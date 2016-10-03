@@ -1,0 +1,287 @@
+@import "./fonts.css";
+
+html {
+  color: RGB(255, 255, 222);
+  font-family: 'Raleway', sans-serif;
+}
+
+#nav-buffer {
+  height: 70px;
+  width: 100%;
+  opacity: 0;
+  display: none;
+}
+
+#main-nav {
+  height: 70px;
+  background-color: lightblue;
+  border-bottom: solid 2px RGB(79, 48, 67);
+  color: rgb(55, 45, 59);
+}
+
+#main-nav > ul {
+  display: flex;
+  font-size: 1.9em;
+}
+
+#main-nav > ul > li {
+  margin: 0 24px;
+  cursor: pointer;
+}
+
+.scroll-nav {
+  position: relative;
+  z-index: 11;
+}
+.fixed-nav {
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  z-index: 11;
+}
+.fixed-nav:before {
+  content: '';
+  height: 70px;
+  /*width: 100vw;*/;
+  position: static;
+}
+
+#splash {
+  height: calc(100vh - 70px);
+  position: relative;
+  z-index: 7;
+  /*width: 300px;*/
+  background: RGB(198, 206, 158) url('../img/rgs.png') no-repeat center;
+  -webkit-background-size: 250px;
+     -moz-background-size: 250px;
+      -ms-background-size: 250px;
+       -o-background-size: 250px;
+          background-size: 250px;
+}
+.splash-logo {
+  color: RGB(255, 255, 222);
+  /*color: rgb(55, 45, 59);*/
+  font-size: 4em;
+}
+
+.small-logo {
+  color: RGB(217, 67, 98);
+  position: absolute;
+  font-size: .85em;
+  left: 32px;
+}
+.small-logo > span:before {
+  content: 'Real';
+  font-family: 'Galada', cursive;
+  position: absolute;
+  top: -45%;
+  left: -47%;
+  border: thin solid RGB(217, 67, 98);
+  border-radius: 50%;
+  height: 44px;
+  width: 44px;
+  /*margin-top: 4px;*/
+}
+.small-logo > span:after {
+  content: 'Syrup';
+  font-family: 'Galada', cursive;
+  position: absolute;
+  top: 65%;
+  left: -68%;
+}
+
+.admin {
+  /*color: RGB(217, 67, 98);*/
+  position: absolute;
+  font-size: .85em;
+  right: 32px;
+}
+
+
+#second {
+  min-height: 300px;
+  background-color: lightblue;
+  /*background-image: url('../img/trunk.png');*/
+  background-repeat: repeat-y;
+}
+
+#third {
+  position: relative;
+  min-height: 1650px;
+  background-color: rgba(55, 45, 59, 1);
+  /*background-image: url('../img/trunk.png');*/
+  /*background-repeat: repeat-y;*/
+  overflow: visible;
+}
+
+.content {
+  position: relative;
+  z-index: 7;
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  /*background-color: red;*/
+}
+
+.layer0 {
+  z-index: 5;
+}
+
+.layer1 {
+  background-image: url('../img/tree3.png');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  /*transform: translateY(500px);*/
+  /*background-color: lightblue;*/
+  z-index: 4;
+}
+
+.layer2 {
+  background-image: url('../img/tree.png');
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  /*transform: translateY(500px);*/
+  /*background-color: lightblue;*/
+  z-index: 3;
+}
+
+.layer3 {
+  background-image: url('../img/tree.png');
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  /*transform: translateY(500px);*/
+  /*background-color: lightblue;*/
+  z-index: 3;
+}
+
+.layer4 {
+  background-image: url('../img/hill.png');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  /*transform: translateY(500px);*/
+  /*background-color: lightblue;*/
+  z-index: 0;
+}
+
+
+#fourth {
+  min-height: 300px;
+  background-color: rgba(44, 38, 51, 1);
+  /*background-image: url('../img/roots.png');*/
+  background-repeat: no-repeat;
+}
+
+#footer {
+  height: 140px;
+  background-color: rgba(28, 22, 34, 1);
+}
+
+#pop-bg {
+  position: fixed;
+  top: 35px;
+  left: 0%;
+  /*transform: translate(-50%, -50%);*/
+  height: 100vh;
+  width: 100vw;
+  /*background-color: rgba(28, 22, 34, .95);*/
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#popup {
+  position: relative;
+  min-height: 64vh;
+  min-width: 72vw;
+  background-color: RGB(198, 206, 158);
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(28, 22, 34);
+  z-index: 5;
+  /*visibility: hidden;*/
+}
+
+#center-state {
+  position: relative;
+  z-index: 11;
+}
+
+.exit-cart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.flex-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#process, #contact, #admin, #about {
+  padding: 70px 15%;
+  /*z-index: 11;*/
+}
+#process p, #contact p, #admin p, #about p {
+  margin: 34px;
+  font-size: 1.1rem;
+  line-height: 1.6em;
+}
+#process h2, #contact h2, #admin h2, #about h2 {
+  font-size: 2.7rem;
+  color: RGB(217, 67, 98);
+  position: relative;
+  left: -36px;
+  padding-bottom: 17px;
+}
+
+.all-products {
+  min-height: 500px;
+  display: flex;
+  flex-direction: row;
+  margin: 0 50px;
+}
+
+.one-product {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 300px;
+  width: calc(100% / 3);
+  background: url('../img/rgs.png') no-repeat center;
+  -webkit-background-size: 130px;
+     -moz-background-size: 130px;
+      -ms-background-size: 130px;
+       -o-background-size: 130px;
+          background-size: 130px;
+}
+
+.one-product ~ .one-product {
+  border-left: thin solid rgb(55, 45, 59);
+
+}
+
+.product-btn {
+  min-width: 100px;
+  min-height: 50px;
+  line-height: 1.3em;
+  padding: 10px;
+  background-color: RGB(217, 67, 98);
+  border-radius: 10px;
+  position: relative;
+  flex-direction: column;
+  top: 63px;
+  cursor: pointer;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="syrupApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Real Good Syrup</title>
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/main.css">
+  </head>
+
+  <body>
+
+    <section id="splash" class="flex-centered">
+      <div class="splash-logo galada">Real <span class="teko">GOOD</span> Syrup</div>
+    </section>
+
+    <section id="nav-buffer"></section>
+
+    <nav id="main-nav" class="scroll-nav flex-centered">
+      <ul class="pacifico">
+        <li ui-sref="landing" class="small-logo"><span class="teko">GOOD</span></li>
+        <li ui-sref="about" class="about-btn">About us</li>
+        <li ui-sref="products" class="products-btn">Syrup sizes</li>
+        <li ui-sref="cart" class="cart-btn">Buy</li>
+        <li ui-sref="process" class="process-btn">Syrup-making</li>
+        <li class="contact-btn">Contact us</li>
+        <li ui-sref="landing" class="admin"><span class="teko">admin</span></li>
+      </ul>
+    </nav>
+
+    <div id="second">
+      <section class="content" ui-view="second"></section>
+    </div>
+
+    <div id="third">
+      <!-- <section class="layer layer0"></section>
+      <section class="layer layer1"></section>
+      <section class="layer layer2"></section>
+      <section class="layer layer3"></section>
+      <section class="layer layer4"></section> -->
+      <section class="content" ui-view="third"></section>
+    </div>
+
+    <div id="fourth">
+      <section class="content" ui-view="contact"></section>
+    </div>
+
+    <footer id="footer"></footer>
+
+    <div id="center-state">
+      <section ui-view="center-state"></section>
+    </div>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
+    <script type="text/javascript" src="./js/app.js"></script>
+    <script type="text/javascript" src="./js/scripts.js"></script>
+    <script type="text/javascript" src="./js/controllers/aboutControl.js"></script>
+    <script type="text/javascript" src="./js/controllers/cartControl.js"></script>
+    <script type="text/javascript" src="./js/controllers/contactControl.js"></script>
+    <script type="text/javascript" src="./js/controllers/landingControl.js"></script>
+    <script type="text/javascript" src="./js/controllers/loginControl.js"></script>
+    <script type="text/javascript" src="./js/controllers/processControl.js"></script>
+    <script type="text/javascript" src="./js/controllers/productsControl.js"></script>
+    <script type="text/javascript" src="./js/services/rgsService.js"></script>
+    <script type="text/javascript" src="./views/about.html"></script>
+    <script type="text/javascript" src="./views/cart.html"></script>
+    <script type="text/javascript" src="./views/landing.html"></script>
+    <script type="text/javascript" src="./views/login.html"></script>
+    <script type="text/javascript" src="./views/products.html"></script>
+  </body>
+</html>

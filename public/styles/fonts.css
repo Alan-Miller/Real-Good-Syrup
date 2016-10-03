@@ -1,0 +1,44 @@
+@import 'https://fonts.googleapis.com/css?family=Baloo+Bhai|Bevan|Teko:500|Lato|Galada|Oleo+Script|Oleo+Script+Swash+Caps|Open+Sans|Pacifico|Raleway|Roboto+Slab|Yellowtail';
+
+.baloo {
+  font-family: 'Baloo Bhai', cursive;
+}
+.open-sans {
+  font-family: 'Open Sans', sans-serif;
+}
+.lato {
+  font-family: 'Lato', sans-serif;
+}
+.teko {
+  font-family: 'Teko', sans-serif;
+}
+.galada {
+  font-family: 'Galada', cursive;
+}
+.raleway {
+  font-family: 'Raleway', sans-serif;
+}
+.roboto-slab {
+  font-family: 'Roboto Slab', serif;
+}
+.pacifico {
+  font-family: 'Pacifico', cursive;
+}
+.yellowtail {
+  font-family: 'Yellowtail', cursive;
+}
+.oleo {
+  font-family: 'Oleo Script', cursive;
+}
+.oleo-swash {
+  font-family: 'Oleo Script Swash Caps', cursive;
+}
+.bevan {
+  font-family: 'Bevan', cursive;
+}
+
+.big-red {
+  color: RGB(217, 67, 98);
+  font-size: 1.3em;
+  margin: 0 4px;
+}
