@@ -1,0 +1,291 @@
+@import "../styles/reset";
+@import "../styles/fonts";
+/*@import "./parallax-trees";*/
+
+$lightred: RGB(217, 67, 98);
+$lightbrown: rgb(55, 45, 59);
+$darkbrown: rgb(28, 22, 34);
+$beige: RGB(255, 255, 222);
+$darkbeige: RGB(198, 206, 158);
+
+html {
+  color: $beige;
+  font-family: 'Raleway', sans-serif;
+}
+
+h2 {
+  font-size: 2.7rem;
+}
+h3 {
+  font-size: 2.1rem;
+}
+
+.flex-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#nav-buffer {
+  height: 70px;
+  width: 100%;
+  opacity: 0;
+  display: none;
+}
+
+#main-nav {
+  height: 70px;
+  background-color: lightblue;
+  border-bottom: solid 2px RGB(79, 48, 67);
+  color: $lightbrown;
+}
+
+#main-nav > ul {
+  display: flex;
+  font-size: 1.9em;
+}
+
+#main-nav > ul > li {
+  margin: 0 24px;
+  cursor: pointer;
+}
+
+.scroll-nav {
+  position: relative;
+  z-index: 11;
+}
+.fixed-nav {
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  z-index: 11;
+}
+.fixed-nav:before {
+  content: '';
+  height: 70px;
+  /*width: 100vw;*/;
+  position: static;
+}
+.login-nav {
+  /*color: $lightred;*/
+  position: absolute;;
+  font-size: .85em;
+  right: 32px;
+}
+
+.splash-logo {
+  color: $beige;
+  /*color: $lightbrown;*/
+  font-size: 4em;
+  position: absolute;
+}
+.splash-bg {
+  height: 500px;
+  width: 500px;
+  background: $darkbeige url('../img/rgs.png') no-repeat center;
+  -webkit-background-size: 250px;
+     -moz-background-size: 250px;
+      -ms-background-size: 250px;
+       -o-background-size: 250px;
+          background-size: 250px;
+}
+
+.small-logo {
+  color: $lightred;
+  position: absolute;
+  font-size: .85em;
+  left: 32px;
+}
+.small-logo > span:before {
+  content: 'Real';
+  font-family: 'Galada', cursive;
+  position: absolute;
+  top: -45%;
+  left: -47%;
+  border: thin solid $lightred;
+  border-radius: 50%;
+  height: 44px;
+  width: 44px;
+  /*margin-top: 4px;*/
+}
+.small-logo > span:after {
+  content: 'Syrup';
+  font-family: 'Galada', cursive;
+  position: absolute;
+  top: 65%;
+  left: -68%;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
+  min-height: 100px;
+  /*background-color: rgba(217, 67, 98, .3);*/
+  background-color: rgba(255, 255, 255, .3);
+  border-radius: 10px;
+  padding: 18px 10px;
+  color: rgb(111, 111, 111);
+}
+.login form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login-btn {
+  margin: 12px;
+  padding: 12px;
+  background-color: $lightred;
+  border-top: solid 2px RGB(255, 131, 166);
+  border-right: solid 2px RGB(121, 38, 55);
+  border-bottom: solid 2px RGB(121, 38, 55);
+  border-left: solid 2px RGB(255, 131, 166);
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+}
+.login input {
+  margin: 10px;
+  padding: 4px;
+  font-size: 1.4em;
+  max-width: 275px;
+  display: flex;
+  flex-direction: column;
+  outline-color: $lightred;
+  color: $lightred;
+  outline-width: medium;
+  /*background-color: rgba(255, 255, 255, 0);*/
+  /*background-color: rgba(217, 67, 98, .3);*/
+}
+.login-text {
+  max-width: 400px;
+  margin: 20px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.view-content {
+  position: relative;
+  z-index: 7;
+  padding: 70px 15%;
+}
+
+#first {
+  height: calc(100vh - 70px);
+  position: relative;
+  z-index: 7;
+  background: $darkbeige;
+}
+
+#second {
+  min-height: 300px;
+  background-color: lightblue;
+  background-repeat: repeat-y;
+}
+
+#third {
+  position: relative;
+  min-height: 1650px;
+  background-color: $lightbrown;
+  overflow: visible;
+}
+
+#fourth {
+  min-height: 300px;
+  background-color: rgb(44, 38, 51);
+  background-repeat: no-repeat;
+}
+
+#footer {
+  height: 140px;
+  background-color: $darkbrown;
+}
+
+#cart {
+  position: relative;
+  min-height: 64vh;
+  min-width: 72vw;
+  background-color: $darkbeige;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: $darkbrown;
+  z-index: 5;
+}
+.exit-cart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+#third p, #contact p, #admin p, #login p,  #about p, #patron p {
+  margin: 34px;
+  font-size: 1.1rem;
+  line-height: 1.6em;
+}
+#third h2, #contact h2, #admin h2, #about h2 {
+  font-size: 2.7rem;
+  color: $lightred;
+  position: relative;
+  left: -36px;
+  padding-bottom: 17px;
+}
+
+.patron-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 200px;
+  width: 100%;
+  padding: 30px;
+  background-color: lightgreen;
+}
+
+.all-products {
+  min-height: 500px;
+  display: flex;
+  flex-direction: row;
+  margin: 0 50px;
+}
+
+.one-product {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 300px;
+  width: calc(100% / 3);
+  background: url('../img/rgs.png') no-repeat center;
+  -webkit-background-size: 130px;
+     -moz-background-size: 130px;
+      -ms-background-size: 130px;
+       -o-background-size: 130px;
+          background-size: 130px;
+}
+
+.one-product ~ .one-product {
+  border-left: thin solid $lightbrown;
+}
+
+.product-btn {
+  min-width: 100px;
+  min-height: 50px;
+  line-height: 1.3em;
+  padding: 10px;
+  background-color: $lightred;
+  border-radius: 10px;
+  position: relative;
+  flex-direction: column;
+  top: 63px;
+  cursor: pointer;
+}

@@ -9,6 +9,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var corsOptions = {
   origin: 'http://localhost:56914'
 };
+// var bs = require('browser-sync').create();
 
 var db = massive.connectSync({
   db: 'rgs'
