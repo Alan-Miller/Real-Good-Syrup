@@ -1,3 +1,3 @@
-angular.module('syrupApp').controller('landingControl', function($scope, rgsService) {
+angular.module('syrupApp').controller('landingControl', function($scope) {
 
 });

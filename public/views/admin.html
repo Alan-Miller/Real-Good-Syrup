@@ -1,22 +1,15 @@
 <div id="admin">
-  <h2 class="pacifico">
-    About us
+  <h2 class="teko">
+    Admin page
   </h2>
-  <span class="big-red">About the family:</span>
-  <p>
-    Maple Ledge Farm's syrup operation has spanned four generations. Charles Sisson was the first person to operate maple production on the farm. Today, his son and grandsons continue the tradition of maple production.
-  </p>
-  <span class="big-red">Location and history:</span>
-  <p>
-    Maple Ledge Farm is a family operation located in the hills between the Adirondack and Catskill Mountains in rural Schoharie County, NY. The farm got its name because of its location on a limestone ledge where the three maple groves (known as sugar bushes) are located. The name Maple Ledge Farm was given to the operation in 1973.  Syrup-making continued until 1997 when a large snowstorm crushed the saphouse and all of the farm's maple producing equipment. After this, Maple Ledge Farm continued to produce maple sap and sell it to a local sugarhouse.
-  </p>
-  <p>
-    In 2009, two of Charles' grandsons decided to revive the tradition that their grandfather and father had started. Eddie and Aaron Sisson rebuilt the family saphouse on the same location where the original building had once stood.
-  </p>
-  <p>
-    In the spring of 2010, Maple Ledge Farm produced its first batch of maple syrup in 13 years. Unfortunately, Charles Sisson was not able to see the resurrection of the family's sweet hobby; he passed away in 2006. A desire to remember their grandfather was part of what motivated the brothers to restart maple production on Maple Ledge Farm.
-  </p>
-  <p>
-    Today, Maple Ledge Farm taps around 4,000 sugar maple trees each February and produces 300—800 gallons of syrup a year. Plans to build a new sugarhouse and expand maple production are under way.
-  </p>
+  <span class="big-red">ADMIN THINGS!</span>
+  <h3>Users</h3>
+  <div ng-repeat="user in users">
+    <div>{{user.firstname}} {{user.lastname}}</div>
+    <div>{{user.address}} {{user.zip}}</div>
+    <div>{{user.admin}}</div>
+  </div>
+
+<button ng-click="logout()">LOGOUT</button>
+
 </div>

@@ -45,24 +45,24 @@ SCROLL TO STATE
           }
       });
   };
-  $('.small-logo').on('click', function() {
+  $('.small-logo, .login-nav').on('click', function() {
     window.setTimeout(function() {
-      $('#splash').scrollToStateContainer();
+      $('#first').scrollToStateContainer();
     });
   });
-  $('.products-btn, .cart-btn').on('click', function() {
+  $('.products-nav, .cart-nav').on('click', function() {
     window.setTimeout(function() {
       $('#second').scrollToStateContainer();
     });
   });
-  $('.process-btn, .about-btn').on('click', function() {
+  $('.process-nav, .about-nav').on('click', function() {
     window.setTimeout(function() {
       $('#third').scrollToStateContainer();
     });
   });
-  $('.contact-btn').on('click', function() {
+  $('.contact-nav').on('click', function() {
     window.setTimeout(function() {
-      $('#contact').scrollToStateContainer();
+      $('#fourth').scrollToStateContainer();
     });
   });
 
@@ -84,6 +84,7 @@ SCROLL TO STATE
   //   $('.left-branch').css({'transform': 'translate(-' + winScroll / 80 + '%, 0px)'});
   //   $('.right-branch').css({'transform' :'translate(' + winScroll / 80 + '%, 0px)'});
   // });
+
 
 
 

@@ -18,7 +18,53 @@ angular.module('syrupApp', ['ui.router'])
            controller: 'processControl',
            templateUrl: 'views/process.html'
          },
-         'contact': {
+         'fourth': {
+           controller: 'contactControl',
+           templateUrl: 'views/contact.html'
+         }
+       }
+     })
+     .state('admin', {
+       url: '/admin',
+       templateUrl: './views/admin.html',
+       controller: 'adminControl',
+       views: {
+         'first': {
+           controller: 'adminControl',
+           templateUrl: 'views/admin.html'
+         },
+         'second': {
+           controller: 'productsControl',
+           templateUrl: 'views/products.html'
+         },
+         'third': {
+           controller: 'processControl',
+           templateUrl: 'views/process.html'
+         },
+         'fourth': {
+           controller: 'contactControl',
+           templateUrl: 'views/contact.html'
+         }
+       }
+     })
+     .state('patron', {
+       url: '/patron',
+       templateUrl: './views/patron.html',
+       controller: 'patronControl',
+       views: {
+         'first': {
+           controller: 'patronControl',
+           templateUrl: 'views/patron.html'
+         },
+         'second': {
+           controller: 'productsControl',
+           templateUrl: 'views/products.html'
+         },
+         'third': {
+           controller: 'processControl',
+           templateUrl: 'views/process.html'
+         },
+         'fourth': {
            controller: 'contactControl',
            templateUrl: 'views/contact.html'
          }
@@ -41,14 +87,13 @@ angular.module('syrupApp', ['ui.router'])
            controller: 'aboutControl',
            templateUrl: 'views/about.html'
          },
-         'contact': {
+         'fourth': {
            controller: 'contactControl',
            templateUrl: 'views/contact.html'
          }
        }
      })
      .state('cart', {
-      //  parent: 'landing',
        url: '/cart',
        templateUrl: './views/cart.html',
        controller: 'cartControl',
@@ -58,20 +103,16 @@ angular.module('syrupApp', ['ui.router'])
            templateUrl: 'views/landing.html'
          },
          'second': {
-           controller: 'productsControl',
-           templateUrl: 'views/products.html'
+           controller: 'cartControl',
+           templateUrl: 'views/cart.html'
          },
          'third': {
            controller: 'processControl',
            templateUrl: 'views/process.html'
          },
-         'contact': {
+         'fourth': {
            controller: 'contactControl',
            templateUrl: 'views/contact.html'
-         },
-         'center-window': {
-           controller: 'cartControl',
-           templateUrl: 'views/cart.html'
          }
        }
      })
@@ -81,18 +122,18 @@ angular.module('syrupApp', ['ui.router'])
        controller: 'loginControl',
        views: {
          'first': {
-           controller: 'landingControl',
-           templateUrl: 'views/landing.html'
-         },
-         'second': {
            controller: 'loginControl',
            templateUrl: 'views/login.html'
+         },
+         'second': {
+           controller: 'productsControl',
+           templateUrl: 'views/products.html'
          },
          'third': {
            controller: 'processControl',
            templateUrl: 'views/process.html'
          },
-         'contact': {
+         'fourth': {
            controller: 'contactControl',
            templateUrl: 'views/contact.html'
          }
@@ -115,7 +156,7 @@ angular.module('syrupApp', ['ui.router'])
            controller: 'processControl',
            templateUrl: 'views/process.html'
          },
-         'contact': {
+         'fourth': {
            controller: 'contactControl',
            templateUrl: 'views/contact.html'
          }
@@ -138,7 +179,7 @@ angular.module('syrupApp', ['ui.router'])
            controller: 'processControl',
            templateUrl: 'views/process.html'
          },
-         'contact': {
+         'fourth': {
            controller: 'contactControl',
            templateUrl: 'views/contact.html'
          }

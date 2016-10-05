@@ -4,5 +4,5 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
     $scope.products = response;
     console.log(response);
   });
-  
+
 });

@@ -2,7 +2,7 @@ angular.module('syrupApp').controller('productsControl', function($scope, rgsSer
 
   rgsService.getProducts().then(function(response) {
     $scope.products = response;
-    console.log(response);
+    // console.log(response);
   });
 
 });
