@@ -1,5 +1,18 @@
 angular.module('syrupApp').controller('adminControl', function($scope, rgsService, $state) {
 
+  $scope.user = rgsService.user;
+  // rgsService.userId = $scope.user.id;
+
+  $scope.getAllOrders = function() {
+    rgsService.getAllOrders().then(function(response) {
+      // console.log(response);
+      // console.log('scope.user.id: ' + $scope.user.id);
+      $scope.orders = response;
+    });
+  };
+  $scope.getAllOrders();
+
+
   rgsService.getUsers().then(function(response) {
     $scope.users = response;
     response.forEach(function(eachUser) {
@@ -27,9 +40,9 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
 
 
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Code Graveyard ††
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  Code Graveyard ††
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 // if (res) {
 //   swal({
 //     title: 'Are you sure?',

@@ -11,8 +11,8 @@ angular.module('syrupApp', ['ui.router'])
            templateUrl: 'views/landing.html'
          },
          'second': {
-           controller: 'productsControl',
-           templateUrl: 'views/products.html'
+           controller: 'cartControl',
+           templateUrl: 'views/cart.html'
          },
          'third': {
            controller: 'processControl',
@@ -34,8 +34,8 @@ angular.module('syrupApp', ['ui.router'])
            templateUrl: 'views/admin.html'
          },
          'second': {
-           controller: 'productsControl',
-           templateUrl: 'views/products.html'
+           controller: 'cartControl',
+           templateUrl: 'views/cart.html'
          },
          'third': {
            controller: 'processControl',
@@ -57,8 +57,8 @@ angular.module('syrupApp', ['ui.router'])
            templateUrl: 'views/patron.html'
          },
          'second': {
-           controller: 'productsControl',
-           templateUrl: 'views/products.html'
+           controller: 'cartControl',
+           templateUrl: 'views/cart.html'
          },
          'third': {
            controller: 'processControl',
@@ -80,8 +80,8 @@ angular.module('syrupApp', ['ui.router'])
            templateUrl: 'views/landing.html'
          },
          'second': {
-           controller: 'productsControl',
-           templateUrl: 'views/products.html'
+           controller: 'cartControl',
+           templateUrl: 'views/cart.html'
          },
          'third': {
            controller: 'aboutControl',
@@ -126,8 +126,8 @@ angular.module('syrupApp', ['ui.router'])
            templateUrl: 'views/login.html'
          },
          'second': {
-           controller: 'productsControl',
-           templateUrl: 'views/products.html'
+           controller: 'cartControl',
+           templateUrl: 'views/cart.html'
          },
          'third': {
            controller: 'processControl',
@@ -149,8 +149,8 @@ angular.module('syrupApp', ['ui.router'])
            templateUrl: 'views/landing.html'
          },
          'second': {
-           controller: 'productsControl',
-           templateUrl: 'views/products.html'
+           controller: 'cartControl',
+           templateUrl: 'views/cart.html'
          },
          'third': {
            controller: 'processControl',
@@ -162,29 +162,29 @@ angular.module('syrupApp', ['ui.router'])
          }
        }
      })
-     .state('products', {
-       url: '/products',
-       templateUrl: './views/products.html',
-       controller: 'productsControl',
-       views: {
-         'first': {
-           controller: 'landingControl',
-           templateUrl: 'views/landing.html'
-         },
-         'second': {
-           controller: 'productsControl',
-           templateUrl: 'views/products.html'
-         },
-         'third': {
-           controller: 'processControl',
-           templateUrl: 'views/process.html'
-         },
-         'fourth': {
-           controller: 'contactControl',
-           templateUrl: 'views/contact.html'
-         }
-       }
-     })
+    //  .state('products', {
+    //    url: '/products',
+    //    templateUrl: './views/products.html',
+    //    controller: 'productsControl',
+    //    views: {
+    //      'first': {
+    //        controller: 'landingControl',
+    //        templateUrl: 'views/landing.html'
+    //      },
+    //      'second': {
+    //        controller: 'productsControl',
+    //        templateUrl: 'views/products.html'
+    //      },
+    //      'third': {
+    //        controller: 'processControl',
+    //        templateUrl: 'views/process.html'
+    //      },
+    //      'fourth': {
+    //        controller: 'contactControl',
+    //        templateUrl: 'views/contact.html'
+    //      }
+    //    }
+    //  })
      .state('contact', {
        url: '/contact',
        templateUrl: './views/contact.html',

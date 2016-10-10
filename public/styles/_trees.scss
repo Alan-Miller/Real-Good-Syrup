@@ -1,0 +1,266 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Parallax trees
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.parallax-layer-fore {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 100;
+  width: 100%;
+  height: 0px;
+}
+
+.parallax-layer-back {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 30;
+  width: 100%;
+  height: 100vh;
+}
+
+.tree {
+  height: 5000px;
+  width: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  // bottom: 0px;
+  z-index: 3;
+}
+// .tree-left {
+//   background-image: url('../img/tree-l.png');
+//   background-position: left bottom;
+//   top: 2100px;
+// }
+// .tree-right {
+//   background-image: url('../img/tree-r.png');
+//   background-position: right bottom;
+//   bottom: -7100px;
+// }
+.tree-left {
+  background-image: url('../img/tree-l.png');
+  // background-image: url('../img/trunk-l.png');
+  // background-repeat: repeat-y;
+  // background-position: left top;
+  background-position: left bottom;
+  top: 1000px;
+}
+.tree-right {
+  background-image: url('../img/tree-r.png');
+  background-position: right bottom;
+  top: 1000px;
+}
+.tree-left-back {
+  background-image: url('../img/tree-l.png');
+  background-position: left bottom;
+  top: 100px;
+  left: 11%;
+}
+.tree-right-back {
+  background-image: url('../img/tree-r.png');
+  background-position: right bottom;
+  top: 100px;
+  right: 18%;
+}
+.tree-deep {
+  background-image: url('../img/tree-l.png');
+  background-position: center bottom;
+  top: 160px;
+}
+
+.hill {
+  height: 1000px;
+  width: 100%;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+}
+.hill-fg {
+  background-image: url('../img/hill.png');
+  z-index: 2;
+  top: 450px;
+}
+.hill-bg {
+  background-image: url('../img/hill2.png');
+  z-index: 1;
+  top: 350px;
+}
+.hill-dbg {
+  background-image: url('../img/hill3.png');
+  z-index: 0;
+  top: 250px;
+}
+
+
+.leaves {
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  position: fixed;
+}
+
+.leaves-splash-bg {
+  background-image: url('../img/maple-leaves.png');
+  // height: 200px;
+  // width: 100px;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  z-index: 0;
+}
+.leaves-nav-up {
+  background-image: url('../img/maple-up.png');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 130%;
+  position: absolute;
+  top: 270px;
+  z-index: 42;
+}
+.leaves-nav-down {
+  background-image: url('../img/maple-down.png');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 130%;
+  position: absolute;
+  top: -350px;
+  z-index: 33;
+  overflow: visible;
+}
+
+
+.falling-leaf, .falling-snowflake {
+  height: 100px;
+  width: 100px;
+  background-image: url('../img/maple-leaf-small.png');
+  background-size: 100px;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 3;
+  // top: 200px;
+  // left: 200px;
+}
+.leaf-one {
+  // top: -1300px;
+  top: 100px;
+  left: 3%;
+}
+.leaf-two {
+  // top: -700px;
+  top: -50px;
+  left: 64%;
+}
+.leaf-three {
+  // top: -1800px;
+  top: -750px;
+  right: 4%;
+}
+
+.snowflake-one {
+  // top: -1300px;
+  top: -900px;
+  left: 3%;
+  // background-color: red;
+}
+.snowflake-two {
+  // top: -700px;
+  top: -1050px;
+  left: 44%;
+  // background-color: blue;
+}
+.snowflake-three {
+  // top: -1800px;
+  top: -950px;
+  right: 17%;
+  // background-color: green;
+}
+
+
+
+
+
+
+// #second .tree-center {
+//   top: 800px;
+// }
+
+// .trees {
+//   display: flex;
+//   // flex-direction: column;
+//   justify-content: flex-end;
+// }
+//
+// .trees img {
+//   position: fixed;
+//   z-index: 3;
+// }
+//
+// .tree-right img, .tree-left img, .tree-center img, .hill img {
+//   position: fixed;
+//   z-index: 5;
+//   // display: none;
+// }
+// .tree-left img {
+//   left: 0px;
+//   bottom: -800px;
+// }
+// .tree-right img {
+//   right: 0px;
+//   // bottom: -800px;
+// }
+// .tree-center img {
+//   left: 20%;
+//   bottom: 150px;
+//   // transform: translateX(-50%);
+// }
+// .hill img {
+//   left: 0px;
+//   bottom: 1900px;
+// }
+
+
+
+
+
+
+
+//
+// .parallax {
+//   z-index: 1000;
+//   position: relative;
+//   top: 0px;
+//   left: 0px;
+//   perspective: 1px;
+//   height: 100vh;
+//   overflow-x: hidden;
+//   overflow-y: auto;
+//   // background-color: yellow;
+//   color: black;
+//
+// }
+// .parallax__layer {
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+//   opacity: 0.3;
+// }
+// .parallax__layer__base {
+//   transform: translateZ(0);
+//   height: 200vh;
+//   background-color: red;
+// }
+// .parallax__layer__back {
+//   transform: translateZ(-1px) scale(2);
+//   background-color: green;
+//   background-image: url('../img/tree-r.png');
+//   background-repeat: no-repeat;
+//   background-position: center right;
+// }
+// .parallax__layer__deep {
+//   transform: translateZ(-2px) scale(3);
+// }

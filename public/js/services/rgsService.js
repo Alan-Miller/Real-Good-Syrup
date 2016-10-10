@@ -29,6 +29,25 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     });
   };
 
+  this.getUserOrders = function(id) {
+    // console.log('ID is: ' + id);
+    return $http({
+      method: 'GET',
+      url: 'http://localhost:' + port + '/api/orders/' + id
+    }).then(function(response) {
+      return response.data;
+    });
+  };
+
+  this.getAllOrders = function() {
+    return $http({
+      method: 'GET',
+      url: 'http://localhost:' + port + '/api/orders'
+    }).then(function(response) {
+      return response.data;
+    });
+  };
+
   this.confirmLogout = function(res) {
     if (res) {
       swal({
@@ -47,20 +66,58 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
           timer: 1100
           }
         );
+        //NEED TO LOG OUT
         $state.go('landing');
+        // this.logout().then(function(res) {
+        //   alert('Am I logged out yet?');
+        // });
+      });
+    }
+  };
+  var serviceScope = this;
+  this.confirmOrder = function(orderObj) {
+    if (orderObj) {
+      swal({
+        title: 'Place order?',
+        text: "This will finalize your order",
+        type: 'question',
+        showCancelButton: true,
+        cancelButtonColor: 'RGB(217, 67, 98)',
+        confirmButtonColor: 'RGB(153, 196, 210)',
+        confirmButtonText: 'Yes, send me the syrup!'
+      }).then(function() {
+        swal({
+          title: 'Thank you!',
+          text: 'Your syrup will arrive soon',
+          type: 'success',
+          timer: 2100
+          }
+        );
+        //NEED TO LOG OUT
+        serviceScope.placeOrder(orderObj);
+        // $state.go('patron');
+        // this.logout().then(function(res) {
+        //   alert('Am I logged out yet?');
+        // });
       });
     }
   };
 
+  this.user = {userId: null};
+  this.placeOrder = function(orderObj) {
+    return $http({
+      method: 'POST',
+      data: orderObj,
+      url: '/api/orders'
+    });
+  };
 
 
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-AUTH
-  Auth functions
-  Mostly pasted in from Brett's code, with Josh's tweaks
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  AUTH
+    Auth functions
+    Mostly pasted in from Brett's code, with Josh's tweaks
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   this.loginLocal = function(credentials) {
     return $http({
       method: "POST",
@@ -95,6 +152,8 @@ AUTH
       url: 'http://localhost:' + port + '/auth/logout'
     }).then(function(res) {
       return res.data;
+    }).catch(function(err) {
+      console.log(err);
     });
   };
 

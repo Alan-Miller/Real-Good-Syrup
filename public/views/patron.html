@@ -4,14 +4,36 @@
     <h2 class="teko">
       {{user.firstname}}'s Page
     </h2>
-    <button ng-click="logout()">LOGOUT</button>
+    <div>Welcome, {{user.firstname}} {{user.lastname}}</div>
+    <div class="logout-btn" ng-click="logout()">LOG OUT</div>
   </nav>
 
+  <div class="user-main">
 
-  <span class="big-red">PATRON THINGS!</span>
-  <br><br>
-  <div>Welcome, {{user.firstname}} {{user.lastname}}</div>
-  <!-- <div>Shipping address: {{user.address}} {{user.zip}}</div> -->
+    <section class="order-section" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
+      <div>Current shipping address: </div>
+      <div>{{user.address}} {{user.zip}}</div>
+      <div class="big-red">ORDERS</div>
+      <ol class="past-orders">
+        <li ng-repeat="order in orders">
+          <div class="order">
+            <section>{{order.name}}</section>
+            <section>{{order.price_paid}}</section>
+            <section>{{order.date}}</section>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <div class="big-red">OTHER SECTION!</div>
+      {{orders}}
+    </section>
+
+  </div>
+
+
+
 
 
 </div>

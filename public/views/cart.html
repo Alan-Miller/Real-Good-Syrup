@@ -1,8 +1,27 @@
-CART
-<section ui-sref="products" class="exit-cart big-red">X</section>
-<section ng-repeat="product in products">
-  <div>
-    <p>{{product.asdfa}}</p>
-    <p>{{product.current_price}}</p>
-  </div>
+
+<section class="all-products">
+
+  <section ng-repeat="product in products | orderBy : 'id'" class="one-product">
+    <div class="product-id">{{product.id}}</div>
+    <div class="product-image"></div>
+    <div class="cart-adder">
+      <section class="product-name-and-price">
+        <p class="product-name">{{product.name}}</p>
+        <p class="product-price">{{product.current_price}}</p>
+      </section>
+
+      <section class="add-sub">
+        <section cart-directive class="sub">-</section>
+        <section cart-directive class="add add-sub-padding">+</section>
+      </section>
+    </div>
+
+    <div class="i-want">
+      I want <span class="num big-red">0</span> <span shorten-name>{{product.name}}</span>s
+    </div>
+
+  </section>
+
 </section>
+
+<section class="buy-btn" ng-click="placeOrder()">Place order</section>

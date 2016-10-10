@@ -1,15 +1,40 @@
-<div id="admin">
-  <h2 class="teko">
-    Admin page
-  </h2>
-  <span class="big-red">ADMIN THINGS!</span>
-  <h3>Users</h3>
-  <div ng-repeat="user in users">
-    <div>{{user.firstname}} {{user.lastname}}</div>
-    <div>{{user.address}} {{user.zip}}</div>
-    <div>{{user.admin}}</div>
-  </div>
+<div id="admin" >
+  <nav class="admin-nav">
+    <h3 class="teko">Admin page</h3>
+    <button class="logout-btn" ng-click="logout()">LOGOUT</button>
+  </nav>
 
-<button ng-click="logout()">LOGOUT</button>
+  <div class="admin-content">
+
+    <span class="order-section">
+      <span class="big-red">Users</span>
+      <!-- <h3>Users</h3> -->
+      <ul ng-repeat="user in users">
+        <li>{{user.id}}
+          <li>{{user.firstname}} {{user.lastname}}</li>
+          <li>{{user.address}} {{user.zip}}</li>
+          <li>{{user.admin}}</li>
+        </li>
+      </ul>
+    </span>
+
+    <span class="order-section">
+      <span class="big-red">Orders</span>
+      <!-- <h3>Users</h3> -->
+      <ul class="past-orders">
+        <li ng-repeat="order in orders">
+          <div class="order">
+            <!-- <section class="order">{{order.id}}</section> -->
+            <section>{{order.firstname}} {{order.lastname}}</section>
+            <section>{{order.name}}</section>
+            <section>{{order.price_paid}}</section>
+            <section>{{order.date}}</section>
+          </div>
+        </li>
+      </ul>
+    </span>
+
+  </div
+
 
 </div>

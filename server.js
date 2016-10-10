@@ -1,3 +1,6 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  REQUIREMENTS
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -7,7 +10,7 @@ var config = require('./config.js');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var corsOptions = {
-  origin: 'http://localhost:56914'
+  origin: 'http://localhost:8002'
 };
 // var bs = require('browser-sync').create();
 
@@ -25,8 +28,8 @@ app.set('db', db);
 var controller = require('./serverControl.js');
 
 app.use(bodyParser.json());
-app.use(cors());
-// app.use(cors(corsOptions));
+// app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(session({
   secret: config.sessionSecret,
@@ -42,10 +45,10 @@ app.use(express.static(__dirname + '/public'));
 
 
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
 AUTH
   LocalAuth functions and endpoints
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 function restrict(req, res, next) {
     if(req.isUnauthenticated()) return res.status(403).json({message: 'please login'});
     next();
@@ -91,24 +94,31 @@ app.get('/auth/me', restrict, function(req, res) {
 app.get('/auth/logout', function(req, res) {
   req.logout();
   res.redirect('/');
+  console.log('LOGGGGGED OUTT!!!');
 });
 /* End of auth functions and endpoints */
 
 
 
 
-
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  ENDPOINTS
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 app.get('/api/users', controller.getUsers);
 app.get('/api/users/:id', controller.getThisUser);
-
 app.put('/api/users/:id', controller.updateUser);
 
-app.get('/api/products', controller.getProducts);
+app.get('/api/orders', controller.getAllOrders);
+app.get('/api/orders/:id', controller.getUserOrders);
+app.post('/api/orders', controller.placeOrder);
 
+app.get('/api/products', controller.getProducts);
 app.put('/api/products/:id', controller.updateProducts);
 
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  PORT
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 var port = config.port;
 app.listen(port, function() {
   console.log('Listening now on port ' + port);
