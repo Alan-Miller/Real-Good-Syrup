@@ -66,19 +66,15 @@ $(document).ready(function() {
 
 
 
-  // var gap = $('.rgs').offset().top;
-  // $('.rgs').css('transform', 'translateY(-' + gap + 'px)');
-
-
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
   PARALLAX EFFECTS
     Splash section
     Falling leaves and snowflakes
     Trees
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  // var treeRoots = ($('#footer').offset().top + $('#footer').outerHeight(true)) -
+   // var treeRoots = ($('#footer').offset().top + $('#footer').outerHeight(true)) -
   // $('.tree-right').css({'bottom': '-100%'});
-// var bottomOfPageOffset = $('#footer').offset().top + $('#footer').outerHeight(true);
+ // var bottomOfPageOffset = $('#footer').offset().top + $('#footer').outerHeight(true);
 // $('.tree-left').css({'bottom': '-' + 2 * bottomOfPageOffset + 'px'});
 
 
@@ -139,19 +135,12 @@ $(document).ready(function() {
   });
 
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    OTHER SCRIPTS
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  // var gap = $('.rgs').offset().top;
+  // $('.rgs').css('transform', 'translateY(-' + gap + 'px)');
 
-  // $(window).scroll(function() {
-  //   var winScroll = $(this).scrollTop();
-  //   $('.vader').css({'transform': 'rotate(-' + winScroll / 40 + 'deg)'});
-  //   $('.left-branch').css({'transform': 'translate(-' + winScroll / 80 + '%, 0px)'});
-  //   $('.right-branch').css({'transform' :'translate(' + winScroll / 80 + '%, 0px)'});
-  // });
-
-// alert('okay')
-//
-// $('.past-orders').on('click', function() {
-//   alert('click');
-// });
 
 
 });

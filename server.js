@@ -28,8 +28,8 @@ app.set('db', db);
 var controller = require('./serverControl.js');
 
 app.use(bodyParser.json());
-// app.use(cors());
-app.use(cors(corsOptions));
+app.use(cors());
+// app.use(cors(corsOptions));
 
 app.use(session({
   secret: config.sessionSecret,

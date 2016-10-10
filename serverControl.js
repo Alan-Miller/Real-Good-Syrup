@@ -7,6 +7,12 @@ var db = app.get('db');
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 module.exports = {
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    USERS
+      Get all users (admin)
+      Get this user
+      Update user
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   getUsers: function(req, res) {
     // if (/* I'm not allowed to see all users because I'm an admin */) {
     //   /* return an error */
@@ -20,63 +26,17 @@ module.exports = {
       res.status(200).json(user);
     });
   },
-
-  getUserOrders: function(req, res) {
-    // for (var i = 0; i < req.body.order.length; i++) {
-    //   array[i]
-    // }
-    db.get_user_orders([req.params.id], function(err, orders) {
-      res.status(200).json(orders);
-    });
-  },
-
-  getAllOrders: function(req, res) {
-    db.get_all_orders(function(err, orders) {
-      res.status(200).json(orders);
-    });
-  },
-
-  placeOrder: function(req, res) {
-    var userAndProducts = [req.body.userId];
-    if (req.body.product1) {
-      userAndProducts.push(1, req.body.product1);
-    } else userAndProducts.push(null, null);
-    if (req.body.product2) {
-      userAndProducts.push(2, req.body.product2);
-    } else userAndProducts.push(null, null);
-    if (req.body.product3) {
-      userAndProducts.push(3, req.body.product3);
-    } else userAndProducts.push(null, null);
-
-    // var userAndProducts = [];
-    // for (var key in req.body) {
-    //   userAndProducts.push(req.body[key]);
-    // }
-    // var justProducts = userAndProducts.splice(userAndProducts.indexOf(req.body.userId));
-    // justProducts.forEach(function(curr, ind, attrs) {
-    //   userAndProducts.push(ind + 1, req.body);
-    // });
-
-
-    db.post_order([req.body.userId], function(err, order) {
-      // res.status(200).json(order);
-      db.post_ordered_products(userAndProducts, function(err, order) {
-        // res.status(200).json(order);
-        db.delete_null_rows(function(err) {
-          res.status(200).end();
-        });
-      });
-    });
-
-
-  },
-
   updateUser: function(req, res) {
     db.update_user([req.params.id, req.body.firstname, req.body.lastname, req.body.address, req.body.zip], function(err, user) {
       res.status(200).json(user);
     });
   },
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    PRODUCTS
+      Get all products
+      Update products (admin)
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   getProducts: function(req, res) {
     db.get_products(function(err, products) {
       res.status(200).json(products);
@@ -89,18 +49,54 @@ module.exports = {
     db.update_products([req.params.id, req.body.price_per], function(err, product) {
       res.status(200).json(product);
     });
+  },
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    ORDERS
+      Get all orders (admin)
+      Get this user's orders
+      Post order to db
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  getAllOrders: function(req, res) {
+    db.get_all_orders(function(err, orders) {
+      res.status(200).json(orders);
+    });
+  },
+  getUserOrders: function(req, res) {
+    db.get_user_orders([req.params.id], function(err, orders) {
+      res.status(200).json(orders);
+    });
+  },
+  placeOrder: function(req, res) {
+    var userAndProducts = [req.body.userId];
+    if (req.body.product1) {
+      userAndProducts.push(1, req.body.product1);
+    } else userAndProducts.push(null, null);
+    if (req.body.product2) {
+      userAndProducts.push(2, req.body.product2);
+    } else userAndProducts.push(null, null);
+    if (req.body.product3) {
+      userAndProducts.push(3, req.body.product3);
+    } else userAndProducts.push(null, null);
+    // var userAndProducts = [];
+    // for (var key in req.body) {
+    //   userAndProducts.push(req.body[key]);
+    // }
+    // var justProducts = userAndProducts.splice(userAndProducts.indexOf(req.body.userId));
+    // justProducts.forEach(function(curr, ind, attrs) {
+    //   userAndProducts.push(ind + 1, req.body);
+    // });
+    db.post_order([req.body.userId], function(err, order) {
+      // res.status(200).json(order);
+      db.post_ordered_products(userAndProducts, function(err, order) {
+        // res.status(200).json(order);
+        db.delete_null_rows(function(err) {
+          res.status(200).end();
+        });
+      });
+    });
   }
 
-
-//   getMyOrders: function(req, res) {
-//     db.getOrders(current_user_id);
-//   },
-//   getProductsForOrderNumber: function(req, res) {
-//     if (/* req.order_id doesn't belog to the current_user_id */) {
-//       res.status(403).json('')
-//     }
-//     db.getProductsForOrderNumber(req.order_id)
-//   }
 
 
 
@@ -115,8 +111,12 @@ module.exports = {
 
 
 
-
-
+//   getProductsForOrderNumber: function(req, res) {
+//     if (/* req.order_id doesn't belog to the current_user_id */) {
+//       res.status(403).json('')
+//     }
+//     db.getProductsForOrderNumber(req.order_id)
+//   }
 
 
 

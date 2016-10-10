@@ -1,4 +1,4 @@
-insert into orders (user_id, date) values ($1, current_date);
+insert into orders (user_id, date, filled) values ($1, current_date, false);
 
 
 

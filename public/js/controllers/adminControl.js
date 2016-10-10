@@ -1,17 +1,10 @@
 angular.module('syrupApp').controller('adminControl', function($scope, rgsService, $state) {
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    USERS
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.user = rgsService.user;
   // rgsService.userId = $scope.user.id;
-
-  $scope.getAllOrders = function() {
-    rgsService.getAllOrders().then(function(response) {
-      // console.log(response);
-      // console.log('scope.user.id: ' + $scope.user.id);
-      $scope.orders = response;
-    });
-  };
-  $scope.getAllOrders();
-
 
   rgsService.getUsers().then(function(response) {
     $scope.users = response;
@@ -20,9 +13,26 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
         eachUser.admin = 'admin';
       } else eachUser.admin = 'not an admin';
     });
-    console.log(response);
+    // console.log(response);
   });
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    ORDERS
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  $scope.getAllOrders = function() {
+    rgsService.getAllOrders().then(function(response) {
+      // console.log(response);
+      // console.log('scope.user.id: ' + $scope.user.id);
+      $scope.orders = response;
+      console.log('response:', response);
+    });
+  };
+  $scope.getAllOrders();
+
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    LOGOUT
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.logout = function() {
     rgsService.logout().then(function(res) {
       rgsService.confirmLogout(res);

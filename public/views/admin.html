@@ -28,7 +28,7 @@
             <section>{{order.firstname}} {{order.lastname}}</section>
             <section>{{order.name}}</section>
             <section>{{order.price_paid}}</section>
-            <section>{{order.date}}</section>
+            <section>{{order.date | date: "medium"}}</section>
           </div>
         </li>
       </ul>

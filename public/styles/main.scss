@@ -170,6 +170,9 @@ h3 {
     border-radius: 12px;
     color: white;
     cursor: pointer;
+    font-size: 1.2rem;
+    font-family: 'Raleway', serif;
+    outline: none;
   }
   .login-text {
     max-width: 400px;
@@ -198,7 +201,7 @@ h3 {
 }
 
 #second {
-  min-height: 700px;
+  min-height: 900px;
   background-color: $sky;
   // background-repeat: repeat-y;
   position: relative;
@@ -434,6 +437,7 @@ h3 {
   border-radius: 3px;
   position: relative;
   bottom: 20px;
+  outline: none;
 }
 .buy-btn:hover {
   background-color: RGB(255, 208, 165);
@@ -510,6 +514,7 @@ h3 {
   cursor: pointer;
   font-size: 1rem;
   background-color: transparent;
+  outline: none;
 }
 
 .user-main {

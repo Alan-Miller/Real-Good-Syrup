@@ -4,9 +4,10 @@ angular.module('syrupApp')
     restrict: 'AE',
     link: function(scope, element, attribute) {
 
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
         Shorten product name
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+          Runs regex on db name
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         window.setTimeout(function() {
           var productName = element.html();
           productName = (productName.replace(/\s\(\d\d?\soz\.\)/g, '')).toLowerCase();

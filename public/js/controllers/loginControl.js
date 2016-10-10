@@ -1,10 +1,9 @@
 angular.module('syrupApp').controller('loginControl', function($scope, rgsService, $state) {
 
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-AUTH
-  Auth functions
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  AUTHENTICATION
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 $scope.loginLocal = function(username, password) {
   // $scope.username = username;
   rgsService.loginLocal({
@@ -34,7 +33,6 @@ function checkUser(isAdmin) {
     });
   }
   // getUser();
-
 
 
 });

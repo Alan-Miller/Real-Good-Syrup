@@ -1,12 +1,19 @@
 angular.module('syrupApp').controller('cartControl', function($scope, rgsService) {
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    PRODUCTS
+      Get all products
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   rgsService.getProducts().then(function(response) {
     $scope.products = response;
   });
 
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-    PLACE ORDER
+    ORDERS
+      Place order
+        - Creates order object; key is based on product id and value is price
+      Runs confirmOrder fn in service
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.placeOrder = function() {
     var orderObject = {};

@@ -16,7 +16,7 @@ angular.module('syrupApp')
       });
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-        Add/Subtract Jars of Syrup in Cart
+        Add/subtract jars of syrup in cart
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       element.on('click', function() {
         var numJars = element.parent().parent().parent().find('.i-want').find('.num').html();

@@ -2,15 +2,11 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
 
   var port = 8002;
 
-  this.getProducts = function() {
-    return $http({
-      method: 'GET',
-      url: 'http://localhost:' + port + '/api/products'
-    }).then(function(response) {
-      return response.data;
-    });
-  };
-
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    USERS
+      Get all users (admin)
+      Get this user's info
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   this.getUsers = function() {
     return $http({
       method: 'GET',
@@ -29,6 +25,36 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     });
   };
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    PRODUCTS
+      Get all products
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  this.getProducts = function() {
+    return $http({
+      method: 'GET',
+      url: 'http://localhost:' + port + '/api/products'
+    }).then(function(response) {
+      return response.data;
+    });
+  };
+
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    ORDERS
+      Get all orders
+      Get this user's orders
+      Confirm order using Sweet Alerts fn which then calls placeOrder fn
+      Post order to db
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  this.getAllOrders = function() {
+    return $http({
+      method: 'GET',
+      url: 'http://localhost:' + port + '/api/orders'
+    }).then(function(response) {
+      return response.data;
+    });
+  };
+
   this.getUserOrders = function(id) {
     // console.log('ID is: ' + id);
     return $http({
@@ -39,41 +65,6 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     });
   };
 
-  this.getAllOrders = function() {
-    return $http({
-      method: 'GET',
-      url: 'http://localhost:' + port + '/api/orders'
-    }).then(function(response) {
-      return response.data;
-    });
-  };
-
-  this.confirmLogout = function(res) {
-    if (res) {
-      swal({
-        title: 'Are you sure?',
-        text: "This will log you out.",
-        type: 'question',
-        showCancelButton: true,
-        cancelButtonColor: 'RGB(217, 67, 98)',
-        confirmButtonColor: 'RGB(153, 196, 210)',
-        confirmButtonText: 'Yes, log out!'
-      }).then(function() {
-        swal({
-          title: 'Bye! Thanks for visiting!',
-          // text: 'We\'ll miss you.',
-          type: 'success',
-          timer: 1100
-          }
-        );
-        //NEED TO LOG OUT
-        $state.go('landing');
-        // this.logout().then(function(res) {
-        //   alert('Am I logged out yet?');
-        // });
-      });
-    }
-  };
   var serviceScope = this;
   this.confirmOrder = function(orderObj) {
     if (orderObj) {
@@ -96,9 +87,6 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
         //NEED TO LOG OUT
         serviceScope.placeOrder(orderObj);
         // $state.go('patron');
-        // this.logout().then(function(res) {
-        //   alert('Am I logged out yet?');
-        // });
       });
     }
   };
@@ -113,8 +101,9 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
   };
 
 
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-  AUTH
+  AUTHENTICATION
     Auth functions
     Mostly pasted in from Brett's code, with Josh's tweaks
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -157,6 +146,35 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     });
   };
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    Confirm logout with Sweet Alerts fn
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  this.confirmLogout = function(res) {
+    if (res) {
+      swal({
+        title: 'Are you sure?',
+        text: "This will log you out.",
+        type: 'question',
+        showCancelButton: true,
+        cancelButtonColor: 'RGB(217, 67, 98)',
+        confirmButtonColor: 'RGB(153, 196, 210)',
+        confirmButtonText: 'Yes, log out!'
+      }).then(function() {
+        swal({
+          title: 'Bye! Thanks for visiting!',
+          // text: 'We\'ll miss you.',
+          type: 'success',
+          timer: 1100
+          }
+        );
+        //NEED TO LOG OUT
+        $state.go('landing');
+        // this.logout().then(function(res) {
+        //   alert('Am I logged out yet?');
+        // });
+      });
+    }
+  };
 
 // FIN
 });

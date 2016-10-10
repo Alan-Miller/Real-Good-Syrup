@@ -366,7 +366,10 @@ h3 {
     border-left: solid 2px RGB(255, 131, 166);
     border-radius: 12px;
     color: white;
-    cursor: pointer; }
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-family: 'Raleway', serif;
+    outline: none; }
   .login .login-text {
     max-width: 400px;
     margin: 20px;
@@ -387,7 +390,7 @@ h3 {
   overflow: hidden; }
 
 #second {
-  min-height: 700px;
+  min-height: 900px;
   background-color: RGB(155, 188, 197);
   position: relative;
   display: flex;
@@ -583,7 +586,8 @@ h3 {
   align-items: center;
   border-radius: 3px;
   position: relative;
-  bottom: 20px; }
+  bottom: 20px;
+  outline: none; }
 
 .buy-btn:hover {
   background-color: RGB(255, 208, 165);
@@ -653,7 +657,8 @@ h3 {
   color: white;
   cursor: pointer;
   font-size: 1rem;
-  background-color: transparent; }
+  background-color: transparent;
+  outline: none; }
 
 .user-main {
   height: calc(100% - 100px);
