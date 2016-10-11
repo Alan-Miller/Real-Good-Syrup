@@ -63,6 +63,7 @@
         <!-- <li ui-sref="products" class="products-nav">Bottle sizes</li> -->
         <li class="contact-nav">Contact us</li>
         <li ui-sref="login" class="login-nav"><span class="teko">log in</span></li>
+        <li class="logout-nav" ng-click="logout()">log out</li>
       </ul>
     </nav>
 
@@ -94,6 +95,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
+    <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/sweetalert2/5.2.0/sweetalert2.js"></script>
     <!-- <script type="text/javascript" src="./builds/all.js"></script> -->
     <script type="text/javascript" src="./app.js"></script>
@@ -112,3 +114,70 @@
     <script type="text/javascript" src="./js/shortenName.js"></script>
   </body>
 </html>
+
+
+
+
+
+<!--
+BACK END
+require jwt and moment
+pasted in server-side code into server.js
+edit getSafeUser function to reflect correct user information
+added TOKEN_SECRET to config file
+test in Postman
+
+to reroute certain views when not logged in:
+  paste in loginRequired code at top of app.js file
+  add resolve property only to states that require login (i.e., NOT to login state)
+
+FRONT END
+injected satellizer and into app module
+injected $authProvider into config function in app module and added $authProvider code at bottom
+make sure getUser fn in server controller is correct
+inject $auth into login controller and wherever the logout fn is
+in login controller, make sure login function is correct
+in the logout fn, use $auth.logout()
+
+
+In pgAdmin:
+  CREATE EXTENSION pgcrypto;
+
+In SQL file:
+  crypt($1, gen_salt('bf')) in place just the variable
+
+Compare password:
+  compare_password.sql
+    select password = crypt($1, password) from users where id = $2;
+-->
+
+
+<!--
+To update user with hashed password:
+  update sql:
+    update users
+    set password = crypt('j', gen_salt('bf'))
+    where id = 3
+-->
+
+
+
+<!--
+TO DO
+admin can't buy till after patron buys (maybe a non-issue if admins don't place orders)
+patron logs out on refresh but can still place order that has no id (GET MENTOR)
+.i-want div show "1 pints," etc. Always plural.
+leaves fall in front of cart
+background
+
+create user front end
+update user info front end
+fix login/logout buttons
+check off filled orders (admin)
+nothing in the user (patron) view
+media queries
+fix sql statement so admin sees total money, count of products for each user
+
+DONE
+order confirmation window
+-->

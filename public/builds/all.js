@@ -1,6 +1,17 @@
 'use strict';
 
-angular.module('syrupApp', ['ui.router']).config(function ($stateProvider, $urlRouterProvider) {
+angular.module('syrupApp', ['ui.router', 'satellizer']).config(function ($stateProvider, $urlRouterProvider, $authProvider) {
+
+  var loginRequired = ['$q', '$location', '$auth', function ($q, $location, $auth) {
+    var deferred = $q.defer();
+    if ($auth.isAuthenticated()) {
+      deferred.resolve();
+    } else {
+      $location.path('/login');
+    }
+    return deferred.promise;
+  }];
+
   $stateProvider.state('landing', {
     url: '/',
     templateUrl: './views/landing.html',
@@ -27,6 +38,9 @@ angular.module('syrupApp', ['ui.router']).config(function ($stateProvider, $urlR
     url: '/admin',
     templateUrl: './views/admin.html',
     controller: 'adminControl',
+    resolve: {
+      loginRequired: loginRequired
+    },
     views: {
       'first': {
         controller: 'adminControl',
@@ -49,6 +63,9 @@ angular.module('syrupApp', ['ui.router']).config(function ($stateProvider, $urlR
     url: '/patron',
     templateUrl: './views/patron.html',
     controller: 'patronControl',
+    resolve: {
+      loginRequired: loginRequired
+    },
     views: {
       'first': {
         controller: 'patronControl',
@@ -186,6 +203,9 @@ angular.module('syrupApp', ['ui.router']).config(function ($stateProvider, $urlR
   });
 
   $urlRouterProvider.otherwise('/');
+
+  $authProvider.loginUrl = 'http://localhost:8002/auth/login';
+  $authProvider.signupUrl = 'http://localhost:8002/auth/signup';
 });
 
 angular.module('syrupApp').directive('cartDirective', function () {
@@ -205,7 +225,7 @@ angular.module('syrupApp').directive('cartDirective', function () {
       });
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-        Add/Subtract Jars of Syrup in Cart
+        Add/subtract jars of syrup in cart
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       element.on('click', function () {
         var numJars = element.parent().parent().parent().find('.i-want').find('.num').html();
@@ -286,10 +306,6 @@ $(document).ready(function () {
     });
   });
 
-  // var gap = $('.rgs').offset().top;
-  // $('.rgs').css('transform', 'translateY(-' + gap + 'px)');
-
-
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     PARALLAX EFFECTS
       Splash section
@@ -298,11 +314,16 @@ $(document).ready(function () {
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   // var treeRoots = ($('#footer').offset().top + $('#footer').outerHeight(true)) -
   // $('.tree-right').css({'bottom': '-100%'});
+  // var bottomOfPageOffset = $('#footer').offset().top + $('#footer').outerHeight(true);
+  // $('.tree-left').css({'bottom': '-' + 2 * bottomOfPageOffset + 'px'});
+
 
   $(window).scroll(function () {
     var winScroll = $(this).scrollTop();
     var navOffset = nav.offset().top;
     var bottomOfPageOffset = $('#footer').offset().top + $('#footer').outerHeight(true);
+    // console.log(bottomOfPageOffset);
+    var windowHeight = $(window).height();
 
     // SPLASH SECTION
     var splashOpacity = (navOffset - winScroll) / navOffset;
@@ -325,12 +346,16 @@ $(document).ready(function () {
     $('.snowflake-three').css({ 'transform': 'translate(0px, ' + winScroll * 0.65 + '%)' + leafSpin });
 
     // TREES
-    $('.tree-left').css({ 'transform': 'translate(0px, ' + winScroll / -20 + '%)' });
-    $('.tree-right').css({ 'transform': 'translate(0px, ' + winScroll / -20 + '%)' });
+    $('.tree-left').css({ 'transform': 'translate(0px, ' + winScroll * -1.8 + 'px)' });
+    $('.tree-right').css({ 'transform': 'translate(0px, ' + winScroll * -1.8 + 'px)' });
     $('.tree-left-back').css({ 'transform': 'translate(0px, ' + winScroll / -30 + '%)' });
     $('.tree-right-back').css({ 'transform': 'translate(0px, ' + winScroll / -30 + '%)' });
     $('.tree-deep').css({ 'transform': 'translate(0px, ' + winScroll / -40 + '%)' });
-    $('.hill').css({ 'transform': 'translate(0px, ' + winScroll / -50 + '%)' });
+
+    // HILLS
+    $('.hill-fg').css({ 'transform': 'translate(0px, ' + winScroll / -50 + '%)' });
+    $('.hill-bg').css({ 'transform': 'translate(0px, ' + winScroll / -75 + '%)' });
+    $('.hill-dbg').css({ 'transform': 'translate(0px, ' + winScroll / -95 + '%)' });
 
     // $('.hill').css({'transform': 'translate(0px, ' + (bottomOfPageOffset + winScroll) / -40 + '%)'});
     // $('.tree-center').css({'transform': 'translate(0px, ' + (bottomOfPageOffset + winScroll) / -30 + '%)'});
@@ -347,18 +372,11 @@ $(document).ready(function () {
 
   });
 
-  // $(window).scroll(function() {
-  //   var winScroll = $(this).scrollTop();
-  //   $('.vader').css({'transform': 'rotate(-' + winScroll / 40 + 'deg)'});
-  //   $('.left-branch').css({'transform': 'translate(-' + winScroll / 80 + '%, 0px)'});
-  //   $('.right-branch').css({'transform' :'translate(' + winScroll / 80 + '%, 0px)'});
-  // });
-
-  // alert('okay')
-  //
-  // $('.past-orders').on('click', function() {
-  //   alert('click');
-  // });
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    OTHER SCRIPTS
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  // var gap = $('.rgs').offset().top;
+  // $('.rgs').css('transform', 'translateY(-' + gap + 'px)');
 
 });
 
@@ -367,9 +385,10 @@ angular.module('syrupApp').directive('shortenName', function () {
     restrict: 'AE',
     link: function link(scope, element, attribute) {
 
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
         Shorten product name
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+          Runs regex on db name
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       window.setTimeout(function () {
         var productName = element.html();
         productName = productName.replace(/\s\(\d\d?\soz\.\)/g, '').toLowerCase();
@@ -381,7 +400,15 @@ angular.module('syrupApp').directive('shortenName', function () {
 
 angular.module('syrupApp').controller('aboutControl', function ($scope) {});
 
-angular.module('syrupApp').controller('adminControl', function ($scope, rgsService, $state) {
+angular.module('syrupApp').controller('adminControl', function ($scope, rgsService, $state, $auth) {
+
+  $('body').addClass('no-scroll');
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    USERS
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  $scope.user = rgsService.user;
+  // rgsService.userId = $scope.user.id;
 
   rgsService.getUsers().then(function (response) {
     $scope.users = response;
@@ -390,11 +417,32 @@ angular.module('syrupApp').controller('adminControl', function ($scope, rgsServi
         eachUser.admin = 'admin';
       } else eachUser.admin = 'not an admin';
     });
-    console.log(response);
+    // console.log(response);
   });
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    ORDERS
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  $scope.getAllOrders = function () {
+    rgsService.getAllOrders().then(function (response) {
+      $scope.orders = response;
+    });
+  };
+  $scope.getAllOrders();
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    LOGOUT
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  // $scope.logout = function() {
+  //   rgsService.logout().then(function(res) {
+  //     rgsService.confirmLogout(res);
+  //   });
+  // };
+
   $scope.logout = function () {
-    rgsService.logout().then(function (res) {
+    $auth.logout().then(function (res) {
+      $('body').removeClass('no-scroll');
+      $state.go('landing');
       rgsService.confirmLogout(res);
     });
   };
@@ -428,12 +476,19 @@ angular.module('syrupApp').controller('adminControl', function ($scope, rgsServi
 
 angular.module('syrupApp').controller('cartControl', function ($scope, rgsService) {
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    PRODUCTS
+      Get all products
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   rgsService.getProducts().then(function (response) {
     $scope.products = response;
   });
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-    PLACE ORDER
+    ORDERS
+      Place order
+        - Creates order object; key is based on product id and value is price
+      Runs confirmOrder fn in service
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.placeOrder = function () {
     var orderObject = {};
@@ -462,7 +517,8 @@ angular.module('syrupApp').controller('cartControl', function ($scope, rgsServic
     });
 
     console.log(orderObject);
-    rgsService.placeOrder(orderObject);
+    rgsService.checkUserIsLoggedIn(orderObject);
+    // rgsService.confirmOrder(orderObject);
   };
 
   /*
@@ -517,68 +573,102 @@ angular.module('syrupApp').controller('contactControl', function ($scope) {});
 
 angular.module('syrupApp').controller('landingControl', function ($scope) {});
 
-angular.module('syrupApp').controller('loginControl', function ($scope, rgsService, $state) {
+angular.module('syrupApp').controller('loginControl', function ($scope, rgsService, $state, $auth) {
 
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  AUTH
-    Auth functions
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    AUTHENTICATION
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  // $scope.loginLocal = function(username, password) {
+  //   // $scope.username = username;
+  //   rgsService.loginLocal({
+  //     username: username,
+  //     password: password
+  //   })
+  //   .then(function(user) { // Here, response is the user sent from /auth/local endpoint
+  //     rgsService.user = user;
+  //     checkUser(user.admin); // Passes admin status into checkUser fn below
+  //   });
+  // };
+
+
+  //login w/jsonwebtokens
   $scope.loginLocal = function (username, password) {
-    // $scope.username = username;
-    rgsService.loginLocal({
+    $auth.login({
       username: username,
       password: password
-    }).then(function (user) {
-      // Here, response is the user sent from /auth/local endpoint
-      rgsService.user = user;
-      checkUser(user.admin); // Passes admin status into checkUser fn below
-    });
+    }).then(function (response) {
+      if (response.status === 200) {
+        $auth.setToken(response);
+        rgsService.user = response.data.user;
+        var user = response.data.user;
+        checkUser(user.admin);
+      }
+    }).catch(function (response) {});
   };
 
   function checkUser(isAdmin) {
     rgsService.getUser().then(function (user) {
-      // console.log('Here is something: ' + $scope.admin);
       if (user && isAdmin) {
         $state.go('admin');
-        // console.log($scope.username[0].toUpperCase() + $scope.username.slice(1).toLowerCase() + ' is logged in');
+        window.setTimeout(function () {
+          $('#first').scrollToStateContainer();
+        });
+        // $('body').addClass('no-scroll');
       } else if (user) {
         $state.go('patron');
       } else {
         $scope.loginHeading = 'Wrong name or password. Try again.';
-        console.log('Can\'t log in');
       }
     });
   }
-  // getUser();
 
+  $scope.logout = function () {
+    $auth.logout().then(function (res) {
+      $('body').removeClass('no-scroll');
+      $state.go('landing');
+      rgsService.confirmLogout(res);
+    });
+  };
 });
 
-angular.module('syrupApp').controller('patronControl', function ($scope, rgsService, $state) {
+angular.module('syrupApp').controller('patronControl', function ($scope, rgsService, $state, $auth) {
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    USERS
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.user = rgsService.user;
   rgsService.userId = $scope.user.id;
+  console.log($scope.user);
+  console.log(rgsService.userId);
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    ORDERS
+      Get this user's orders
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.getUserOrders = function () {
     rgsService.getUserOrders($scope.user.id).then(function (response) {
-      // console.log(response);
-      console.log('scope.user.id: ' + $scope.user.id);
-      $scope.things = response;
-      // $scope.thing.date = new Date($scope.thing.date);
-      // $scope.date = 'date';
+      $scope.orders = response;
     });
   };
   $scope.getUserOrders();
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    LOGOUT
+      Runs confirmLogout fn
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  // $scope.logout = function() {
+  //   rgsService.logout().then(function(res) {
+  //     rgsService.confirmLogout(res);
+  //   });
+  // };
+
+
   $scope.logout = function () {
-    rgsService.logout().then(function (res) {
+    $auth.logout().then(function (res) {
+      $state.go('landing');
       rgsService.confirmLogout(res);
     });
   };
-
-  // $scope.logout = function() {
-  //   rgsService.confirmLogout();
-  // };
-
 
   // FIN
 });
@@ -587,25 +677,25 @@ angular.module('syrupApp').controller('processControl', function ($scope) {});
 
 angular.module('syrupApp').controller('productsControl', function ($scope, rgsService) {
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    PRODUCTS
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   rgsService.getProducts().then(function (response) {
     $scope.products = response;
-    // console.log(response);
   });
 });
 
 angular.module('syrupApp').service('rgsService', function ($http, $state) {
 
   var port = 8002;
+  var serviceScope = this;
+  this.user = { userId: null };
 
-  this.getProducts = function () {
-    return $http({
-      method: 'GET',
-      url: 'http://localhost:' + port + '/api/products'
-    }).then(function (response) {
-      return response.data;
-    });
-  };
-
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    USERS
+      Get all users (admin)
+      Get this user's info
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   this.getUsers = function () {
     return $http({
       method: 'GET',
@@ -624,6 +714,36 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
     });
   };
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    PRODUCTS
+      Get all products
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  this.getProducts = function () {
+    return $http({
+      method: 'GET',
+      url: 'http://localhost:' + port + '/api/products'
+    }).then(function (response) {
+      return response.data;
+    });
+  };
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    ORDERS
+      getAllOrders: show all orders (admin)
+      getUserOrders: get this user's orders
+      checkUserIsLoggedIn: check user is logged in, then call confirmOrder()
+      confirmOrder: check order is not empty and confirm order, then call placeOrder()
+      placeOrder: post order to db (and reset order to zeroes)
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  this.getAllOrders = function () {
+    return $http({
+      method: 'GET',
+      url: 'http://localhost:' + port + '/api/orders'
+    }).then(function (response) {
+      return response.data;
+    });
+  };
+
   this.getUserOrders = function (id) {
     // console.log('ID is: ' + id);
     return $http({
@@ -634,6 +754,146 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
     });
   };
 
+  this.checkUserIsLoggedIn = function (orderObj) {
+    // alert(user.id);
+    console.log('LOOK!:', orderObj.userId);
+    if (!orderObj.userId) {
+      swal({
+        title: 'Oops...',
+        text: 'Please log in before ordering!',
+        // imageUrl: 'https://b.thumbs.redditmedia.com/oQFn0MTVrjaz2rYL2kFIif6sH4S9B1WBplgn-NuuQMg.jpg',
+        // imageWidth: 300,
+        // imageHeight: 200,
+        type: 'error'
+      });
+    } else {
+      this.confirmOrder(orderObj);
+    }
+  };
+
+  this.confirmOrder = function (orderObj) {
+    if (!orderObj.product1 && !orderObj.product2 && !orderObj.product3) {
+      swal({
+        title: 'Your order is empty!',
+        text: 'Click the syrup jar icon (+/-) to add to your order',
+        type: 'error'
+      });
+    } else {
+      var quarts,
+          pints,
+          halfPints,
+          total = 0;
+      console.log(orderObj.product1, orderObj.product2, orderObj.product3);
+      if (!isNaN(orderObj.product1)) {
+        quarts = orderObj.product1 / 22 + ' quarts ';
+        // quarts === 1 ? quarts = ' quart, ' : quarts = ' quarts, ';
+        quarts === 1 ? quarts = quarts.replace('quarts', 'quart') : quarts;
+        total += orderObj.product1;
+      } else quarts = 0;
+      if (!isNaN(orderObj.product2)) {
+        pints = orderObj.product2 / 12 + ' pints ';
+        // pints === 1 ? pints = ' pint, ' : pints = ' pints, ';
+        total += orderObj.product2;
+      } else pints = 0;
+      if (!isNaN(orderObj.product3)) {
+        halfPints = orderObj.product3 / 8 + ' half pints ';
+        // halfPints === 1 ? halfPints = ' half pint, ' : halfPints = ' half pints ';
+        total += orderObj.product3;
+      } else halfPints = 0;
+      swal({
+        title: 'Is this your order?',
+        text: quarts + ',' + pints + ', and ' + halfPints + 'for $' + total + '.00?',
+        type: 'question',
+        showCancelButton: true,
+        cancelButtonColor: 'RGB(217, 67, 98)',
+        confirmButtonColor: 'RGB(153, 196, 210)',
+        confirmButtonText: 'Yes, send me the syrup!'
+      }).then(function () {
+        swal({
+          title: 'Thank you!',
+          text: 'Your syrup will arrive soon',
+          type: 'success',
+          timer: 2100
+        });
+        //NEED TO LOG OUT
+        serviceScope.placeOrder(orderObj);
+        // $state.go('patron');
+      });
+    }
+  };
+
+  this.placeOrder = function (orderObj) {
+    $('.num').html(0); // Reset numbers to zero (so second order is not placed by accident)
+    return $http({
+      method: 'POST',
+      data: orderObj,
+      url: '/api/orders'
+    });
+  };
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    AUTHENTICATION
+      Auth functions
+      Mostly pasted in from Brett's code, with Josh's tweaks
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  // this.loginLocal = function(credentials) {
+  //   return $http({
+  //     method: "POST",
+  //     url: 'http://localhost:' + port + '/auth/local',
+  //     data: credentials
+  //   })
+  //   .then(function(res) {
+  //     return res.data;
+  //   })
+  //   .catch(function(err) {
+  //     console.log('service loginLocal function caught error logging in!', err);
+  //   });
+  // };
+  //
+  // this.getUser = function() {
+  //   return $http({
+  //     method: 'GET',
+  //     url: 'http://localhost:' + port + '/auth/me'
+  //   })
+  //   .then(function(res) {
+  //     // console.log(res);
+  //     return res.data;
+  //   })
+  //   .catch(function(err) {
+  //     console.log(err);
+  //   });
+  // };
+  //
+  // this.logout = function() {
+  //   return $http({
+  //     method: 'GET',
+  //     url: 'http://localhost:' + port + '/auth/logout'
+  //   }).then(function(res) {
+  //     return res.data;
+  //   }).catch(function(err) {
+  //     console.log(err);
+  //   });
+  // };
+
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  this.getUser = function () {
+    return $http({
+      method: 'GET',
+      url: 'http://localhost:' + port + '/api/me'
+    }).then(function (res) {
+      // console.log(res);
+      return res.data;
+    }).catch(function (err) {
+      console.log(err);
+    });
+  };
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    Confirm logout with Sweet Alerts fn
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   this.confirmLogout = function (res) {
     if (res) {
       swal({
@@ -658,55 +918,6 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
         // });
       });
     }
-  };
-
-  this.user = { userId: null };
-  this.placeOrder = function (orderObj) {
-    return $http({
-      method: 'POST',
-      data: orderObj,
-      url: '/api/orders'
-    });
-  };
-
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-    AUTH
-      Auth functions
-      Mostly pasted in from Brett's code, with Josh's tweaks
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  this.loginLocal = function (credentials) {
-    return $http({
-      method: "POST",
-      url: 'http://localhost:' + port + '/auth/local',
-      data: credentials
-    }).then(function (res) {
-      return res.data;
-    }).catch(function (err) {
-      console.log('service loginLocal function caught error logging in!', err);
-    });
-  };
-
-  this.getUser = function () {
-    return $http({
-      method: 'GET',
-      url: 'http://localhost:' + port + '/auth/me'
-    }).then(function (res) {
-      // console.log(res);
-      return res.data;
-    }).catch(function (err) {
-      console.log(err);
-    });
-  };
-
-  this.logout = function () {
-    return $http({
-      method: 'GET',
-      url: 'http://localhost:' + port + '/auth/logout'
-    }).then(function (res) {
-      return res.data;
-    }).catch(function (err) {
-      console.log(err);
-    });
   };
 
   // FIN

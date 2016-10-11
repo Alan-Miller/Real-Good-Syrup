@@ -1,4 +1,10 @@
-angular.module('syrupApp').controller('adminControl', function($scope, rgsService, $state) {
+angular.module('syrupApp').controller('adminControl', function($scope, rgsService, $state, $auth) {
+
+  window.setTimeout(function() {
+    $('#first').scrollToStateContainer(); // Scrolls up again before locking position, in case window is scrolled then refreshed
+  });
+  $('body').addClass('no-scroll');
+  $('#main-nav').fadeOut('fast');
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
@@ -21,20 +27,27 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.getAllOrders = function() {
     rgsService.getAllOrders().then(function(response) {
-      // console.log(response);
-      // console.log('scope.user.id: ' + $scope.user.id);
       $scope.orders = response;
-      console.log('response:', response);
     });
   };
   $scope.getAllOrders();
 
 
+
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     LOGOUT
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  // $scope.logout = function() {
+  //   rgsService.logout().then(function(res) {
+  //     rgsService.confirmLogout(res);
+  //   });
+  // };
+
   $scope.logout = function() {
-    rgsService.logout().then(function(res) {
+    $auth.logout().then(function(res) {
+      $('#main-nav').fadeIn('slow');
+      $('body').removeClass('no-scroll');
+      $state.go('landing');
       rgsService.confirmLogout(res);
     });
   };

@@ -1,10 +1,13 @@
-angular.module('syrupApp').controller('patronControl', function($scope, rgsService, $state) {
+angular.module('syrupApp').controller('patronControl', function($scope, rgsService, $state, $auth) {
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.user = rgsService.user;
   rgsService.userId = $scope.user.id;
+  // console.log($scope.user);
+  // console.log(rgsService.userId);
+
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     ORDERS
@@ -12,8 +15,6 @@ angular.module('syrupApp').controller('patronControl', function($scope, rgsServi
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.getUserOrders = function() {
     rgsService.getUserOrders($scope.user.id).then(function(response) {
-      // console.log(response);
-      console.log('scope.user.id: ' + $scope.user.id);
       $scope.orders = response;
     });
   };
@@ -23,12 +24,20 @@ angular.module('syrupApp').controller('patronControl', function($scope, rgsServi
     LOGOUT
       Runs confirmLogout fn
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  // $scope.logout = function() {
+  //   rgsService.logout().then(function(res) {
+  //     rgsService.confirmLogout(res);
+  //   });
+  // };
+
+
+
   $scope.logout = function() {
-    rgsService.logout().then(function(res) {
+    $auth.logout().then(function(res) {
+      $state.go('landing');
       rgsService.confirmLogout(res);
     });
   };
-
 
 
 // FIN

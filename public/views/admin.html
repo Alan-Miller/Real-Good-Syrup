@@ -9,11 +9,11 @@
     <span class="order-section">
       <span class="big-red">Users</span>
       <!-- <h3>Users</h3> -->
-      <ul ng-repeat="user in users">
-        <li>{{user.id}}
-          <li>{{user.firstname}} {{user.lastname}}</li>
-          <li>{{user.address}} {{user.zip}}</li>
-          <li>{{user.admin}}</li>
+      <ul class="all-users">
+        <li ng-repeat="user in users | orderBy : 'id'">{{user.id}}
+          <section>{{user.firstname}} {{user.lastname}}</section>
+          <section>{{user.address}} {{user.zip}}</section>
+          <section>{{user.admin}}</section>
         </li>
       </ul>
     </span>
@@ -22,14 +22,12 @@
       <span class="big-red">Orders</span>
       <!-- <h3>Users</h3> -->
       <ul class="past-orders">
-        <li ng-repeat="order in orders">
-          <div class="order">
+        <li ng-repeat="order in orders | orderBy : 'date_priority'" ng-click="test(order)">
             <!-- <section class="order">{{order.id}}</section> -->
-            <section>{{order.firstname}} {{order.lastname}}</section>
+            <section>{{order.date_priority | date: "MMMM d, yyyy"}}</section>
+            <section>{{order.firstname}} {{order.lastname}} <span class="order-id">id: {{order.id}}</span></section>
             <section>{{order.name}}</section>
-            <section>{{order.price_paid}}</section>
-            <section>{{order.date | date: "medium"}}</section>
-          </div>
+            <section>{{order.num_products}} items</section>
         </li>
       </ul>
     </span>

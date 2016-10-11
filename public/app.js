@@ -1,5 +1,17 @@
-angular.module('syrupApp', ['ui.router'])
-.config(function($stateProvider, $urlRouterProvider) {
+angular.module('syrupApp', ['ui.router', 'satellizer'])
+.config(function($stateProvider, $urlRouterProvider, $authProvider) {
+
+  var loginRequired = ['$q', '$location', '$auth', function($q, $location, $auth) {
+        var deferred = $q.defer();
+        if ($auth.isAuthenticated()) {
+          deferred.resolve();
+        } else {
+          $location.path('/login');
+        }
+        return deferred.promise;
+      }];
+
+
    $stateProvider
      .state('landing', {
        url: '/',
@@ -28,6 +40,9 @@ angular.module('syrupApp', ['ui.router'])
        url: '/admin',
        templateUrl: './views/admin.html',
        controller: 'adminControl',
+       resolve: {
+         loginRequired: loginRequired
+       },
        views: {
          'first': {
            controller: 'adminControl',
@@ -51,6 +66,9 @@ angular.module('syrupApp', ['ui.router'])
        url: '/patron',
        templateUrl: './views/patron.html',
        controller: 'patronControl',
+       resolve: {
+         loginRequired: loginRequired
+       },
        views: {
          'first': {
            controller: 'patronControl',
@@ -192,4 +210,7 @@ angular.module('syrupApp', ['ui.router'])
      });
 
    $urlRouterProvider.otherwise('/');
+
+   $authProvider.loginUrl = 'http://localhost:8002/auth/login';
+   $authProvider.signupUrl = 'http://localhost:8002/auth/signup';
 });

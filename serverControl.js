@@ -26,11 +26,16 @@ module.exports = {
       res.status(200).json(user);
     });
   },
-  updateUser: function(req, res) {
-    db.update_user([req.params.id, req.body.firstname, req.body.lastname, req.body.address, req.body.zip], function(err, user) {
-      res.status(200).json(user);
-    });
-  },
+  // postUser: function(req, res) {
+  //   db.post_user([req.body.firstname, req.body.lastname, req.body.address, req.body.zip, req.body.username, req.body.password], function(err, user) {
+  //     res.status(200).json(user);
+  //   });
+  // },
+  // updateUser: function(req, res) {
+  //   db.update_user([req.params.id, req.body.firstname, req.body.lastname, req.body.address, req.body.zip], function(err, user) {
+  //     res.status(200).json(user);
+  //   });
+  // },
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     PRODUCTS
@@ -91,7 +96,7 @@ module.exports = {
       db.post_ordered_products(userAndProducts, function(err, order) {
         // res.status(200).json(order);
         db.delete_null_rows(function(err) {
-          res.status(200).end();
+          res.status(200).end(); // Only one of these db functions should have a send (otherwise, there is an error regarding sending multiple times with the same header. The value of nesting is that each will wait till the previous is successful.)
         });
       });
     });

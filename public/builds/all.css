@@ -80,7 +80,7 @@ table {
   font-family: 'Bevan', cursive; }
 
 .big-red {
-  color: RGB(217, 67, 98);
+  color: RGB(204, 70, 77);
   font-size: 1.3em;
   margin: 0 4px; }
 
@@ -226,13 +226,14 @@ Parallax trees
   top: -950px;
   right: 17%; }
 
-body.noScroll {
+body.no-scroll {
   overflow: hidden; }
 
 html {
   color: RGB(255, 255, 222);
   font-family: 'Raleway', sans-serif;
-  background-color: #1c1622; }
+  background-color: #1c1622;
+  outline: none; }
 
 body {
   overflow: auto; }
@@ -308,17 +309,18 @@ h3 {
   background-size: 720px; }
 
 .small-logo {
-  color: RGB(217, 67, 98);
+  color: RGB(204, 70, 77);
   position: absolute;
   font-size: .85em;
-  left: 32px; }
+  left: 32px;
+  top: 21px; }
   .small-logo span:before {
     content: 'Real';
     font-family: 'Galada', cursive;
     position: absolute;
     top: -45%;
     left: -47%;
-    border: thin solid RGB(217, 67, 98);
+    border: thin solid RGB(204, 70, 77);
     border-radius: 50%;
     height: 44px;
     width: 44px;
@@ -353,13 +355,13 @@ h3 {
     max-width: 275px;
     display: flex;
     flex-direction: column;
-    outline-color: RGB(217, 67, 98);
-    color: RGB(217, 67, 98);
+    outline-color: RGB(204, 70, 77);
+    color: RGB(204, 70, 77);
     outline-width: medium; }
   .login .login-btn {
     margin: 12px;
     padding: 12px;
-    background-color: RGB(217, 67, 98);
+    background-color: RGB(204, 70, 77);
     border-top: solid 2px RGB(255, 131, 166);
     border-right: solid 2px RGB(121, 38, 55);
     border-bottom: solid 2px RGB(121, 38, 55);
@@ -390,7 +392,7 @@ h3 {
   overflow: hidden; }
 
 #second {
-  min-height: 900px;
+  min-height: 700px;
   background-color: RGB(155, 188, 197);
   position: relative;
   display: flex;
@@ -429,7 +431,7 @@ h3 {
 
 #third h2, #contact h2, #admin h2, #about h2 {
   font-size: 2.7rem;
-  color: RGB(217, 67, 98);
+  color: RGB(204, 70, 77);
   position: relative;
   left: -36px;
   padding-bottom: 17px;
@@ -460,7 +462,7 @@ h3 {
 #cart {
   position: relative;
   color: #1c1622;
-  z-index: 32;
+  z-index: 34;
   display: flex;
   flex-direction: column;
   align-items: center; }
@@ -508,7 +510,7 @@ h3 {
     user-select: none; }
   .cart-adder .add-sub:after {
     content: '';
-    background-color: RGB(217, 67, 98);
+    background-color: RGB(204, 70, 77);
     height: 18px;
     width: 18px;
     border-radius: 3px 3px 0 0;
@@ -520,7 +522,7 @@ h3 {
     transform: translateX(-50%); }
   .cart-adder .add-sub:before {
     content: '';
-    border: 5px solid RGB(217, 67, 98);
+    border: 5px solid RGB(204, 70, 77);
     height: 18px;
     width: 11px;
     border-radius: 11px;
@@ -532,7 +534,7 @@ h3 {
   .cart-adder .add-sub-padding {
     padding: 14px 0; }
   .cart-adder .sub {
-    background-color: RGB(217, 67, 98);
+    background-color: RGB(204, 70, 77);
     cursor: pointer;
     border-radius: 20px 20px 0 0;
     border-left: 4px solid RGB(255, 157, 162);
@@ -549,8 +551,8 @@ h3 {
   .cart-adder .add {
     background-color: #372d3b;
     border-left: 4px solid RGB(255, 157, 162);
-    border-right: 4px solid RGB(217, 67, 98);
-    border-bottom: 4px solid RGB(217, 67, 98);
+    border-right: 4px solid RGB(204, 70, 77);
+    border-bottom: 4px solid RGB(204, 70, 77);
     cursor: pointer;
     border-radius: 0 0 12px 12px;
     position: relative; }
@@ -574,7 +576,7 @@ h3 {
   cursor: pointer; }
 
 .buy-btn {
-  background-color: RGB(217, 67, 98);
+  background-color: RGB(204, 70, 77);
   width: 200px;
   height: 50px;
   border: medium solid white;
@@ -591,7 +593,31 @@ h3 {
 
 .buy-btn:hover {
   background-color: RGB(255, 208, 165);
-  color: RGB(217, 67, 98); }
+  color: RGB(204, 70, 77); }
+
+.buy-btn:before {
+  content: '';
+  background-image: url("../img/maple-leaf-small.png");
+  background-size: 30px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: -44px;
+  top: -28px;
+  height: 100px;
+  width: 100px; }
+
+.buy-btn:after {
+  content: '';
+  background-image: url("../img/maple-leaf-small.png");
+  background-size: 30px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: -111px;
+  top: -28px;
+  height: 100px;
+  width: 100px; }
 
 .product-id {
   font-size: 4.2em;
@@ -610,7 +636,7 @@ h3 {
   height: 100px;
   width: 100%;
   padding: 30px 100px;
-  border-bottom: dotted thin RGB(217, 67, 98); }
+  border-bottom: dotted thin RGB(204, 70, 77); }
 
 #patron, #admin {
   position: absolute;
@@ -628,7 +654,7 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: dotted thin RGB(217, 67, 98);
+  border-bottom: dotted thin RGB(204, 70, 77);
   height: 100px;
   width: 100vw;
   position: absolute;
@@ -660,6 +686,17 @@ h3 {
   background-color: transparent;
   outline: none; }
 
+.logout-nav {
+  color: #372d3b;
+  outline: none;
+  margin: 12px;
+  cursor: pointer;
+  font-family: 'Teko', sans-serif;
+  position: absolute;
+  font-size: .85em;
+  right: 132px;
+  top: 24px; }
+
 .user-main {
   height: calc(100% - 100px);
   color: black;
@@ -685,6 +722,26 @@ h3 {
 .past-orders {
   list-style-type: decimal; }
   .past-orders li {
+    margin: 10px;
+    padding: 10px;
+    background-color: RGB(255, 132, 77); }
+    .past-orders li section ~ section {
+      margin: 4px 0;
+      font-size: .9rem;
+      position: relative;
+      left: 12px; }
+    .past-orders li .order-id {
+      color: RGB(204, 70, 77); }
+
+.past-orders li:nth-child(even) {
+  background-color: RGB(204, 70, 77);
+  border-radius: 2px; }
+  .past-orders li:nth-child(even) .order-id {
+    color: RGB(255, 132, 77); }
+
+.all-users {
+  list-style: none; }
+  .all-users li {
     margin: 10px; }
 
 #process, #faq, #contact {

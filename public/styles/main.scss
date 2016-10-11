@@ -1,8 +1,7 @@
-@import "../styles/reset";
-@import "../styles/fonts";
-@import "../styles/trees";
-
-$lightred: RGB(217, 67, 98);
+$maplered: RGB(204, 70, 77);
+// $lightred: RGB(217, 67, 98);
+$mapleorange: RGB(255, 132, 77);
+$lightred: $maplered;
 $lightbrown: rgb(55, 45, 59);
 $darkbrown: rgb(28, 22, 34);
 $beige: RGB(255, 255, 222);
@@ -13,7 +12,12 @@ $first-section-height: calc(100vh - 70px);
 $user-nav-height: 100px;
 $user-main-height: calc(100% - 100px);
 
-body.noScroll {
+@import "../styles/reset";
+@import "../styles/fonts";
+@import "../styles/trees";
+
+
+body.no-scroll {
   overflow: hidden;
 }
 
@@ -21,6 +25,7 @@ html {
   color: $beige;
   font-family: 'Raleway', sans-serif;
   background-color: $darkbrown;
+  outline: none;
   // overflow: hidden;
 }
 body {
@@ -110,6 +115,7 @@ h3 {
   position: absolute;
   font-size: .85em;
   left: 32px;
+  top: 21px;
   span:before {
     content: 'Real';
     font-family: 'Galada', cursive;
@@ -201,7 +207,7 @@ h3 {
 }
 
 #second {
-  min-height: 900px;
+  min-height: 700px;
   background-color: $sky;
   // background-repeat: repeat-y;
   position: relative;
@@ -294,7 +300,7 @@ h3 {
   position: relative;
   color: $darkbrown;
   // background-color: black;
-  z-index: 32;
+  z-index: 34;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -443,6 +449,30 @@ h3 {
   background-color: RGB(255, 208, 165);
   color: $lightred;
 }
+.buy-btn:before {
+  content: '';
+  background-image: url('../img/maple-leaf-small.png');
+  background-size: 30px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: -44px;
+  top: -28px;
+  height: 100px;
+  width: 100px;
+}
+.buy-btn:after {
+  content: '';
+  background-image: url('../img/maple-leaf-small.png');
+  background-size: 30px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: -111px;
+  top: -28px;
+  height: 100px;
+  width: 100px;
+}
 
 
 .product-id {
@@ -516,6 +546,38 @@ h3 {
   background-color: transparent;
   outline: none;
 }
+.logout-nav {
+  // max-height: 42px;
+  // padding: 12px;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // border: solid 2px white;
+  // border-radius: 39px;
+  color: $lightbrown;
+  // cursor: pointer;
+  // font-size: 1rem;
+  // background-color: transparent;
+  outline: none;
+
+  margin: 12px;
+  // padding: 12px;
+  // background-color: $lightred;
+  // border-top: solid 2px RGB(255, 131, 166);
+  // border-right: solid 2px RGB(121, 38, 55);
+  // border-bottom: solid 2px RGB(121, 38, 55);
+  // border-left: solid 2px RGB(255, 131, 166);
+  // border-radius: 12px;
+  // color: white;
+  cursor: pointer;
+  // font-size: 1.2rem;
+  font-family: 'Teko', sans-serif;
+  // display: none;
+  position: absolute;
+  font-size: .85em;
+  right: 132px;
+  top: 24px;
+}
 
 .user-main {
   height: $user-main-height;
@@ -546,6 +608,32 @@ h3 {
 
 .past-orders {
   list-style-type: decimal;
+  li {
+    margin: 10px;
+    padding: 10px;
+    background-color: $mapleorange;
+    section ~ section {
+      margin: 4px 0;
+      font-size: .9rem;
+      position: relative;
+      left: 12px;
+    }
+    .order-id {
+      color: $maplered;
+      // font-size: .7rem;
+    }
+  }
+}
+.past-orders li:nth-child(even) {
+  background-color: $maplered;
+  border-radius: 2px;
+  .order-id {
+    color: $mapleorange
+  }
+}
+
+.all-users {
+  list-style: none;
   li {
     margin: 10px;
   }

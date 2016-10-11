@@ -1,6 +1,9 @@
 angular.module('syrupApp').service('rgsService', function($http, $state) {
 
   var port = 8002;
+  var serviceScope = this;
+  this.user = {userId: null};
+
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
@@ -41,10 +44,11 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     ORDERS
-      Get all orders
-      Get this user's orders
-      Confirm order using Sweet Alerts fn which then calls placeOrder fn
-      Post order to db
+      getAllOrders: show all orders (admin)
+      getUserOrders: get this user's orders
+      checkUserIsLoggedIn: check user is logged in, then call confirmOrder()
+      confirmOrder: check order is not empty and confirm order, then call placeOrder()
+      placeOrder: post order to db (and reset order to zeroes)
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   this.getAllOrders = function() {
     return $http({
@@ -65,12 +69,52 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     });
   };
 
-  var serviceScope = this;
-  this.confirmOrder = function(orderObj) {
-    if (orderObj) {
+  this.checkUserIsLoggedIn = function(orderObj) {
+    // alert(user.id);
+    if (!orderObj.userId) {
       swal({
-        title: 'Place order?',
-        text: "This will finalize your order",
+        title: 'Oops...',
+        text: 'Please log in before ordering!',
+        // imageUrl: 'https://b.thumbs.redditmedia.com/oQFn0MTVrjaz2rYL2kFIif6sH4S9B1WBplgn-NuuQMg.jpg',
+        // imageWidth: 300,
+        // imageHeight: 200,
+        type: 'error'
+      });
+    }
+    else {
+      this.confirmOrder(orderObj);
+    }
+  };
+
+  this.confirmOrder = function(orderObj) {
+    if (!orderObj.product1 && !orderObj.product2 && !orderObj.product3) {
+      swal({
+        title: 'Your order is empty!',
+        text: 'Click the syrup jar icon (+/-) to add to your order',
+        type: 'error'
+        }
+      );
+    }
+    else {
+      var quarts, pints, halfPints, total = 0;
+      if (!isNaN(orderObj.product1)) {
+        quarts = orderObj.product1 / 22;
+        quarts === 1 ? quarts += ' quart' : quarts += ' quarts';
+        total += orderObj.product1;
+      } else quarts = 0;
+      if (!isNaN(orderObj.product2)) {
+        pints = orderObj.product2 / 12;
+        pints === 1 ? pints += ' pint' : pints += ' pints';
+        total += orderObj.product2;
+      } else pints = 0;
+      if (!isNaN(orderObj.product3)) {
+        halfPints = orderObj.product3 / 8;
+        halfPints === 1 ? halfPints += ' half pint' : halfPints += ' half pints';
+        total += orderObj.product3;
+      } else halfPints = 0;
+      swal({
+        title: 'Is this your order?',
+        text: quarts + ', ' + pints + ', and ' + halfPints + ' for $' + total + '.00?',
         type: 'question',
         showCancelButton: true,
         cancelButtonColor: 'RGB(217, 67, 98)',
@@ -91,8 +135,8 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     }
   };
 
-  this.user = {userId: null};
   this.placeOrder = function(orderObj) {
+    $('.num').html(0); // Reset numbers to zero (so second order is not placed by accident)
     return $http({
       method: 'POST',
       data: orderObj,
@@ -107,24 +151,54 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     Auth functions
     Mostly pasted in from Brett's code, with Josh's tweaks
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  this.loginLocal = function(credentials) {
-    return $http({
-      method: "POST",
-      url: 'http://localhost:' + port + '/auth/local',
-      data: credentials
-    })
-    .then(function(res) {
-      return res.data;
-    })
-    .catch(function(err) {
-      console.log('service loginLocal function caught error logging in!', err);
-    });
-  };
+  // this.loginLocal = function(credentials) {
+  //   return $http({
+  //     method: "POST",
+  //     url: 'http://localhost:' + port + '/auth/local',
+  //     data: credentials
+  //   })
+  //   .then(function(res) {
+  //     return res.data;
+  //   })
+  //   .catch(function(err) {
+  //     console.log('service loginLocal function caught error logging in!', err);
+  //   });
+  // };
+  //
+  // this.getUser = function() {
+  //   return $http({
+  //     method: 'GET',
+  //     url: 'http://localhost:' + port + '/auth/me'
+  //   })
+  //   .then(function(res) {
+  //     // console.log(res);
+  //     return res.data;
+  //   })
+  //   .catch(function(err) {
+  //     console.log(err);
+  //   });
+  // };
+  //
+  // this.logout = function() {
+  //   return $http({
+  //     method: 'GET',
+  //     url: 'http://localhost:' + port + '/auth/logout'
+  //   }).then(function(res) {
+  //     return res.data;
+  //   }).catch(function(err) {
+  //     console.log(err);
+  //   });
+  // };
 
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   this.getUser = function() {
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/auth/me'
+      url: 'http://localhost:' + port + '/api/me'
     })
     .then(function(res) {
       // console.log(res);
@@ -135,16 +209,8 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     });
   };
 
-  this.logout = function() {
-    return $http({
-      method: 'GET',
-      url: 'http://localhost:' + port + '/auth/logout'
-    }).then(function(res) {
-      return res.data;
-    }).catch(function(err) {
-      console.log(err);
-    });
-  };
+
+
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     Confirm logout with Sweet Alerts fn

@@ -43,7 +43,8 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
     });
 
     console.log(orderObject);
-    rgsService.confirmOrder(orderObject);
+    rgsService.checkUserIsLoggedIn(orderObject);
+    // rgsService.confirmOrder(orderObject);
   };
 
 
