@@ -84,6 +84,11 @@ table {
   font-size: 1.3em;
   margin: 0 4px; }
 
+.big-blue {
+  color: RGB(110, 143, 179);
+  font-size: 1.3em;
+  margin: 0 4px; }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Parallax trees
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -539,6 +544,8 @@ h3 {
     border-radius: 20px 20px 0 0;
     border-left: 4px solid RGB(255, 157, 162);
     position: relative; }
+  .cart-adder .sub.white-highlight {
+    box-shadow: 0 -6px 9px 7px white; }
   .cart-adder .sub:before {
     content: '';
     position: absolute;
@@ -556,6 +563,8 @@ h3 {
     cursor: pointer;
     border-radius: 0 0 12px 12px;
     position: relative; }
+  .cart-adder .add.white-highlight {
+    box-shadow: 0 9px 9px 7px white; }
   .cart-adder .add:before {
     content: '';
     position: absolute;
@@ -694,8 +703,9 @@ h3 {
   font-family: 'Teko', sans-serif;
   position: absolute;
   font-size: .85em;
-  right: 132px;
-  top: 24px; }
+  right: 32px;
+  top: 24px;
+  display: none; }
 
 .user-main {
   height: calc(100% - 100px);
@@ -724,20 +734,26 @@ h3 {
   .past-orders li {
     margin: 10px;
     padding: 10px;
-    background-color: RGB(255, 132, 77); }
+    background-color: white; }
+    .past-orders li section {
+      color: black; }
     .past-orders li section ~ section {
       margin: 4px 0;
       font-size: .9rem;
       position: relative;
       left: 12px; }
     .past-orders li .order-id {
-      color: RGB(204, 70, 77); }
+      color: RGB(110, 143, 179);
+      margin-left: 12px;
+      font-size: 0.8rem; }
 
 .past-orders li:nth-child(even) {
-  background-color: RGB(204, 70, 77);
-  border-radius: 2px; }
+  border-radius: 2px;
+  background-color: RGB(110, 143, 179); }
   .past-orders li:nth-child(even) .order-id {
-    color: RGB(255, 132, 77); }
+    color: white;
+    margin-left: 12px;
+    font-size: 0.8rem; }
 
 .all-users {
   list-style: none; }

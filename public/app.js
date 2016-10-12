@@ -11,6 +11,25 @@ angular.module('syrupApp', ['ui.router', 'satellizer'])
         return deferred.promise;
       }];
 
+  var requestUser = function($http, rgsService) {
+      return $http ({
+        method: 'GET',
+        url: '/api/me'
+      }).then(function(response) {
+        // console.log(response);
+        return $http({
+          method: 'GET',
+          url: '/api/users/' + response.data
+        }).then(function(response) {
+          user = response.data;
+          rgsService.setUser(user[0]);
+          console.log('here is the user', user);
+          return user[0];
+        });
+        // console.log('user', user);
+      });
+  };
+
 
    $stateProvider
      .state('landing', {
@@ -67,7 +86,8 @@ angular.module('syrupApp', ['ui.router', 'satellizer'])
        templateUrl: './views/patron.html',
        controller: 'patronControl',
        resolve: {
-         loginRequired: loginRequired
+         loginRequired: loginRequired,
+         requestUser: requestUser
        },
        views: {
          'first': {

@@ -124,6 +124,7 @@ function ensureAuthenticated(req, res, next) {
   if (payload.exp <= moment().unix()) {
     return res.status(401).send({ message: 'Token has expired' });
   }
+  console.log('payload', payload);
   req.user = payload.sub;
   next();
 }
@@ -294,7 +295,7 @@ app.get('/api/users/:id', ensureAuthenticated, controller.getThisUser);
 
 app.get('/api/orders', ensureAuthenticated, controller.getAllOrders);
 app.get('/api/orders/:id', ensureAuthenticated, controller.getUserOrders);
-app.post('/api/orders', controller.placeOrder);
+app.post('/api/orders', ensureAuthenticated, controller.placeOrder);
 
 app.get('/api/products', controller.getProducts); // no login required for this endpoint
 app.put('/api/products/:id', ensureAuthenticated, controller.updateProducts);

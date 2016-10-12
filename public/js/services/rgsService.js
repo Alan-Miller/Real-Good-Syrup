@@ -2,14 +2,24 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
 
   var port = 8002;
   var serviceScope = this;
-  this.user = {userId: null};
+  var user = {};
 
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
-      Get all users (admin)
-      Get this user's info
+      setUser: set user using loginLocal fn (in loginControl.js)
+      getCurrentUser: get user fn allows views to access this service's user object
+      getUsers: get all users endpoint (admin)
+      getThisUser: get this user's info
+      getUser: get user fn used by requestUser resolve fn in app.js
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  this.setUser = function(userObj) {
+    user = userObj;
+  };
+  this.getCurrentUser = function() {
+    return user;
+  };
+
   this.getUsers = function() {
     return $http({
       method: 'GET',
@@ -26,7 +36,22 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     }).then(function(response) {
       return response.data;
     });
+  }.bind(this);
+
+  this.getUser = function() {
+    return $http({
+      method: 'GET',
+      url: 'http://localhost:' + port + '/api/me'
+    })
+    .then(function(res) {
+      console.log('is it the user', res);
+      return res.data;
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
   };
+
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     PRODUCTS
@@ -113,8 +138,8 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
         total += orderObj.product3;
       } else halfPints = 0;
       swal({
-        title: 'Is this your order?',
-        text: quarts + ', ' + pints + ', and ' + halfPints + ' for $' + total + '.00?',
+        title: 'Please confirm your order',
+        text: quarts + '\n'  + pints + '\n' + halfPints + '\ntotal: $' + total + '.00',
         type: 'question',
         showCancelButton: true,
         cancelButtonColor: 'RGB(217, 67, 98)',
@@ -146,101 +171,82 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
 
 
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-  AUTHENTICATION
-    Auth functions
-    Mostly pasted in from Brett's code, with Josh's tweaks
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  // this.loginLocal = function(credentials) {
-  //   return $http({
-  //     method: "POST",
-  //     url: 'http://localhost:' + port + '/auth/local',
-  //     data: credentials
-  //   })
-  //   .then(function(res) {
-  //     return res.data;
-  //   })
-  //   .catch(function(err) {
-  //     console.log('service loginLocal function caught error logging in!', err);
-  //   });
-  // };
-  //
-  // this.getUser = function() {
-  //   return $http({
-  //     method: 'GET',
-  //     url: 'http://localhost:' + port + '/auth/me'
-  //   })
-  //   .then(function(res) {
-  //     // console.log(res);
-  //     return res.data;
-  //   })
-  //   .catch(function(err) {
-  //     console.log(err);
-  //   });
-  // };
-  //
-  // this.logout = function() {
-  //   return $http({
-  //     method: 'GET',
-  //     url: 'http://localhost:' + port + '/auth/logout'
-  //   }).then(function(res) {
-  //     return res.data;
-  //   }).catch(function(err) {
-  //     console.log(err);
-  //   });
-  // };
-
-
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  this.getUser = function() {
-    return $http({
-      method: 'GET',
-      url: 'http://localhost:' + port + '/api/me'
-    })
-    .then(function(res) {
-      // console.log(res);
-      return res.data;
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
-  };
-
 
 
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-    Confirm logout with Sweet Alerts fn
+    AUTHENTICATION
+      Auth functions are in server.js
+      Below are unused functions pasted in from Brett's code, with Josh's tweaks
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  this.confirmLogout = function(res) {
-    if (res) {
-      swal({
-        title: 'Are you sure?',
-        text: "This will log you out.",
-        type: 'question',
-        showCancelButton: true,
-        cancelButtonColor: 'RGB(217, 67, 98)',
-        confirmButtonColor: 'RGB(153, 196, 210)',
-        confirmButtonText: 'Yes, log out!'
-      }).then(function() {
-        swal({
-          title: 'Bye! Thanks for visiting!',
-          // text: 'We\'ll miss you.',
-          type: 'success',
-          timer: 1100
-          }
-        );
-        //NEED TO LOG OUT
-        $state.go('landing');
-        // this.logout().then(function(res) {
-        //   alert('Am I logged out yet?');
-        // });
-      });
-    }
-  };
+    // this.loginLocal = function(credentials) {
+    //   return $http({
+    //     method: "POST",
+    //     url: 'http://localhost:' + port + '/auth/local',
+    //     data: credentials
+    //   })
+    //   .then(function(res) {
+    //     return res.data;
+    //   })
+    //   .catch(function(err) {
+    //     console.log('service loginLocal function caught error logging in!', err);
+    //   });
+    // };
+    //
+    // this.getUser = function() {
+    //   return $http({
+    //     method: 'GET',
+    //     url: 'http://localhost:' + port + '/auth/me'
+    //   })
+    //   .then(function(res) {
+    //     // console.log(res);
+    //     return res.data;
+    //   })
+    //   .catch(function(err) {
+    //     console.log(err);
+    //   });
+    // };
+    //
+    // this.logout = function() {
+    //   return $http({
+    //     method: 'GET',
+    //     url: 'http://localhost:' + port + '/auth/logout'
+    //   }).then(function(res) {
+    //     return res.data;
+    //   }).catch(function(err) {
+    //     console.log(err);
+    //   });
+    // };
 
-// FIN
+
+    // /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    //   Confirm logout with Sweet Alerts fn
+    // /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    // this.confirmLogout = function(res) {
+    //   if (res) {
+    //     swal({
+    //       title: 'Are you sure?',
+    //       text: "This will log you out.",
+    //       type: 'question',
+    //       showCancelButton: true,
+    //       cancelButtonColor: 'RGB(217, 67, 98)',
+    //       confirmButtonColor: 'RGB(153, 196, 210)',
+    //       confirmButtonText: 'Yes, log out!'
+    //     }).then(function() {
+    //       swal({
+    //         title: 'Bye! Thanks for visiting!',
+    //         // text: 'We\'ll miss you.',
+    //         type: 'success',
+    //         timer: 1100
+    //         }
+    //       );
+    //       //NEED TO LOG OUT
+    //       $state.go('landing');
+    //       // this.logout().then(function(res) {
+    //       //   alert('Am I logged out yet?');
+    //       // });
+    //     });
+    //   }
+    // };
+
 });

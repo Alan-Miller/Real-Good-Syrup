@@ -7,19 +7,19 @@
   <div class="admin-content">
 
     <span class="order-section">
-      <span class="big-red">Users</span>
+      <span class="big-blue">Users</span>
       <!-- <h3>Users</h3> -->
       <ul class="all-users">
-        <li ng-repeat="user in users | orderBy : 'id'">{{user.id}}
-          <section>{{user.firstname}} {{user.lastname}}</section>
-          <section>{{user.address}} {{user.zip}}</section>
-          <section>{{user.admin}}</section>
+        <li ng-repeat="yoozer in users | orderBy : 'id'">{{yoozer.id}}
+          <section>{{yoozer.firstname}} {{yoozer.lastname}}</section>
+          <section>{{yoozer.address}} {{yoozer.zip}}</section>
+          <section>{{yoozer.admin}}</section>
         </li>
       </ul>
     </span>
 
     <span class="order-section">
-      <span class="big-red">Orders</span>
+      <span class="big-blue">Orders</span>
       <!-- <h3>Users</h3> -->
       <ul class="past-orders">
         <li ng-repeat="order in orders | orderBy : 'date_priority'" ng-click="test(order)">

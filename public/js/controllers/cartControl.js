@@ -1,9 +1,9 @@
 angular.module('syrupApp').controller('cartControl', function($scope, rgsService) {
 
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     PRODUCTS
       Get all products
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   rgsService.getProducts().then(function(response) {
     $scope.products = response;
   });
@@ -17,7 +17,10 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.placeOrder = function() {
     var orderObject = {};
-    orderObject.userId = rgsService.user.id;
+    var user = rgsService.getCurrentUser();
+    // console.log('THE USER', user);
+    orderObject.userId = user.id;
+    // console.log(orderObject.userId);
 
     $('.i-want').each(function(index, val) {
 
@@ -39,50 +42,12 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
           orderObject[key] = null;
         }
       }
-
     });
-
     console.log(orderObject);
     rgsService.checkUserIsLoggedIn(orderObject);
     // rgsService.confirmOrder(orderObject);
   };
 
-
-
-
-
-
-
-
-
-
-/*
-
-var numJars = 0;
-$scope.numJars = function(symbol) {
-  if (symbol === '+') {
-    numJars++;
-    console.log(numJars);
-  } else if (symbol === '-' && numJars > 0) {
-    numJars--;
-    console.log(numJars);
-  }
-  // var spanOfJars = document.getElementById('i-want');
-  $(this).parent().parent().parent().find('.i-want').find('.num').html(numJars);
-  // $(this).closest('.one-product').find('.i-want').html(numJars);
-  // $('.num').html(numJars);
-};
-// $scope.numJars();
-
-
-//
-// $scope.theorder = {};
-//
-// $scope.placeorder = function() {
-//
-// };
-
-*/
 
 
 
@@ -117,3 +82,30 @@ $scope.numJars = function(symbol) {
 //     delete orderObject[key];
 //   }
 // }
+
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  if (symbol === '+') {
+    numJars++;
+    console.log(numJars);
+  } else if (symbol === '-' && numJars > 0) {
+    numJars--;
+    console.log(numJars);
+  }
+  // var spanOfJars = document.getElementById('i-want');
+  $(this).parent().parent().parent().find('.i-want').find('.num').html(numJars);
+  // $(this).closest('.one-product').find('.i-want').html(numJars);
+  // $('.num').html(numJars);
+};
+// $scope.numJars();
+
+
+//
+// $scope.theorder = {};
+//
+// $scope.placeorder = function() {
+//
+// };
+
+*/

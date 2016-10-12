@@ -24,12 +24,20 @@ angular.module('syrupApp').controller('loginControl', function($scope, rgsServic
        password: password,
      }).then(function (response) {
        if(response.status === 200){
-         $auth.setToken(response);
-        rgsService.user = response.data.user;
+        $auth.setToken(response);
+        // rgsService.user = response.data.user;
+        rgsService.setUser(response.data.user);
         var user = response.data.user;
         checkUser(user.admin);
        }
      }).catch(function (response) {
+       swal({
+         title: 'Wrong username or password',
+         text: 'Please try again',
+         type: 'error',
+         timer: 2100
+         }
+       );
      });
    };
 
@@ -47,7 +55,8 @@ angular.module('syrupApp').controller('loginControl', function($scope, rgsServic
           $state.go('patron');
         }
         else {
-          $scope.loginHeading = 'Wrong name or password. Try again.';
+          // $scope.loginHeading = 'Wrong name or password. Try again.';
+          // THIS NEVER GETS HIT SINCE AUTH IS REQUIRED BY LOGINLOCAL()
         }
 
       });
@@ -57,7 +66,7 @@ angular.module('syrupApp').controller('loginControl', function($scope, rgsServic
     $auth.logout().then(function(res) {
       $('body').removeClass('no-scroll');
       $state.go('landing');
-      rgsService.confirmLogout(res);
+      // rgsService.confirmLogout(res);
     });
   };
 

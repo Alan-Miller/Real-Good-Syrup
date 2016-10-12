@@ -1,18 +1,22 @@
 angular.module('syrupApp')
-.directive('cartDirective', function() {
+.directive('addSubtract', function() {
   return {
     restrict: 'AE',
     link: function(scope, element, attribute) {
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-        Grow the add/subtract button on hover
+        HOVER OVER ADD/SUB BUTTON
+          Grow the add/subtract section
+          Create highlight behind button
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       element.hover(function() {
         element.parent().find('.add').removeClass('add-sub-padding');
         element.addClass('add-sub-padding');
+        element.parent().find('section').addClass('white-highlight');
       }, function() {
         $('.add').addClass('add-sub-padding');
         $('.sub').removeClass('add-sub-padding');
+        element.parent().find('section').removeClass('white-highlight');
       });
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*

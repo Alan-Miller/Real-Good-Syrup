@@ -56,14 +56,14 @@
 
     <nav id="main-nav" class="scroll-nav flex-centered">
       <ul class="pacifico">
-        <li ui-sref="landing" class="small-logo"><span class="teko">GOOD</span></li>
-        <li ui-sref="cart" class="cart-nav">Buy</li>
-        <li ui-sref="about" class="about-nav">About us</li>
-        <li ui-sref="process" class="process-nav">Our process</li>
+        <li ui-sref="landing" class="small-logo admin-fade"><span class="teko">GOOD</span></li>
+        <li ui-sref="cart" class="cart-nav admin-fade">Buy</li>
+        <li ui-sref="about" class="about-nav admin-fade">About us</li>
+        <li ui-sref="process" class="process-nav admin-fade">Our process</li>
         <!-- <li ui-sref="products" class="products-nav">Bottle sizes</li> -->
-        <li class="contact-nav">Contact us</li>
-        <li ui-sref="login" class="login-nav"><span class="teko">log in</span></li>
-        <li class="logout-nav" ng-click="logout()">log out</li>
+        <li class="contact-nav admin-fade">Contact us</li>
+        <li ui-sref="login" class="login-nav admin-fade"><span class="teko">log in</span></li>
+        <li class="logout-nav" nav-logout>log out</li>
       </ul>
     </nav>
 
@@ -110,7 +110,8 @@
     <script type="text/javascript" src="./js/controllers/processControl.js"></script>
     <script type="text/javascript" src="./js/controllers/productsControl.js"></script>
     <script type="text/javascript" src="./js/services/rgsService.js"></script>
-    <script type="text/javascript" src="./js/cartDirective.js"></script>
+    <script type="text/javascript" src="./js/addSubtract.js"></script>
+    <script type="text/javascript" src="./js/navLogout.js"></script>
     <script type="text/javascript" src="./js/shortenName.js"></script>
   </body>
 </html>
@@ -164,20 +165,23 @@ To update user with hashed password:
 
 <!--
 TO DO
-admin can't buy till after patron buys (maybe a non-issue if admins don't place orders)
-patron logs out on refresh but can still place order that has no id (GET MENTOR)
 .i-want div show "1 pints," etc. Always plural.
+admin view incorrectly calculates num items
+  fix sql statement so admin sees total money, count of products for each user
 leaves fall in front of cart
 background
+redo tables
 
-create user front end
-update user info front end
+logout logs out of view but still allows orders
 fix login/logout buttons
 check off filled orders (admin)
 nothing in the user (patron) view
+  create user front end
+  update user info front end
 media queries
-fix sql statement so admin sees total money, count of products for each user
 
 DONE
 order confirmation window
+patron logs out on refresh but can still place order that has no id (GET MENTOR)
+admin can't buy till after patron buys (maybe a non-issue if admins don't place orders)
 -->

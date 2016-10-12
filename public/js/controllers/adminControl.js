@@ -1,16 +1,24 @@
 angular.module('syrupApp').controller('adminControl', function($scope, rgsService, $state, $auth) {
 
-  window.setTimeout(function() {
-    $('#first').scrollToStateContainer(); // Scrolls up again before locking position, in case window is scrolled then refreshed
-  });
-  $('body').addClass('no-scroll');
-  $('#main-nav').fadeOut('fast');
 
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    ADMIN LOCKOUT
+      Locks admin out of other features and hides nav bar
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  $('#first').scrollToStateContainer(); // Scrolls up again before locking position, in case window is scrolled then refreshed
+  $('.admin-fade').fadeOut('fast');
+  $('.logout-nav').fadeIn('fast');
+
+  window.setTimeout(function() {
+    $('body').addClass('no-scroll');
+  }, 1000);
+
+
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  $scope.user = rgsService.user;
-  // rgsService.userId = $scope.user.id;
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  $scope.user = rgsService.getCurrentUser();
 
   rgsService.getUsers().then(function(response) {
     $scope.users = response;
@@ -22,9 +30,10 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
     // console.log(response);
   });
 
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     ORDERS
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.getAllOrders = function() {
     rgsService.getAllOrders().then(function(response) {
       $scope.orders = response;
@@ -33,10 +42,9 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
   $scope.getAllOrders();
 
 
-
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     LOGOUT
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   // $scope.logout = function() {
   //   rgsService.logout().then(function(res) {
   //     rgsService.confirmLogout(res);
@@ -45,44 +53,11 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
 
   $scope.logout = function() {
     $auth.logout().then(function(res) {
-      $('#main-nav').fadeIn('slow');
+      $('#main-nav').find('.admin-fade').fadeIn('fast');
       $('body').removeClass('no-scroll');
       $state.go('landing');
-      rgsService.confirmLogout(res);
+      // rgsService.confirmLogout(res);
     });
   };
 
-// FIN
 });
-
-
-
-
-
-
-
-
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-  Code Graveyard ††
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-// if (res) {
-//   swal({
-//     title: 'Are you sure?',
-//     text: "This will log you out.",
-//     type: 'question',
-//     showCancelButton: true,
-//     cancelButtonColor: 'RGB(217, 67, 98)',
-//     confirmButtonColor: 'RGB(153, 196, 210)',
-//     confirmButtonText: 'Yes, log out!'
-//   }).then(function() {
-//     swal({
-//       title: 'Bye! Thanks for visiting!',
-//       // text: 'We\'ll miss you.',
-//       type: 'success',
-//       timer: 1300
-//       }
-//     );
-//     $state.go('landing');
-//   });
-// }

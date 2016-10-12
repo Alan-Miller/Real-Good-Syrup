@@ -1,6 +1,8 @@
 $maplered: RGB(204, 70, 77);
 // $lightred: RGB(217, 67, 98);
 $mapleorange: RGB(255, 132, 77);
+$mapleblue: RGB(80, 103, 129);
+$maplelightblue: RGB(110, 143, 179);
 $lightred: $maplered;
 $lightbrown: rgb(55, 45, 59);
 $darkbrown: rgb(28, 22, 34);
@@ -389,6 +391,9 @@ h3 {
     border-left: 4px solid RGB(255, 157, 162);
     position: relative;
   }
+  .sub.white-highlight {
+    box-shadow: 0 -6px 9px 7px white;
+  }
   .sub:before {
     content: '';
     position: absolute;
@@ -408,6 +413,10 @@ h3 {
     cursor: pointer;
     border-radius: 0 0 12px 12px;
     position: relative;
+
+  }
+  .add.white-highlight {
+    box-shadow: 0 9px 9px 7px white;
   }
   .add:before {
     content: '';
@@ -575,8 +584,9 @@ h3 {
   // display: none;
   position: absolute;
   font-size: .85em;
-  right: 132px;
+  right: 32px;
   top: 24px;
+  display: none;
 }
 
 .user-main {
@@ -611,7 +621,10 @@ h3 {
   li {
     margin: 10px;
     padding: 10px;
-    background-color: $mapleorange;
+    background-color: white;
+    section {
+      color: black;
+    }
     section ~ section {
       margin: 4px 0;
       font-size: .9rem;
@@ -619,16 +632,20 @@ h3 {
       left: 12px;
     }
     .order-id {
-      color: $maplered;
+      color: $maplelightblue;
+      margin-left: 12px;
+      font-size: 0.8rem;
       // font-size: .7rem;
     }
   }
 }
 .past-orders li:nth-child(even) {
-  background-color: $maplered;
   border-radius: 2px;
+  background-color: $maplelightblue;
   .order-id {
-    color: $mapleorange
+    color: white;
+    margin-left: 12px;
+    font-size: 0.8rem;
   }
 }
 
