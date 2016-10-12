@@ -12,6 +12,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
       getUsers: get all users endpoint (admin)
       getThisUser: get this user's info
       getUser: get user fn used by requestUser resolve fn in app.js
+      postUser: create new user in login view
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   this.setUser = function(userObj) {
     user = userObj;
@@ -33,7 +34,8 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     return $http({
       method: 'GET',
       url: 'http://localhost:' + port + '/api/users' + id
-    }).then(function(response) {
+    })
+    .then(function(response) {
       return response.data;
     });
   }.bind(this);
@@ -49,6 +51,17 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     })
     .catch(function(err) {
       console.log(err);
+    });
+  };
+
+  this.postUser = function(newUserObject) {
+    return $http({
+      method: 'POST',
+      data: newUserObject,
+      url: '/api/users'
+    })
+    .then(function(response) {
+      return response.data;
     });
   };
 
@@ -113,6 +126,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
 
   this.confirmOrder = function(orderObj) {
     if (!orderObj.product1 && !orderObj.product2 && !orderObj.product3) {
+      swal.resetDefaults();
       swal({
         title: 'Your order is empty!',
         text: 'Click the syrup jar icon (+/-) to add to your order',
@@ -142,8 +156,8 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
         text: quarts + '\n'  + pints + '\n' + halfPints + '\ntotal: $' + total + '.00',
         type: 'question',
         showCancelButton: true,
-        cancelButtonColor: 'RGB(217, 67, 98)',
-        confirmButtonColor: 'RGB(153, 196, 210)',
+        cancelButtonColor: 'RGB(204, 70, 77)',
+        confirmButtonColor: 'RGB(80, 103, 129)',
         confirmButtonText: 'Yes, send me the syrup!'
       }).then(function() {
         swal({

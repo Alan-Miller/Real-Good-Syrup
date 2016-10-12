@@ -27,11 +27,11 @@ module.exports = {
       res.status(200).json(user);
     });
   },
-  // postUser: function(req, res) {
-  //   db.post_user([req.body.firstname, req.body.lastname, req.body.address, req.body.zip, req.body.username, req.body.password], function(err, user) {
-  //     res.status(200).json(user);
-  //   });
-  // },
+  postUser: function(req, res) {
+    db.post_user([req.body.firstname, req.body.lastname, req.body.address, req.body.zip, req.body.username, req.body.password], function(err, user) {
+      res.status(200).json(user);
+    });
+  },
   // updateUser: function(req, res) {
   //   db.update_user([req.params.id, req.body.firstname, req.body.lastname, req.body.address, req.body.zip], function(err, user) {
   //     res.status(200).json(user);

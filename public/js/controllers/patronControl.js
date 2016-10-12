@@ -3,6 +3,7 @@ angular.module('syrupApp').controller('patronControl', function($scope, rgsServi
 
   $('.login-nav').fadeOut('fast');
   $('.logout-nav').fadeIn('fast');
+  $('.my-info-nav').fadeIn('fast');
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
@@ -38,6 +39,9 @@ angular.module('syrupApp').controller('patronControl', function($scope, rgsServi
 
   $scope.logout = function() {
     $auth.logout().then(function(res) {
+      $('.login-nav').fadeIn('fast');
+      $('.logout-nav').fadeOut('fast');
+      $('.my-info-nav').fadeOut('fast');
       $state.go('landing');
       // rgsService.confirmLogout(res);
     });

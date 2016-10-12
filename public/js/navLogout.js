@@ -8,6 +8,7 @@ angular.module('syrupApp')
         $auth.logout().then(function(res) {
           $('.admin-fade').fadeIn('fast');
           $('.logout-nav').fadeOut('fast');
+          $('.my-info-nav').fadeOut('fast');
           $('body').removeClass('no-scroll');
           $state.go('landing');
         });

@@ -291,6 +291,7 @@ function getSafeUser (user) {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 app.get('/api/users', ensureAuthenticated, controller.getUsers);
 app.get('/api/users/:id', ensureAuthenticated, controller.getThisUser);
+app.post('/api/users', controller.postUser);
 // app.put('/api/users/:id', ensureAuthenticated, controller.updateUser);
 
 app.get('/api/orders', ensureAuthenticated, controller.getAllOrders);

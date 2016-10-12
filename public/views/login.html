@@ -2,18 +2,21 @@
   <h2 class="teko">
     <div class="big-red">Log in here</div>
   </h2>
-  
+
 
   <form class="form" submit="loginLocal(username, password)">
     <input type="text" ng-model="username" placeholder="Username">
     <input type="password" ng-model="password" placeholder="Password">
     <!-- <div class="login-btn" ng-click="loginLocal(username, password)">log in</div> -->
-    <button class="login-btn" ng-click="loginLocal(username, password)" type="submit">log in</button>
-
+    <div>
+      <button class="login-btn" ng-click="loginLocal(username, password)" type="submit">log in</button>
+      <!-- or -->
+      <button class="login-btn new-login" ng-click="createNew()">create new account</button>
+    </div>
   </form>
 
   <div class="login-text">
-    Creating a login is not required because payment is handled securely through PayPal, though you may create a login if you wish to save and review your orders through this site.
+    <!-- Creating a login is not required because payment is handled securely through PayPal, though you may create a login if you wish to save and review your orders through this site. -->
   </div>
 
 

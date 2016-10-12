@@ -344,7 +344,7 @@ h3 {
   align-items: center;
   min-width: 200px;
   min-height: 100px;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.55);
   border-radius: 10px;
   padding: 18px 10px;
   color: #6f6f6f;
@@ -364,19 +364,27 @@ h3 {
     color: RGB(204, 70, 77);
     outline-width: medium; }
   .login .login-btn {
-    margin: 12px;
+    margin: 12px 0 12px 12px;
     padding: 12px;
     background-color: RGB(204, 70, 77);
-    border-top: solid 2px RGB(255, 131, 166);
-    border-right: solid 2px RGB(121, 38, 55);
-    border-bottom: solid 2px RGB(121, 38, 55);
-    border-left: solid 2px RGB(255, 131, 166);
-    border-radius: 12px;
+    border-top: solid 2px RGB(234, 130, 137);
+    border-right: solid 2px RGB(101, 8, 25);
+    border-bottom: solid 2px RGB(101, 8, 25);
+    border-left: solid 2px RGB(234, 130, 137);
+    border-radius: 12px 0 0 12px;
     color: white;
     cursor: pointer;
     font-size: 1.2rem;
     font-family: 'Raleway', serif;
     outline: none; }
+  .login .login-btn.new-login {
+    background-color: RGB(80, 103, 129);
+    border-top: solid 2px RGB(110, 143, 179);
+    border-right: solid 2px RGB(40, 57, 69);
+    border-bottom: solid 2px RGB(40, 57, 69);
+    border-left: solid 2px RGB(110, 143, 179);
+    border-radius: 0 12px 12px 0;
+    margin: 12px 12px 12px 0; }
   .login .login-text {
     max-width: 400px;
     margin: 20px;
@@ -695,7 +703,7 @@ h3 {
   background-color: transparent;
   outline: none; }
 
-.logout-nav {
+.logout-nav, .my-info-nav {
   color: #372d3b;
   outline: none;
   margin: 12px;
@@ -706,6 +714,9 @@ h3 {
   right: 32px;
   top: 24px;
   display: none; }
+
+.my-info-nav {
+  right: 132px; }
 
 .user-main {
   height: calc(100% - 100px);

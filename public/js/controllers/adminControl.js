@@ -53,7 +53,8 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
 
   $scope.logout = function() {
     $auth.logout().then(function(res) {
-      $('#main-nav').find('.admin-fade').fadeIn('fast');
+      $('.admin-fade').fadeIn('fast');
+      $('.logout-nav').fadeOut('fast');
       $('body').removeClass('no-scroll');
       $state.go('landing');
       // rgsService.confirmLogout(res);

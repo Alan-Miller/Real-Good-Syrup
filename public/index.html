@@ -63,6 +63,7 @@
         <!-- <li ui-sref="products" class="products-nav">Bottle sizes</li> -->
         <li class="contact-nav admin-fade">Contact us</li>
         <li ui-sref="login" class="login-nav admin-fade"><span class="teko">log in</span></li>
+        <li ui-sref="patron" class="my-info-nav patron-fade">my info</li>
         <li class="logout-nav" nav-logout>log out</li>
       </ul>
     </nav>
@@ -172,16 +173,19 @@ leaves fall in front of cart
 background
 redo tables
 
-logout logs out of view but still allows orders
-fix login/logout buttons
+logout logs out but still allows orders
+rewrite logout "filler" lines (like fadeOut of nav elements) to separate fn)
 check off filled orders (admin)
 nothing in the user (patron) view
-  create user front end
   update user info front end
 media queries
+connect to store (Stripe)
+host it (talk to Richard)
 
 DONE
 order confirmation window
+create user front end
 patron logs out on refresh but can still place order that has no id (GET MENTOR)
 admin can't buy till after patron buys (maybe a non-issue if admins don't place orders)
+fix login/logout buttons
 -->
