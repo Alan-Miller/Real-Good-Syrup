@@ -74,37 +74,25 @@ module.exports = {
     });
   },
   placeOrder: function(req, res) {
-    var userAndProducts = [req.body.userId];
-    if (req.body.product1) {
-      userAndProducts.push(1, req.body.product1);
-    } else userAndProducts.push(null, null);
-    if (req.body.product2) {
-      userAndProducts.push(2, req.body.product2);
-    } else userAndProducts.push(null, null);
-    if (req.body.product3) {
-      userAndProducts.push(3, req.body.product3);
-    } else userAndProducts.push(null, null);
-    // var userAndProducts = [];
-    // for (var key in req.body) {
-    //   userAndProducts.push(req.body[key]);
-    // }
-    // var justProducts = userAndProducts.splice(userAndProducts.indexOf(req.body.userId));
-    // justProducts.forEach(function(curr, ind, attrs) {
-    //   userAndProducts.push(ind + 1, req.body);
-    // });
+    var userOrder = [req.body.userId];
+    userOrder.push(req.body.quart.productId, req.body.quart.qty, req.body.quart.price);
+    userOrder.push(req.body.pint.productId, req.body.pint.qty, req.body.pint.price);
+    userOrder.push(req.body.half_pint.productId, req.body.half_pint.qty, req.body.half_pint.price);
+
+
     db.post_order([req.body.userId], function(err, order) {
       // res.status(200).json(order);
-      db.post_ordered_products(userAndProducts, function(err, order) {
+      console.log('returns:', order);
+      userOrder.push(order[0].id);
+      console.log('pushed obj:', userOrder);
+      db.post_ordered_products(userOrder, function(err, order) {
         // res.status(200).json(order);
         db.delete_null_rows(function(err) {
-          res.status(200).end(); // Only one of these db functions should have a send (otherwise, there is an error regarding sending multiple times with the same header. The value of nesting is that each will wait till the previous is successful.)
+          res.status(200).end(); // Only one of these db functions has a send (otherwise, there is an error regarding sending multiple times with the same header. The value of nesting is that each will wait till the previous is successful.)
         });
       });
     });
   }
-
-
-
 
 };
 
@@ -116,21 +104,45 @@ module.exports = {
 
 
 
-
-//   getProductsForOrderNumber: function(req, res) {
-//     if (/* req.order_id doesn't belog to the current_user_id */) {
-//       res.status(403).json('')
-//     }
-//     db.getProductsForOrderNumber(req.order_id)
-//   }
-
-
-
-
-
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
   †† CODE GRAVEYARD ††
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+// if (req.body.product1) {
+  // userOrder.push(1, req.body.product1);
+// } else userOrder.push(null, null);
+// if (req.body.product2) {
+  // userOrder.push(2, req.body.product2);
+// } else userOrder.push(null, null);
+// if (req.body.product3) {
+  // userOrder.push(3, req.body.product3);
+// } else userOrder.push(null, null);
+
+
+// var userOrder = [req.body.userId];
+// if (req.body.product1) {
+//   userOrder.push(1, req.body.product1);
+// } else userOrder.push(null, null);
+// if (req.body.product2) {
+//   userOrder.push(2, req.body.product2);
+// } else userOrder.push(null, null);
+// if (req.body.product3) {
+//   userOrder.push(3, req.body.product3);
+// } else userOrder.push(null, null);
+
+
+// var userOrder = [];
+// for (var key in req.body) {
+//   userOrder.push(req.body[key]);
+// }
+// var justProducts = userOrder.splice(userOrder.indexOf(req.body.userId));
+// justProducts.forEach(function(curr, ind, attrs) {
+//   userOrder.push(ind + 1, req.body);
+// });
+
+
+
+
+
 
 /*
 placeOrder: function(req, res) {
@@ -181,3 +193,17 @@ placeOrder: function(req, res) {
 },
 
 */
+
+
+
+
+
+
+
+
+//   getProductsForOrderNumber: function(req, res) {
+//     if (/* req.order_id doesn't belog to the current_user_id */) {
+//       res.status(403).json('')
+//     }
+//     db.getProductsForOrderNumber(req.order_id)
+//   }

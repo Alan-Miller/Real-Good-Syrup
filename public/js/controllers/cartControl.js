@@ -6,14 +6,15 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   rgsService.getProducts().then(function(response) {
     $scope.products = response;
+    console.log('$prod:', $scope.products);
   });
 
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     ORDERS
-      Place order
+      Places order
         - Creates order object; key is based on product id and value is price
-      Runs confirmOrder fn in service
+      Runs checkUserIsLoggedIn fn in service
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.placeOrder = function() {
     var orderObject = {};
@@ -28,22 +29,26 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
       var productPrice = Number(($(this).parent().find('.product-price').html()).replace('$', ''));
       var productTotal = 0;
 
-      var numOfEachSizeOfJar = $(this).find('.num').html();
+      var numOfEachSizeOfJar = Number($(this).find('.num').html());
       for (var i = 0; i < numOfEachSizeOfJar; i++) {
         productTotal += productPrice;
       }
 
       var productId = $(this).parent().find('.product-id').html();
-      orderObject['product' + productId] = productTotal;
+      orderObject[$scope.products[productId - 1].short_name] = {};
+      orderObject[$scope.products[productId - 1].short_name].productId = Number(productId);
+      orderObject[$scope.products[productId - 1].short_name].qty = numOfEachSizeOfJar;
+      orderObject[$scope.products[productId - 1].short_name].price = productTotal;
 
-      for (var key in orderObject) {
-        if (orderObject[key] === 0) {
+      // for (var key in orderObject[$scope.products[productId - 1].short_name]) {
+        // if (orderObject[$scope.products[productId - 1].short_name].qty === 0) {
           // delete orderObject[key];
-          orderObject[key] = null;
-        }
-      }
+          // orderObject[$scope.products[productId - 1].short_name].qty = null;
+        // }
+      // }
     });
-    console.log(orderObject);
+    // console.log(orderObject);
+    console.log('Here is your order:', orderObject);
     rgsService.checkUserIsLoggedIn(orderObject);
     // rgsService.confirmOrder(orderObject);
   };

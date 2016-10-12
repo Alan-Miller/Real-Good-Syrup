@@ -1,4 +1,6 @@
-insert into orders (user_id, date, filled) values ($1, current_date, false);
+insert into orders (user_id, date, filled)
+  values ($1, current_date, false)
+  returning *
 
 
 

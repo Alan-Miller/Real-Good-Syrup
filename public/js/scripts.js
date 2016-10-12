@@ -8,9 +8,11 @@ $(document).ready(function() {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   var nav = $('#main-nav');
   var navOffset = nav.offset().top;
+  // alert(navOffset);
 
   $(window).resize(function() {
     navOffset = nav.offset().top;
+    // alert(navOffset);
   });
 
   $(window).on('scroll', function() {

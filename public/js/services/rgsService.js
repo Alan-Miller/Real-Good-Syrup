@@ -125,7 +125,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
   };
 
   this.confirmOrder = function(orderObj) {
-    if (!orderObj.product1 && !orderObj.product2 && !orderObj.product3) {
+    if (orderObj.quart.qty === 0 && orderObj.pint.qty === 0 && orderObj.half_pint.qty === 0) {
       swal.resetDefaults();
       swal({
         title: 'Your order is empty!',
@@ -136,21 +136,30 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     }
     else {
       var quarts, pints, halfPints, total = 0;
-      if (!isNaN(orderObj.product1)) {
-        quarts = orderObj.product1 / 22;
+      if (orderObj.quart.qty) {
+        // quarts = orderObj.product1 / 22;
+        quarts = orderObj.quart.qty;
         quarts === 1 ? quarts += ' quart' : quarts += ' quarts';
-        total += orderObj.product1;
-      } else quarts = 0;
-      if (!isNaN(orderObj.product2)) {
-        pints = orderObj.product2 / 12;
+        // total += orderObj.product1;
+        total += orderObj.quart.price;
+      }
+      // else quarts = 0;
+      if (orderObj.pint.qty) {
+        // pints = orderObj.product2 / 12;
+        pints = orderObj.pint.qty;
         pints === 1 ? pints += ' pint' : pints += ' pints';
-        total += orderObj.product2;
-      } else pints = 0;
-      if (!isNaN(orderObj.product3)) {
-        halfPints = orderObj.product3 / 8;
+        // total += orderObj.product2;
+        total += orderObj.pint.price;
+      }
+      // else pints = 0;
+      if (orderObj.half_pint.qty) {
+        // halfPints = orderObj.product3 / 8;
+        halfPints = orderObj.half_pint.qty;
         halfPints === 1 ? halfPints += ' half pint' : halfPints += ' half pints';
-        total += orderObj.product3;
-      } else halfPints = 0;
+        // total += orderObj.product3;
+        total += orderObj.half_pint.price;
+      }
+      // else halfPints = 0;
       swal({
         title: 'Please confirm your order',
         text: quarts + '\n'  + pints + '\n' + halfPints + '\ntotal: $' + total + '.00',

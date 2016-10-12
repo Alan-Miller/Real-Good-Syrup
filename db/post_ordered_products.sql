@@ -1,4 +1,4 @@
-insert into orders_products (user_id, product_id, price_paid)
-  values ($1, $2, $3),
-   ($1, $4, $5),
-   ($1, $6, $7);
+insert into orders_products (user_id, product_id, qty, price_paid, order_id)
+  values ($1, $2, $3, $4, $11),
+   ($1, $5, $6, $7, $11),
+   ($1, $8, $9, $10, $11);
