@@ -14,21 +14,15 @@ var massive = require('massive');
 
 var app = module.exports = express();
 
-// try {
-//   var config = require('./config.js');
-// } catch (ex) {
-//   var config = {
-//     "port": 8002,
-//     "STRIPE_KEY": "",
-//     "TOKEN_SECRET": "",
-//   };
-// }
-
-var config = {
-  "port": 8002,
-  "STRIPE_KEY": "",
-  "TOKEN_SECRET": "",
-};
+try {
+  var config = require('./config.js');
+} catch (ex) {
+  var config = {
+    "port": 8002,
+    "STRIPE_KEY": "",
+    "TOKEN_SECRET": "marbles",
+  };
+}
 
 var stripe = require('stripe')(config.STRIPE_KEY);
 
