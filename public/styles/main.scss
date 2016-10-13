@@ -22,6 +22,7 @@ $user-main-height: calc(100% - 100px);
 @import "../styles/trees";
 
 
+
 body.no-scroll {
   overflow: hidden;
 }
@@ -284,11 +285,11 @@ h3 {
 }
 
 .all-products {
-  height: 500px;
+  min-height: 600px;
   width: 100vw;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   position: relative;
   margin-bottom: 24px;
@@ -301,7 +302,7 @@ h3 {
   margin: 0 14px;
   background-color: rgba(233, 233, 233, 0.3);
   border-radius: 90px;
-  border: 7px dotted rgba(233, 233, 233, 1);
+  border: 4px dotted rgba(233, 233, 233, 1);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -515,7 +516,7 @@ h3 {
   height: $user-nav-height;
   width: 100%;
   padding: 30px 100px;
-  border-bottom: dotted thin $lightred;
+  border-bottom: dotted thin white;
 }
 #patron, #admin {
   position: absolute;
@@ -534,7 +535,7 @@ h3 {
   justify-content: space-between;
   align-items: center;
   // background-color: green;
-  border-bottom: dotted thin $lightred;
+  border-bottom: dotted thin white;
   height: $user-nav-height;
   width: 100vw;
   position: absolute;
@@ -632,14 +633,20 @@ h3 {
   }
 }
 
-.past-orders {
+.unfilled-orders, .filled-orders, .past-orders {
   list-style-type: decimal;
   li {
     margin: 10px;
     padding: 10px;
     background-color: white;
+    border-radius: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
     section {
       color: black;
+      // display: block;
     }
     section ~ section {
       margin: 4px 0;
@@ -647,21 +654,48 @@ h3 {
       position: relative;
       left: 12px;
     }
-    .order-id {
+    .user-id {
       color: $maplelightblue;
       margin-left: 12px;
       font-size: 0.8rem;
       // font-size: .7rem;
     }
+    .mark-filled, .mark-unfilled {
+      color: $maplelightblue;
+      cursor: pointer;
+      border: 3px solid $maplelightblue;
+      border-radius: 50%;
+      height: 37px;
+      width: 37px;
+    }
+    .mark-filled:before {
+      content: '';
+      position: absolute;
+      right: 17px;
+      bottom: 29px;
+      height: 27px;
+      width: 12px;
+      border-right: 6px solid lightgreen;
+      border-bottom: 6px solid lightgreen;
+      transform: rotate(35deg);
+    }
+    .mark-unfilled {
+      color: $mapleblue;
+      font-size: 2.3rem;
+    }
   }
 }
-.past-orders li:nth-child(even) {
+.unfilled-orders li:nth-child(even), .filled-orders li:nth-child(even), .past-orders li:nth-child(even) {
   border-radius: 2px;
   background-color: $maplelightblue;
-  .order-id {
+  .user-id {
     color: white;
     margin-left: 12px;
     font-size: 0.8rem;
+  }
+  .mark-filled, .mark-unfilled {
+    color: white;
+    border: 3px solid white;
   }
 }
 
@@ -700,3 +734,10 @@ h3 {
 //   flex-direction: column;
 //   top: 63px;
 //   cursor: pointer;
+
+
+
+#payment-form {
+  display: flex;
+  flex-direction: column;
+}

@@ -11,6 +11,9 @@ var moment = require('moment');
 var cors = require('cors');
 var massive = require('massive');
 var config = require('./config.js');
+
+var stripe = require('stripe')(config.STRIPE_KEY);
+
 var corsOptions = {
   origin: 'http://localhost:8002'
 };
@@ -124,7 +127,7 @@ function ensureAuthenticated(req, res, next) {
   if (payload.exp <= moment().unix()) {
     return res.status(401).send({ message: 'Token has expired' });
   }
-  console.log('payload', payload);
+  // console.log('payload', payload);
   req.user = payload.sub;
   next();
 }
@@ -294,9 +297,26 @@ app.get('/api/users/:id', ensureAuthenticated, controller.getThisUser);
 app.post('/api/users', controller.postUser);
 // app.put('/api/users/:id', ensureAuthenticated, controller.updateUser);
 
-app.get('/api/orders', ensureAuthenticated, controller.getAllOrders);
+app.get('/api/orders/unfilled', ensureAuthenticated, controller.getUnfilledOrders);
+app.get('/api/orders/filled', ensureAuthenticated, controller.getFilledOrders);
 app.get('/api/orders/:id', ensureAuthenticated, controller.getUserOrders);
 app.post('/api/orders', ensureAuthenticated, controller.placeOrder);
+app.put('/api/orders/mark/filled/:id', ensureAuthenticated, controller.markOrderFilled);
+app.put('/api/orders/mark/unfilled/:id', ensureAuthenticated, controller.markOrderUnfilled);
+
+app.post('/api/payment', ensureAuthenticated, function(req, res) {
+  var stripeToken = req.body.token;
+  console.log('req.body', req.body);
+  var charge = stripe.charges.create({
+    amount: 1000, // Amount in cents
+    currency: "usd",
+    source: stripeToken,
+    description: "Example charge"
+  }).then(function(response) {
+    console.log('response', response);
+  });
+
+});
 
 app.get('/api/products', controller.getProducts); // no login required for this endpoint
 app.put('/api/products/:id', ensureAuthenticated, controller.updateProducts);

@@ -1,4 +1,4 @@
--- select users.users.firstname, users.lastname, products.name, price_paid, orders.date, count(orders.id), count(products.name)
+-- select users.users.firstname, users.lastname, products.name, product_total, orders.date, count(orders.id), count(products.name)
 -- select users.firstname, products.name, count(products.name) as "eachProduct"
 -- from orders
 -- join orders_products
@@ -22,12 +22,14 @@
 -- where filled = false
 
 
-select users.firstname, sum(orders_products.qty), orders.date, min(orders.date) as date_priority, users.id
+select users.firstname, sum(orders_products.qty), orders.date, min(orders.date) as date_priority, users.id as users_id, orders.id as orders_id
 from users
 join orders on orders.user_id = users.id
-join orders_products on orders_products.id = orders.id
-group by users.id, orders.date
+join orders_products on orders_products.order_id = orders.id
+where filled = false
+group by users_id, orders_id, orders.date
 order by date_priority
+
 
 
 
@@ -48,7 +50,7 @@ order by date_priority
 
 --
 -- -- select *
--- select users.id, users.firstname, users.lastname, products.name, price_paid, orders.date, count(products.name)
+-- select users.id, users.firstname, users.lastname, products.name, product_total, orders.date, count(products.name)
 -- from orders
 -- join orders_products
 -- on orders.user_id = orders_products.user_id

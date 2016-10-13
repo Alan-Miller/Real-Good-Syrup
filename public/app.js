@@ -1,5 +1,7 @@
-angular.module('syrupApp', ['ui.router', 'satellizer'])
-.config(function($stateProvider, $urlRouterProvider, $authProvider) {
+angular.module('syrupApp', ['ui.router', 'satellizer', 'angular-stripe'])
+.config(function($stateProvider, $urlRouterProvider, $authProvider, stripeProvider) {
+
+  stripeProvider.setPublishableKey('pk_test_hnF7JyUZM8nhb8nk1YSaJpuQ');
 
   var loginRequired = ['$q', '$location', '$auth', function($q, $location, $auth) {
         var deferred = $q.defer();
@@ -23,7 +25,7 @@ angular.module('syrupApp', ['ui.router', 'satellizer'])
         }).then(function(response) {
           user = response.data;
           rgsService.setUser(user[0]);
-          console.log('here is the user', user);
+          // console.log('here is the user', user);
           return user[0];
         });
         // console.log('user', user);
@@ -233,4 +235,5 @@ angular.module('syrupApp', ['ui.router', 'satellizer'])
 
    $authProvider.loginUrl = 'http://localhost:8002/auth/login';
    $authProvider.signupUrl = 'http://localhost:8002/auth/signup';
+
 });

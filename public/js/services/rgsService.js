@@ -24,7 +24,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
   this.getUsers = function() {
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/api/users'
+      url: '/api/users'
     }).then(function(response) {
       return response.data;
     });
@@ -33,7 +33,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
   this.getThisUser = function(id) {
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/api/users' + id
+      url: '/api/users' + id
     })
     .then(function(response) {
       return response.data;
@@ -43,7 +43,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
   this.getUser = function() {
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/api/me'
+      url: '/api/me'
     })
     .then(function(res) {
       console.log('is it the user', res);
@@ -73,7 +73,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
   this.getProducts = function() {
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/api/products'
+      url: '/api/products'
     }).then(function(response) {
       return response.data;
     });
@@ -82,26 +82,50 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     ORDERS
-      getAllOrders: show all orders (admin)
+      getUnfilledOrders: show all orders (admin)
       getUserOrders: get this user's orders
       checkUserIsLoggedIn: check user is logged in, then call confirmOrder()
       confirmOrder: check order is not empty and confirm order, then call placeOrder()
       placeOrder: post order to db (and reset order to zeroes)
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  this.getAllOrders = function() {
+  this.getUnfilledOrders = function() {
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/api/orders'
+      url: '/api/orders/unfilled'
     }).then(function(response) {
       return response.data;
     });
   };
 
+  this.getFilledOrders = function() {
+    return $http({
+      method: 'GET',
+      url: '/api/orders/filled'
+    }).then(function(response) {
+      return response.data;
+    });
+  };
+
+  this.markOrderFilled = function(id) {
+    return $http({
+      method: 'PUT',
+      url: '/api/orders/mark/filled/' + id
+    });
+  };
+
+  this.markOrderUnfilled = function(id) {
+    return $http({
+      method: 'PUT',
+      url: '/api/orders/mark/unfilled/' + id
+    });
+  };
+
+
   this.getUserOrders = function(id) {
     // console.log('ID is: ' + id);
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/api/orders/' + id
+      url: '/api/orders/' + id
     }).then(function(response) {
       return response.data;
     });
@@ -185,6 +209,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
 
   this.placeOrder = function(orderObj) {
     $('.num').html(0); // Reset numbers to zero (so second order is not placed by accident)
+    console.log('rgsService.placeOrder obj', orderObj);
     return $http({
       method: 'POST',
       data: orderObj,

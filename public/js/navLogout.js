@@ -1,5 +1,5 @@
 angular.module('syrupApp')
-.directive('navLogout', function() {
+.directive('navLogout', function(rgsService) {
   return {
     restrict: 'AE',
     controller: function($scope, $state, $auth) {
@@ -10,6 +10,7 @@ angular.module('syrupApp')
           $('.logout-nav').fadeOut('fast');
           $('.my-info-nav').fadeOut('fast');
           $('body').removeClass('no-scroll');
+          rgsService.setUser({id: false});
           $state.go('landing');
         });
       };

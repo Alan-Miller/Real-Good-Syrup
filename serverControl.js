@@ -63,32 +63,67 @@ module.exports = {
       Get this user's orders
       Post order to db
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  getAllOrders: function(req, res) {
-    db.get_all_orders(function(err, orders) {
+  getUnfilledOrders: function(req, res) {
+    db.get_unfilled_orders(function(err, orders) {
       res.status(200).json(orders);
     });
   },
+
+  getFilledOrders: function(req, res) {
+    db.get_filled_orders(function(err, orders) {
+      res.status(200).json(orders);
+    });
+  },
+
+  markOrderFilled: function(req, res) {
+    db.update_order_mark_filled([req.params.id], function(err, order) {
+      db.get_unfilled_orders(function(err, unfilled) {
+        db.get_filled_orders(function(err, filled) {
+          res.status(200).json(filled);
+        });
+      });
+    });
+  },
+
+  markOrderUnfilled: function(req, res) {
+    db.update_order_mark_unfilled([req.params.id], function(err, order) {
+      db.get_unfilled_orders(function(err, unfilled) {
+        db.get_filled_orders(function(err, filled) {
+          res.status(200).json(filled);
+        });
+      });
+    });
+  },
+
   getUserOrders: function(req, res) {
     db.get_user_orders([req.params.id], function(err, orders) {
       res.status(200).json(orders);
     });
   },
+
   placeOrder: function(req, res) {
     var userOrder = [req.body.userId];
     userOrder.push(req.body.quart.productId, req.body.quart.qty, req.body.quart.price);
     userOrder.push(req.body.pint.productId, req.body.pint.qty, req.body.pint.price);
     userOrder.push(req.body.half_pint.productId, req.body.half_pint.qty, req.body.half_pint.price);
+    // userOrder.push(req.body.total);
 
-
-    db.post_order([req.body.userId], function(err, order) {
+    console.log('userOrder before post', userOrder);
+    db.post_order([req.body.userId, req.body.total], function(err, order) {
       // res.status(200).json(order);
-      console.log('returns:', order);
+      console.log('db.post_order returns:', order);
+      console.log('returned order id:', order[0].id);
       userOrder.push(order[0].id);
-      console.log('pushed obj:', userOrder);
-      db.post_ordered_products(userOrder, function(err, order) {
+      console.log('userOrder:', userOrder);
+      // console.log('pushed obj:', userOrder);
+      db.post_ordered_products(userOrder, function(err, details) {
+        console.log(err);
+        console.log('details:', details);
         // res.status(200).json(order);
-        db.delete_null_rows(function(err) {
-          res.status(200).end(); // Only one of these db functions has a send (otherwise, there is an error regarding sending multiple times with the same header. The value of nesting is that each will wait till the previous is successful.)
+        db.delete_null_orders(function(err) {
+          res.status(200).json(order[0]);
+          // res.status(200).end();
+          // Only one of these db functions has a send (otherwise, there is an error regarding sending multiple times with the same header. The value of nesting is that each will wait till the previous is successful.)
         });
       });
     });

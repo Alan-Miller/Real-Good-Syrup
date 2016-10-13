@@ -1,4 +1,4 @@
--- select users.users.firstname, users.lastname, products.name, price_paid, orders.date, count(orders.id), count(products.name)
+-- select users.users.firstname, users.lastname, products.name, product_total, orders.date, count(orders.id), count(products.name)
 select users.firstname, products.name, count(products.name) as "eachProduct"
 from orders
 join orders_products
@@ -25,7 +25,7 @@ group by users.firstname, products.name
 
 --
 -- -- select *
--- select users.id, users.firstname, users.lastname, products.name, price_paid, orders.date, count(products.name)
+-- select users.id, users.firstname, users.lastname, products.name, product_total, orders.date, count(products.name)
 -- from orders
 -- join orders_products
 -- on orders.user_id = orders_products.user_id

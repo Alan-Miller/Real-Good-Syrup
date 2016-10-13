@@ -42,6 +42,7 @@ angular.module('syrupApp').controller('patronControl', function($scope, rgsServi
       $('.login-nav').fadeIn('fast');
       $('.logout-nav').fadeOut('fast');
       $('.my-info-nav').fadeOut('fast');
+      rgsService.setUser({id: false});
       $state.go('landing');
       // rgsService.confirmLogout(res);
     });

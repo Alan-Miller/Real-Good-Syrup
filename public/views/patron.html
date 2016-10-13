@@ -2,7 +2,7 @@
 
   <nav class="patron-nav">
     <h2 class="teko">
-      {{user.firstname}}'s Page
+      {{user.firstname}}'s Info
     </h2>
     <div>Welcome, {{user.firstname}} {{user.lastname}}</div>
     <div class="logout-btn" ng-click="logout()">LOG OUT</div>
@@ -11,23 +11,23 @@
   <div class="user-main">
 
     <section class="order-section" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
-      <div>Current shipping address: </div>
-      <div>{{user.address}} {{user.zip}}</div>
-      <div class="big-red">ORDERS</div>
+      <div class="big-blue">Orders</div>
       <ol class="past-orders">
         <li ng-repeat="order in orders">
           <div class="order">
             <section>{{order.name}}</section>
-            <section>{{order.price_paid}}</section>
-            <section>{{order.date}}</section>
+            <section>{{order.product_total}}</section>
+            <section>{{order.date | date: "MMMM d, yyyy"}}</section>
           </div>
         </li>
       </ol>
     </section>
 
     <section>
-      <div class="big-red">OTHER SECTION!</div>
-      {{orders}}
+      <div class="big-blue">Account info</div>
+      <div>username: {{user.firstname}} {{user.lastname}}</div>
+      <div>Shipping address: {{user.address}} {{user.zip}}</div>
+
     </section>
 
   </div>

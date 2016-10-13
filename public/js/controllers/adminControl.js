@@ -34,13 +34,35 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     ORDERS
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  $scope.getAllOrders = function() {
-    rgsService.getAllOrders().then(function(response) {
-      $scope.orders = response;
+  $scope.getUnfilledOrders = function() {
+    rgsService.getUnfilledOrders().then(function(response) {
+      // console.log('THE RESPONSE:', response);
+      $scope.unfilled = response;
     });
   };
-  $scope.getAllOrders();
+  $scope.getUnfilledOrders();
 
+  $scope.getFilledOrders = function() {
+    rgsService.getFilledOrders().then(function(response) {
+      console.log('THE RESPONSE:', response);
+      $scope.filled = response;
+    });
+  };
+  $scope.getFilledOrders();
+
+  $scope.markOrderFilled = function(orderId) {
+    console.log('orderId:', orderId);
+    rgsService.markOrderFilled(orderId).then(function(response) {
+      $state.reload();
+    });
+  };
+
+  $scope.markOrderUnfilled = function(orderId) {
+    console.log('orderId:', orderId);
+    rgsService.markOrderUnfilled(orderId).then(function(response) {
+      $state.reload();
+    });
+  };
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     LOGOUT

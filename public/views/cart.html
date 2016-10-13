@@ -7,7 +7,7 @@
     <div class="cart-adder">
       <section class="product-name-and-price">
         <p class="product-name">{{product.name}}</p>
-        <p class="product-price">{{product.current_price}}</p>
+        <p class="product-price">{{product.current_price_per}}</p>
       </section>
 
       <section class="add-sub">
@@ -25,3 +25,59 @@
 </section>
 
 <section class="buy-btn" ng-click="placeOrder()">Place order</section>
+
+
+
+<!-- STRIPE FORM -->
+
+
+<form id="payment-form" ng-submit="charge(payment)">
+  <span class="payment-errors"></span>
+    <section class="checkout-header">
+      <h1>Checkout</h1>
+
+    </section>
+
+    <section class="checkout-body">
+      <div class="">
+        <input  placeholder="Name on Card">
+      </div>
+    <div class="">
+      <input ng-model="payment.card.number" placeholder="Card Number" maxlength="16" type="number">
+    </div>
+    <section class="checkout-exp-cvc">
+      <div class="checkout-exp">
+        <span>Expire</span>
+        <div class="">
+          <input id="exp-input" ng-model="payment.card.exp_month"
+          placeholder="MM">
+        <input id="exp-input" type="text"  ng-model="payment.card.exp_year"
+        placeholder="YY">
+        </div>
+      </div>
+    <div class="checkout-cvc">
+      <span>CVC</span>
+      <div class="">
+      <input id="exp-input" type="text" size="4" ng-model="payment.card.cvc"
+      placeholder="CVC">
+    </div>
+  </div>
+  </section>
+
+      <div class="checkout-payment">
+        <input type="submit" class="submit" value="Submit Payment">
+      </div>
+    </section>
+
+</form>
+
+
+
+<!-- <form action="" method="POST" id="payment-form">
+    <span class='payment-errors'></span>
+    <input data-stripe="number"/>
+    <input data-stripe="cvc"/>
+    <input data-stripe="exp-month"/>
+    <input data-stripe="exp-year"/>
+    <button type="submit">Submit Payment</button>
+</form> -->

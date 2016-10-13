@@ -1,4 +1,4 @@
-angular.module('syrupApp').controller('cartControl', function($scope, rgsService, stripe, $http) {
+angular.module('syrupApp').controller('cartControl', function($scope, rgsService, stripe) {
 
 
 
@@ -75,7 +75,6 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
         // }
       // }
     });
-    orderObject.total = orderObject.quart.price + orderObject.pint.price + orderObject.half_pint.price;
     // console.log(orderObject);
     console.log('Here is your order:', orderObject);
     rgsService.checkUserIsLoggedIn(orderObject);

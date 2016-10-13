@@ -1,7 +1,7 @@
 <div id="admin" >
   <nav class="admin-nav">
     <h3 class="teko">Admin page</h3>
-    <button class="logout-btn" ng-click="logout()">LOGOUT</button>
+    <button class="logout-btn" ng-click="logout()">LOG OUT</button>
   </nav>
 
   <div class="admin-content">
@@ -19,18 +19,39 @@
     </span>
 
     <span class="order-section">
-      <span class="big-blue">Orders</span>
+      <span class="big-blue">Pending orders</span>
       <!-- <h3>Users</h3> -->
-      <ul class="past-orders">
-        <li ng-repeat="order in orders | orderBy : 'date_priority'" ng-click="test(order)">
+      <ul class="unfilled-orders">
+        <li ng-repeat="pending in unfilled | orderBy : 'date_priority'" ng-click="test(order)">
             <!-- <section class="order">{{order.id}}</section> -->
-            <section>{{order.date_priority | date: "MMMM d, yyyy"}}</section>
-            <section>{{order.firstname}} {{order.lastname}} <span class="order-id">id: {{order.id}}</span></section>
-            <section>{{order.name}}</section>
-            <section>{{order.num_products}} items</section>
+            <span>
+              <section>{{pending.date_priority | date: "MMMM d, yyyy"}}</section>
+              <section>{{pending.firstname}} {{pending.lastname}} <span class="user-id">id: {{pending.users_id}}</span></section>
+              <section>{{pending.name}}</section>
+              <section>{{pending.num_products}} items</section>
+            </span>
+            <div class="mark-filled" ng-click="markOrderFilled(pending.orders_id)"></div>
         </li>
       </ul>
     </span>
+
+    <span class="order-section">
+      <span class="big-blue">Filled orders</span>
+      <!-- <h3>Users</h3> -->
+      <ul class="filled-orders">
+        <li ng-repeat="completed in filled | orderBy : 'date_priority'" ng-click="test(order)">
+            <!-- <section class="order">{{order.id}}</section> -->
+            <span>
+              <section>{{completed.date_priority | date: "MMMM d, yyyy"}}</section>
+              <section>{{completed.firstname}} {{completed.lastname}} <span class="user-id">id: {{completed.users_id}}</span></section>
+              <section>{{completed.name}}</section>
+              <section>{{completed.num_products}} items</section>
+            </span>
+            <div class="mark-unfilled flex-centered" ng-click="markOrderUnfilled(completed.orders_id)">/</div>
+        </li>
+      </ul>
+    </span>
+
 
   </div
 

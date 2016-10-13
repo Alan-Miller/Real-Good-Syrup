@@ -99,6 +99,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
     <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/sweetalert2/5.2.0/sweetalert2.js"></script>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-stripe/4.2.12/angular-stripe.js"></script>
+
     <!-- <script type="text/javascript" src="./builds/all.js"></script> -->
     <script type="text/javascript" src="./app.js"></script>
     <script type="text/javascript" src="./js/scripts.js"></script>
@@ -170,18 +173,16 @@ TO DO
 admin view incorrectly calculates num items
   fix sql statement so admin sees total money, count of products for each user
 .i-want div show "1 pints," etc. Always plural.
-leaves fall in front of cart
 background
-redo tables
 
-logout logs out but still allows orders
 rewrite logout "filler" lines (like fadeOut of nav elements) to separate fn)
-check off filled orders (admin)
 nothing in the user (patron) view
   update user info front end
 media queries
 connect to store (Stripe)
 host it (talk to Richard)
+
+
 
 DONE
 order confirmation window
@@ -189,4 +190,12 @@ create user front end
 patron logs out on refresh but can still place order that has no id (GET MENTOR)
 admin can't buy till after patron buys (maybe a non-issue if admins don't place orders)
 fix login/logout buttons
+logout logs out but still allows orders
+redo tables
+check off filled orders (admin)
+leaves fall in front of cart
 -->
+
+
+
+<!-- STRIPE: ctrl, front end, server, app.js -->
