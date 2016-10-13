@@ -10,7 +10,16 @@ var moment = require('moment');
 // var LocalStrategy = require('passport-local').Strategy;
 var cors = require('cors');
 var massive = require('massive');
-var config = require('./config.js');
+
+try {
+  var config = require('./config.js');
+} catch (ex) {
+  var config = {
+    "port": 8002,
+    "STRIPE_KEY": "",
+    "TOKEN_SECRET": "",
+  };
+}
 
 var stripe = require('stripe')(config.STRIPE_KEY);
 
