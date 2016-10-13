@@ -37,41 +37,14 @@ var corsOptions = {
 };
 // var bs = require('browser-sync').create();
 
-console.log(process.env.DATABASE_URL);
-
-
 var db = massive.connectSync({
   // connectionString: 'postgres://ashman@localhost:5432/rgs'
-  // connectionString: 'postgres://kciviaixoexflx:feoJgmDOA4_nyLNQW68b9PaYG1@ec2-54-235-104-63.compute-1.amazonaws.com:5432/dfagii3i7dqfd2'
   connectionString: process.env.DATABASE_URL
-  // db: 'rgs'
 });
-
-db.run("select * from users", function(err, res){
-  // all products returned in array
-  console.log(res);
-});
-
-
-
-app.set('db', db);
-
-app.get('/', function(req, res) {
-  // db.users.findById(1);
-  res.status(200).json({"Message": "Hello"});
-});
-
-var port = process.env.PORT || 8002;
-app.listen(port, function() {
-  console.log('Listening now on port ' + port);
-});
-return;
-
-
 
 var app = module.exports = express();
 app.set('db', db);
-// var app = module.exports = express();
+
 // app.set('database', massive.connectSync({
 //   db: 'rgs'
 // }));
