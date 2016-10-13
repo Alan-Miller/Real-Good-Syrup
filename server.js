@@ -23,8 +23,6 @@ app.listen(port, function() {
   console.log('Listening now on port ' + port);
 });
 
-return;
-
 
 // try {
 //   var config = require('./config.js');
@@ -48,6 +46,8 @@ var corsOptions = {
   // origin: 'http://localhost:8002'
 };
 // var bs = require('browser-sync').create();
+
+return;
 
 var db = massive.connectSync({
   db: 'rgs'
