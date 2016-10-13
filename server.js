@@ -1,11 +1,12 @@
 var express = require('express');
 var app = module.exports = express();
 
-app.put('/', function(req, res) {
+app.get('/', function(req, res) {
   res.status(200).json({"Message": "Hello"});
 });
 
-app.listen(process.env.PORT || 8002, function() {
+var port = process.env.PORT || 8002;
+app.listen(port, function() {
   console.log('Listening now on port ' + port);
 });
 
