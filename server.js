@@ -1,4 +1,17 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  REQUIREMENTS
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 var express = require('express');
+var bodyParser = require('body-parser');
+var jwt = require('jwt-simple');
+var moment = require('moment');
+// var session = require('express-session');
+// var passport = require('passport');
+// var LocalStrategy = require('passport-local').Strategy;
+var cors = require('cors');
+var massive = require('massive');
+
+
 var app = module.exports = express();
 
 app.get('/', function(req, res) {
@@ -12,20 +25,6 @@ app.listen(port, function() {
 
 return;
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-
-
-  REQUIREMENTS
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-var express = require('express');
-var bodyParser = require('body-parser');
-var jwt = require('jwt-simple');
-var moment = require('moment');
-// var session = require('express-session');
-// var passport = require('passport');
-// var LocalStrategy = require('passport-local').Strategy;
-var cors = require('cors');
-var massive = require('massive');
 
 // try {
 //   var config = require('./config.js');
