@@ -42,8 +42,8 @@ console.log(process.env.DATABASE_URL);
 
 var db = massive.connectSync({
   // connectionString: 'postgres://ashman@localhost:5432/rgs'
-  connectionString: 'postgres://kciviaixoexflx:feoJgmDOA4_nyLNQW68b9PaYG1@ec2-54-235-104-63.compute-1.amazonaws.com:5432/dfagii3i7dqfd2'
-  // connectionString: process.env.DATABASE_URL
+  // connectionString: 'postgres://kciviaixoexflx:feoJgmDOA4_nyLNQW68b9PaYG1@ec2-54-235-104-63.compute-1.amazonaws.com:5432/dfagii3i7dqfd2'
+  connectionString: process.env.DATABASE_URL
   // db: 'rgs'
 });
 
