@@ -62,7 +62,7 @@
         <li ui-sref="about" class="about-nav admin-fade">About us</li>
         <li ui-sref="process" class="process-nav admin-fade">Our process</li>
         <!-- <li ui-sref="products" class="products-nav">Bottle sizes</li> -->
-        <li class="contact-nav admin-fade">Contact us</li>
+        <li class="contact-nav admin-fade">Contact</li>
         <li ui-sref="login" class="login-nav admin-fade"><span class="teko">log in</span></li>
         <li ui-sref="patron" class="my-info-nav patron-fade">my info</li>
         <li class="logout-nav" nav-logout>log out</li>
@@ -120,91 +120,3 @@
     <script type="text/javascript" src="./js/shortenName.js"></script>
   </body>
 </html>
-
-
-
-
-
-<!--
-BACK END
-require jwt and moment
-pasted in server-side code into server.js
-edit getSafeUser function to reflect correct user information
-added TOKEN_SECRET to config file
-test in Postman
-
-to reroute certain views when not logged in:
-  paste in loginRequired code at top of app.js file
-  add resolve property only to states that require login (i.e., NOT to login state)
-
-FRONT END
-injected satellizer and into app module
-injected $authProvider into config function in app module and added $authProvider code at bottom
-make sure getUser fn in server controller is correct
-inject $auth into login controller and wherever the logout fn is
-in login controller, make sure login function is correct
-in the logout fn, use $auth.logout()
-
-
-In pgAdmin:
-  CREATE EXTENSION pgcrypto;
-
-In SQL file:
-  crypt($1, gen_salt('bf')) in place just the variable
-
-Compare password:
-  compare_password.sql
-    select password = crypt($1, password) from users where id = $2;
--->
-
-
-<!--
-To update user with hashed password:
-  update sql:
-    update users
-    set password = crypt('j', gen_salt('bf'))
-    where id = 3
--->
-
-
-
-<!--
-TO DO
-admin view incorrectly calculates num items
-  fix sql statement so admin sees total money, count of products for each user
-.i-want div show "1 pints," etc. Always plural.
-background
-
-rewrite logout "filler" lines (like fadeOut of nav elements) to separate fn)
-nothing in the user (patron) view
-  update user info front end
-media queries
-connect to store (Stripe)
-host it (talk to Richard)
-
-
-
-DONE
-order confirmation window
-create user front end
-patron logs out on refresh but can still place order that has no id (GET MENTOR)
-admin can't buy till after patron buys (maybe a non-issue if admins don't place orders)
-fix login/logout buttons
-logout logs out but still allows orders
-redo tables
-check off filled orders (admin)
-leaves fall in front of cart
--->
-
-
-
-<!-- STRIPE: ctrl, front end, server, app.js -->
-
-
-
-
-
-
-
-<!-- LATER
-two servers at once (live server) -->
