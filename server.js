@@ -32,8 +32,8 @@ var corsOptions = {
 // var bs = require('browser-sync').create();
 
 var db = massive.connectSync({
-  connectionString: 'postgres://ashman@localhost:5432/rgs'
-  // connectionString: process.env.DATABASE_URL
+  // connectionString: 'postgres://ashman@localhost:5432/rgs'
+  connectionString: process.env.DATABASE_URL
 });
 
 var app = module.exports = express();
