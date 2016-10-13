@@ -15,7 +15,7 @@ var config = require('./config.js');
 var stripe = require('stripe')(config.STRIPE_KEY);
 
 var corsOptions = {
-  origin: 'http://localhost:8002'
+  // origin: 'http://localhost:8002'
 };
 // var bs = require('browser-sync').create();
 

@@ -233,7 +233,7 @@ angular.module('syrupApp', ['ui.router', 'satellizer', 'angular-stripe'])
 
    $urlRouterProvider.otherwise('/');
 
-   $authProvider.loginUrl = 'http://localhost:8002/auth/login';
-   $authProvider.signupUrl = 'http://localhost:8002/auth/signup';
+   $authProvider.loginUrl = '/auth/login';
+   $authProvider.signupUrl = '/auth/signup';
 
 });

@@ -1,6 +1,6 @@
 angular.module('syrupApp').service('rgsService', function($http, $state) {
 
-  var port = 8002;
+  // var port = 8002;
   var serviceScope = this;
   var user = {};
 
@@ -230,7 +230,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     // this.loginLocal = function(credentials) {
     //   return $http({
     //     method: "POST",
-    //     url: 'http://localhost:' + port + '/auth/local',
+    //     url: '/auth/local',
     //     data: credentials
     //   })
     //   .then(function(res) {
@@ -244,7 +244,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     // this.getUser = function() {
     //   return $http({
     //     method: 'GET',
-    //     url: 'http://localhost:' + port + '/auth/me'
+    //     url: '/auth/me'
     //   })
     //   .then(function(res) {
     //     // console.log(res);
@@ -258,7 +258,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     // this.logout = function() {
     //   return $http({
     //     method: 'GET',
-    //     url: 'http://localhost:' + port + '/auth/logout'
+    //     url: '/auth/logout'
     //   }).then(function(res) {
     //     return res.data;
     //   }).catch(function(err) {
