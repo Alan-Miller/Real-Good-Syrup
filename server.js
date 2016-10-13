@@ -47,6 +47,8 @@ var corsOptions = {
 };
 // var bs = require('browser-sync').create();
 
+console.log(process.env.DATABASE_URL);
+
 return;
 
 var db = massive.connectSync({
