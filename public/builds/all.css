@@ -367,10 +367,10 @@ h3 {
     margin: 12px 0 12px 12px;
     padding: 12px;
     background-color: RGB(204, 70, 77);
-    border-top: solid 2px RGB(234, 130, 137);
+    border-top: solid 2px green;
     border-right: solid 2px RGB(101, 8, 25);
     border-bottom: solid 2px RGB(101, 8, 25);
-    border-left: solid 2px RGB(234, 130, 137);
+    border-left: solid 2px green;
     border-radius: 12px 0 0 12px;
     color: white;
     cursor: pointer;
