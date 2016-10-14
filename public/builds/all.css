@@ -314,7 +314,7 @@ h3 {
   background-size: 720px; }
 
 .small-logo {
-  color: RGB(204, 70, 77);
+  color: green;
   position: absolute;
   font-size: .85em;
   left: 32px;
@@ -325,7 +325,7 @@ h3 {
     position: absolute;
     top: -45%;
     left: -47%;
-    border: thin solid RGB(204, 70, 77);
+    border: thin solid green;
     border-radius: 50%;
     height: 44px;
     width: 44px;
@@ -360,17 +360,17 @@ h3 {
     max-width: 275px;
     display: flex;
     flex-direction: column;
-    outline-color: RGB(204, 70, 77);
-    color: RGB(204, 70, 77);
+    outline-color: green;
+    color: green;
     outline-width: medium; }
   .login .login-btn {
     margin: 12px 0 12px 12px;
     padding: 12px;
     background-color: RGB(204, 70, 77);
-    border-top: solid 2px green;
+    border-top: solid 2px RGB(234, 130, 137);
     border-right: solid 2px RGB(101, 8, 25);
     border-bottom: solid 2px RGB(101, 8, 25);
-    border-left: solid 2px green;
+    border-left: solid 2px RGB(234, 130, 137);
     border-radius: 12px 0 0 12px;
     color: white;
     cursor: pointer;
@@ -444,7 +444,7 @@ h3 {
 
 #third h2, #contact h2, #admin h2, #about h2 {
   font-size: 2.7rem;
-  color: RGB(204, 70, 77);
+  color: green;
   position: relative;
   left: -36px;
   padding-bottom: 17px;
@@ -523,7 +523,7 @@ h3 {
     user-select: none; }
   .cart-adder .add-sub:after {
     content: '';
-    background-color: RGB(204, 70, 77);
+    background-color: green;
     height: 18px;
     width: 18px;
     border-radius: 3px 3px 0 0;
@@ -535,7 +535,7 @@ h3 {
     transform: translateX(-50%); }
   .cart-adder .add-sub:before {
     content: '';
-    border: 5px solid RGB(204, 70, 77);
+    border: 5px solid green;
     height: 18px;
     width: 11px;
     border-radius: 11px;
@@ -547,7 +547,7 @@ h3 {
   .cart-adder .add-sub-padding {
     padding: 14px 0; }
   .cart-adder .sub {
-    background-color: RGB(204, 70, 77);
+    background-color: green;
     cursor: pointer;
     border-radius: 20px 20px 0 0;
     border-left: 4px solid RGB(255, 157, 162);
@@ -566,8 +566,8 @@ h3 {
   .cart-adder .add {
     background-color: #372d3b;
     border-left: 4px solid RGB(255, 157, 162);
-    border-right: 4px solid RGB(204, 70, 77);
-    border-bottom: 4px solid RGB(204, 70, 77);
+    border-right: 4px solid green;
+    border-bottom: 4px solid green;
     cursor: pointer;
     border-radius: 0 0 12px 12px;
     position: relative; }
@@ -593,7 +593,7 @@ h3 {
   cursor: pointer; }
 
 .buy-btn {
-  background-color: RGB(204, 70, 77);
+  background-color: green;
   width: 200px;
   height: 50px;
   border: medium solid white;
@@ -610,7 +610,7 @@ h3 {
 
 .buy-btn:hover {
   background-color: RGB(255, 208, 165);
-  color: RGB(204, 70, 77); }
+  color: green; }
 
 .buy-btn:before {
   content: '';
