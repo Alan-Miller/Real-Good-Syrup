@@ -4,13 +4,17 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var jwt = require('jwt-simple');
+var massive = require('massive');
 var moment = require('moment');
+var cors = require('cors');
+// var stripe = require('stripe')(config.STRIPE_KEY);
+// var corsOptions = {
+//   origin: 'http://localhost:8002'
+// };
+// var bs = require('browser-sync').create();
 // var session = require('express-session');
 // var passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
-var cors = require('cors');
-var massive = require('massive');
-
 
 var app = module.exports = express();
 
@@ -24,24 +28,17 @@ try {
   };
 }
 
-var stripe = require('stripe')(config.STRIPE_KEY);
-
-var corsOptions = {
-  // origin: 'http://localhost:8002'
-};
-// var bs = require('browser-sync').create();
-
 var db = massive.connectSync({
-  // connectionString: 'postgres://ashman@localhost:5432/rgs'
-  connectionString: process.env.DATABASE_URL
+  connectionString: 'postgres://ashman@localhost:5432/rgs'
+  // connectionString: process.env.DATABASE_URL
 });
-
-var app = module.exports = express();
-app.set('db', db);
 
 // app.set('database', massive.connectSync({
 //   db: 'rgs'
 // }));
+
+var app = module.exports = express();
+app.set('db', db);
 
 var controller = require('./serverControl.js');
 
@@ -57,9 +54,8 @@ app.use(cors());
 // app.use(passport.initialize());
 // app.use(passport.session());
 
-
-// app.use(express.static('./public'));
 app.use(express.static(__dirname + '/public'));
+// app.use(express.static('./public'));
 
 
 
@@ -343,7 +339,6 @@ var port = process.env.PORT || config.port; // If the environment has a port (He
 app.listen(port, function() {
   console.log('Listening now on port ' + port);
 });
-
 
 
 // var hash = bcrypt.hashSync(req.body.password, saltRounds);

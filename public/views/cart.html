@@ -1,6 +1,5 @@
 
 <section class="all-products">
-
   <section ng-repeat="product in products | orderBy : 'id'" class="one-product">
     <div class="product-id">{{product.id}}</div>
     <div class="product-image"></div>
@@ -29,9 +28,7 @@
 
 
 <!-- STRIPE FORM -->
-
-
-<form id="payment-form" ng-submit="charge(payment)">
+<!-- <form id="payment-form" ng-submit="charge(payment)">
   <span class="payment-errors"></span>
     <section class="checkout-header">
       <h1>Checkout</h1>
@@ -69,7 +66,7 @@
       </div>
     </section>
 
-</form>
+</form> -->
 
 
 
