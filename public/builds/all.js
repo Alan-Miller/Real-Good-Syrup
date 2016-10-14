@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('syrupApp', ['ui.router', 'satellizer']).config(function ($stateProvider, $urlRouterProvider, $authProvider) {
+angular.module('syrupApp', ['ui.router', 'satellizer', 'angular-stripe']).config(function ($stateProvider, $urlRouterProvider, $authProvider, stripeProvider) {
+
+  stripeProvider.setPublishableKey('pk_test_hnF7JyUZM8nhb8nk1YSaJpuQ');
 
   var loginRequired = ['$q', '$location', '$auth', function ($q, $location, $auth) {
     var deferred = $q.defer();
@@ -11,6 +13,25 @@ angular.module('syrupApp', ['ui.router', 'satellizer']).config(function ($stateP
     }
     return deferred.promise;
   }];
+
+  var requestUser = function requestUser($http, rgsService) {
+    return $http({
+      method: 'GET',
+      url: '/api/me'
+    }).then(function (response) {
+      // console.log(response);
+      return $http({
+        method: 'GET',
+        url: '/api/users/' + response.data
+      }).then(function (response) {
+        user = response.data;
+        rgsService.setUser(user[0]);
+        // console.log('here is the user', user);
+        return user[0];
+      });
+      // console.log('user', user);
+    });
+  };
 
   $stateProvider.state('landing', {
     url: '/',
@@ -64,7 +85,8 @@ angular.module('syrupApp', ['ui.router', 'satellizer']).config(function ($stateP
     templateUrl: './views/patron.html',
     controller: 'patronControl',
     resolve: {
-      loginRequired: loginRequired
+      loginRequired: loginRequired,
+      requestUser: requestUser
     },
     views: {
       'first': {
@@ -204,37 +226,65 @@ angular.module('syrupApp', ['ui.router', 'satellizer']).config(function ($stateP
 
   $urlRouterProvider.otherwise('/');
 
-  $authProvider.loginUrl = 'http://localhost:8002/auth/login';
-  $authProvider.signupUrl = 'http://localhost:8002/auth/signup';
+  $authProvider.loginUrl = '/auth/login';
+  $authProvider.signupUrl = '/auth/signup';
 });
 
-angular.module('syrupApp').directive('cartDirective', function () {
+angular.module('syrupApp').directive('addSubtract', function () {
   return {
     restrict: 'AE',
     link: function link(scope, element, attribute) {
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-        Grow the add/subtract button on hover
+        HOVER OVER ADD/SUB BUTTON
+          Grow the add/subtract section
+          Create highlight behind button
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       element.hover(function () {
         element.parent().find('.add').removeClass('add-sub-padding');
         element.addClass('add-sub-padding');
+        element.parent().find('section').addClass('white-highlight');
       }, function () {
         $('.add').addClass('add-sub-padding');
         $('.sub').removeClass('add-sub-padding');
+        element.parent().find('section').removeClass('white-highlight');
       });
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
         Add/subtract jars of syrup in cart
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       element.on('click', function () {
-        var numJars = element.parent().parent().parent().find('.i-want').find('.num').html();
+        var numJars = element.closest('.one-product').find('.num').html();
+        // var numJars = element.parent().parent().parent().find('.i-want').find('.num').html();
         if (element.html() === '+') {
           numJars++;
         } else if (element.html() === '-' && numJars > 0) {
           numJars--;
         }
-        element.parent().parent().parent().find('.i-want').find('.num').html(numJars);
+        element.closest('.one-product').find('.num').html(numJars);
+      });
+    }
+  };
+});
+
+angular.module('syrupApp').directive('navLogout', function (rgsService) {
+  return {
+    restrict: 'AE',
+    controller: function controller($scope, $state, $auth) {
+
+      $scope.logout = function () {
+        $auth.logout().then(function (res) {
+          $('.admin-fade').fadeIn('fast');
+          $('.logout-nav').fadeOut('fast');
+          $('.my-info-nav').fadeOut('fast');
+          $('body').removeClass('no-scroll');
+          rgsService.setUser({ id: false });
+          $state.go('landing');
+        });
+      };
+
+      $('.logout-nav').on('click', function () {
+        $scope.logout();
       });
     }
   };
@@ -250,9 +300,11 @@ $(document).ready(function () {
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   var nav = $('#main-nav');
   var navOffset = nav.offset().top;
+  // alert(navOffset);
 
   $(window).resize(function () {
     navOffset = nav.offset().top;
+    // alert(navOffset);
   });
 
   $(window).on('scroll', function () {
@@ -285,7 +337,7 @@ $(document).ready(function () {
       }
     });
   };
-  $('.small-logo, .login-nav').on('click', function () {
+  $('.small-logo, .login-nav, .my-info-nav').on('click', function () {
     window.setTimeout(function () {
       $('#first').scrollToStateContainer();
     });
@@ -402,13 +454,22 @@ angular.module('syrupApp').controller('aboutControl', function ($scope) {});
 
 angular.module('syrupApp').controller('adminControl', function ($scope, rgsService, $state, $auth) {
 
-  $('body').addClass('no-scroll');
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    ADMIN LOCKOUT
+      Locks admin out of other features and hides nav bar
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  $('#first').scrollToStateContainer(); // Scrolls up again before locking position, in case window is scrolled then refreshed
+  $('.admin-fade').fadeOut('fast');
+  $('.logout-nav').fadeIn('fast');
 
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  window.setTimeout(function () {
+    $('body').addClass('no-scroll');
+  }, 1000);
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  $scope.user = rgsService.user;
-  // rgsService.userId = $scope.user.id;
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  $scope.user = rgsService.getCurrentUser();
 
   rgsService.getUsers().then(function (response) {
     $scope.users = response;
@@ -420,19 +481,42 @@ angular.module('syrupApp').controller('adminControl', function ($scope, rgsServi
     // console.log(response);
   });
 
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     ORDERS
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  $scope.getAllOrders = function () {
-    rgsService.getAllOrders().then(function (response) {
-      $scope.orders = response;
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  $scope.getUnfilledOrders = function () {
+    rgsService.getUnfilledOrders().then(function (response) {
+      // console.log('THE RESPONSE:', response);
+      $scope.unfilled = response;
     });
   };
-  $scope.getAllOrders();
+  $scope.getUnfilledOrders();
 
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  $scope.getFilledOrders = function () {
+    rgsService.getFilledOrders().then(function (response) {
+      console.log('THE RESPONSE:', response);
+      $scope.filled = response;
+    });
+  };
+  $scope.getFilledOrders();
+
+  $scope.markOrderFilled = function (orderId) {
+    console.log('orderId:', orderId);
+    rgsService.markOrderFilled(orderId).then(function (response) {
+      $state.reload();
+    });
+  };
+
+  $scope.markOrderUnfilled = function (orderId) {
+    console.log('orderId:', orderId);
+    rgsService.markOrderUnfilled(orderId).then(function (response) {
+      $state.reload();
+    });
+  };
+
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     LOGOUT
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   // $scope.logout = function() {
   //   rgsService.logout().then(function(res) {
   //     rgsService.confirmLogout(res);
@@ -441,58 +525,56 @@ angular.module('syrupApp').controller('adminControl', function ($scope, rgsServi
 
   $scope.logout = function () {
     $auth.logout().then(function (res) {
+      $('.admin-fade').fadeIn('fast');
+      $('.logout-nav').fadeOut('fast');
       $('body').removeClass('no-scroll');
       $state.go('landing');
-      rgsService.confirmLogout(res);
+      // rgsService.confirmLogout(res);
+    });
+  };
+});
+
+angular.module('syrupApp').controller('cartControl', function ($scope, rgsService, stripe, $http) {
+
+  $scope.charge = function () {
+    return stripe.card.createToken($scope.payment.card).then(function (response) {
+      console.log('token created for card ending in ', response.card.last4);
+      var payment = angular.copy($scope.payment);
+      payment.card = void 0;
+      payment.token = response.id;
+      return $http.post('/api/payment', payment);
+    }).then(function (payment) {
+      console.log('successfully submitted payment for $', payment.amount);
+    }).catch(function (err) {
+      if (err.type && /^Stripe/.test(err.type)) {
+        console.log('Stripe error: ', err.message);
+      } else {
+        console.log('Other error occurred, possibly with your API', err.message);
+      }
     });
   };
 
-  // FIN
-});
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-  Code Graveyard ††
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-// if (res) {
-//   swal({
-//     title: 'Are you sure?',
-//     text: "This will log you out.",
-//     type: 'question',
-//     showCancelButton: true,
-//     cancelButtonColor: 'RGB(217, 67, 98)',
-//     confirmButtonColor: 'RGB(153, 196, 210)',
-//     confirmButtonText: 'Yes, log out!'
-//   }).then(function() {
-//     swal({
-//       title: 'Bye! Thanks for visiting!',
-//       // text: 'We\'ll miss you.',
-//       type: 'success',
-//       timer: 1300
-//       }
-//     );
-//     $state.go('landing');
-//   });
-// }
-
-angular.module('syrupApp').controller('cartControl', function ($scope, rgsService) {
-
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     PRODUCTS
       Get all products
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   rgsService.getProducts().then(function (response) {
     $scope.products = response;
+    console.log('$prod:', $scope.products);
   });
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     ORDERS
-      Place order
+      Places order
         - Creates order object; key is based on product id and value is price
-      Runs confirmOrder fn in service
+      Runs checkUserIsLoggedIn fn in service
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.placeOrder = function () {
     var orderObject = {};
-    orderObject.userId = rgsService.user.id;
+    var user = rgsService.getCurrentUser();
+    // console.log('THE USER', user);
+    orderObject.userId = user.id;
+    // console.log(orderObject.userId);
 
     $('.i-want').each(function (index, val) {
 
@@ -500,54 +582,33 @@ angular.module('syrupApp').controller('cartControl', function ($scope, rgsServic
       var productPrice = Number($(this).parent().find('.product-price').html().replace('$', ''));
       var productTotal = 0;
 
-      var numOfEachSizeOfJar = $(this).find('.num').html();
+      var numOfEachSizeOfJar = Number($(this).find('.num').html());
       for (var i = 0; i < numOfEachSizeOfJar; i++) {
         productTotal += productPrice;
       }
 
       var productId = $(this).parent().find('.product-id').html();
-      orderObject['product' + productId] = productTotal;
+      orderObject[$scope.products[productId - 1].short_name] = {};
+      orderObject[$scope.products[productId - 1].short_name].productId = Number(productId);
+      orderObject[$scope.products[productId - 1].short_name].qty = numOfEachSizeOfJar;
+      orderObject[$scope.products[productId - 1].short_name].price = productTotal;
 
-      for (var key in orderObject) {
-        if (orderObject[key] === 0) {
-          // delete orderObject[key];
-          orderObject[key] = null;
-        }
-      }
+      // for (var key in orderObject[$scope.products[productId - 1].short_name]) {
+      // if (orderObject[$scope.products[productId - 1].short_name].qty === 0) {
+      // delete orderObject[key];
+      // orderObject[$scope.products[productId - 1].short_name].qty = null;
+      // }
+      // }
     });
-
-    console.log(orderObject);
+    orderObject.total = orderObject.quart.price + orderObject.pint.price + orderObject.half_pint.price;
+    // console.log(orderObject);
+    console.log('Here is your order:', orderObject);
     rgsService.checkUserIsLoggedIn(orderObject);
     // rgsService.confirmOrder(orderObject);
   };
 
-  /*
-  
-  var numJars = 0;
-  $scope.numJars = function(symbol) {
-    if (symbol === '+') {
-      numJars++;
-      console.log(numJars);
-    } else if (symbol === '-' && numJars > 0) {
-      numJars--;
-      console.log(numJars);
-    }
-    // var spanOfJars = document.getElementById('i-want');
-    $(this).parent().parent().parent().find('.i-want').find('.num').html(numJars);
-    // $(this).closest('.one-product').find('.i-want').html(numJars);
-    // $('.num').html(numJars);
-  };
-  // $scope.numJars();
-  
-  
-  //
-  // $scope.theorder = {};
-  //
-  // $scope.placeorder = function() {
-  //
-  // };
-  
-  */
+  // Stripe.setPublishableKey('pk_test_hnF7JyUZM8nhb8nk1YSaJpuQ');
+
 });
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -569,11 +630,190 @@ angular.module('syrupApp').controller('cartControl', function ($scope, rgsServic
 //   }
 // }
 
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  if (symbol === '+') {
+    numJars++;
+    console.log(numJars);
+  } else if (symbol === '-' && numJars > 0) {
+    numJars--;
+    console.log(numJars);
+  }
+  // var spanOfJars = document.getElementById('i-want');
+  $(this).parent().parent().parent().find('.i-want').find('.num').html(numJars);
+  // $(this).closest('.one-product').find('.i-want').html(numJars);
+  // $('.num').html(numJars);
+};
+// $scope.numJars();
+
+
+//
+// $scope.theorder = {};
+//
+// $scope.placeorder = function() {
+//
+// };
+
+*/
+
 angular.module('syrupApp').controller('contactControl', function ($scope) {});
 
 angular.module('syrupApp').controller('landingControl', function ($scope) {});
 
 angular.module('syrupApp').controller('loginControl', function ($scope, rgsService, $state, $auth) {
+
+  $scope.createNew = function () {
+    swal.setDefaults({
+      confirmButtonText: 'Next &rarr;',
+      confirmButtonColor: 'RGB(204, 70, 77)',
+      showCancelButton: true,
+      animation: false,
+      progressSteps: ['1', '2', '3', '4', '5', '6']
+    });
+
+    var newUserArr = [];
+    var saveNewUserInput = function saveNewUserInput(input) {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          if (input === 'duh') {
+            reject('no duh');
+          } else {
+            newUserArr.push(input);
+            resolve();
+          }
+        }, 88);
+      });
+    };
+    var steps = [{
+      title: 'Step 1',
+      text: 'Enter your first name',
+      input: 'text',
+      // preConfirm: saveNewUserInput(text),
+      preConfirm: function preConfirm(text) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(function () {
+            if (text === 'duh') {
+              reject('no duh');
+            } else {
+              newUserArr.push(text);
+              resolve();
+            }
+          }, 88);
+        });
+      }
+    }, {
+      title: 'Step 2',
+      text: 'Enter your last name',
+      input: 'text',
+      // preConfirm: saveNewUserInput(text),
+      preConfirm: function preConfirm(text) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(function () {
+            if (text === 'duh') {
+              reject('no duh');
+            } else {
+              newUserArr.push(text);
+              resolve();
+            }
+          }, 88);
+        });
+      }
+    }, {
+      title: 'Step 3',
+      text: 'Enter your address',
+      input: 'text',
+      // preConfirm: saveNewUserInput(text),
+      preConfirm: function preConfirm(text) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(function () {
+            if (text === 'duh') {
+              reject('no duh');
+            } else {
+              newUserArr.push(text);
+              resolve();
+            }
+          }, 88);
+        });
+      }
+    }, {
+      title: 'Step 4',
+      text: 'Enter your zip code',
+      input: 'number',
+      // preConfirm: saveNewUserInput(number),
+      preConfirm: function preConfirm(number) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(function () {
+            if (number === 'duh') {
+              reject('no duh');
+            } else {
+              newUserArr.push(number);
+              resolve();
+            }
+          }, 88);
+        });
+      }
+    }, {
+      title: 'Step 5',
+      text: 'Enter a username',
+      input: 'text',
+      // preConfirm: saveNewUserInput(text),
+      preConfirm: function preConfirm(text) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(function () {
+            if (text === 'duh') {
+              reject('no duh');
+            } else {
+              newUserArr.push(text);
+              resolve();
+            }
+          }, 88);
+        });
+      }
+    }, {
+      title: 'Step 6',
+      text: 'Enter a password',
+      input: 'password',
+      // preConfirm: saveNewUserInput(password),
+      preConfirm: function preConfirm(password) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(function () {
+            if (password === 'duh') {
+              reject('no duh');
+            } else {
+              newUserArr.push(password);
+              resolve();
+            }
+          }, 88);
+        });
+      }
+    }];
+
+    swal.queue(steps).then(function () {
+      console.log(newUserArr);
+      var newUserObj = {
+        firstname: newUserArr[0],
+        lastname: newUserArr[1],
+        address: newUserArr[2],
+        zip: newUserArr[3],
+        username: newUserArr[4],
+        password: newUserArr[5]
+      };
+      console.log(newUserObj);
+      rgsService.postUser(newUserObj);
+      setTimeout(function () {
+        $scope.loginLocal(newUserObj.username, newUserObj.password);
+      }, 1000);
+    }, function () {
+      swal.resetDefaults();
+      swal({
+        title: 'Welcome!',
+        confirmButtonText: 'Yay!',
+        showCancelButton: false
+      });
+    }, function () {
+      swal.resetDefaults();
+    });
+  };
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     AUTHENTICATION
@@ -599,11 +839,19 @@ angular.module('syrupApp').controller('loginControl', function ($scope, rgsServi
     }).then(function (response) {
       if (response.status === 200) {
         $auth.setToken(response);
-        rgsService.user = response.data.user;
+        // rgsService.user = response.data.user;
+        rgsService.setUser(response.data.user);
         var user = response.data.user;
         checkUser(user.admin);
       }
-    }).catch(function (response) {});
+    }).catch(function (response) {
+      swal({
+        title: 'Wrong username or password',
+        text: 'Please try again',
+        type: 'error',
+        timer: 2100
+      });
+    });
   };
 
   function checkUser(isAdmin) {
@@ -611,13 +859,14 @@ angular.module('syrupApp').controller('loginControl', function ($scope, rgsServi
       if (user && isAdmin) {
         $state.go('admin');
         window.setTimeout(function () {
-          $('#first').scrollToStateContainer();
+          $('#first').scrollToStateContainer(); // Scrolls to top in case window is not scroll to position when logging in
         });
         // $('body').addClass('no-scroll');
       } else if (user) {
         $state.go('patron');
       } else {
-        $scope.loginHeading = 'Wrong name or password. Try again.';
+        // $scope.loginHeading = 'Wrong name or password. Try again.';
+        // THIS NEVER GETS HIT SINCE AUTH IS REQUIRED BY LOGINLOCAL()
       }
     });
   }
@@ -626,20 +875,25 @@ angular.module('syrupApp').controller('loginControl', function ($scope, rgsServi
     $auth.logout().then(function (res) {
       $('body').removeClass('no-scroll');
       $state.go('landing');
-      rgsService.confirmLogout(res);
+      // rgsService.confirmLogout(res);
     });
   };
 });
 
-angular.module('syrupApp').controller('patronControl', function ($scope, rgsService, $state, $auth) {
+angular.module('syrupApp').controller('patronControl', function ($scope, rgsService, $state, $auth, requestUser) {
+
+  $('.login-nav').fadeOut('fast');
+  $('.logout-nav').fadeIn('fast');
+  $('.my-info-nav').fadeIn('fast');
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  $scope.user = rgsService.user;
-  rgsService.userId = $scope.user.id;
-  console.log($scope.user);
-  console.log(rgsService.userId);
+  // $scope.user = rgsService.getCurrentUser();
+  $scope.user = requestUser;
+  // console.log($scope.user);
+  // console.log(rgsService.userId);
+
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     ORDERS
@@ -655,6 +909,7 @@ angular.module('syrupApp').controller('patronControl', function ($scope, rgsServ
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     LOGOUT
       Runs confirmLogout fn
+      Uses $auth
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   // $scope.logout = function() {
   //   rgsService.logout().then(function(res) {
@@ -662,11 +917,14 @@ angular.module('syrupApp').controller('patronControl', function ($scope, rgsServ
   //   });
   // };
 
-
   $scope.logout = function () {
     $auth.logout().then(function (res) {
+      $('.login-nav').fadeIn('fast');
+      $('.logout-nav').fadeOut('fast');
+      $('.my-info-nav').fadeOut('fast');
+      rgsService.setUser({ id: false });
       $state.go('landing');
-      rgsService.confirmLogout(res);
+      // rgsService.confirmLogout(res);
     });
   };
 
@@ -687,19 +945,30 @@ angular.module('syrupApp').controller('productsControl', function ($scope, rgsSe
 
 angular.module('syrupApp').service('rgsService', function ($http, $state) {
 
-  var port = 8002;
+  // var port = 8002;
   var serviceScope = this;
-  this.user = { userId: null };
+  var user = {};
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
-      Get all users (admin)
-      Get this user's info
+      setUser: set user using loginLocal fn (in loginControl.js)
+      getCurrentUser: get user fn allows views to access this service's user object
+      getUsers: get all users endpoint (admin)
+      getThisUser: get this user's info
+      getUser: get user fn used by requestUser resolve fn in app.js
+      postUser: create new user in login view
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  this.setUser = function (userObj) {
+    user = userObj;
+  };
+  this.getCurrentUser = function () {
+    return user;
+  };
+
   this.getUsers = function () {
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/api/users'
+      url: '/api/users'
     }).then(function (response) {
       return response.data;
     });
@@ -708,7 +977,29 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   this.getThisUser = function (id) {
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/api/users' + id
+      url: '/api/users' + id
+    }).then(function (response) {
+      return response.data;
+    });
+  }.bind(this);
+
+  this.getUser = function () {
+    return $http({
+      method: 'GET',
+      url: '/api/me'
+    }).then(function (res) {
+      console.log('is it the user', res);
+      return res.data;
+    }).catch(function (err) {
+      console.log(err);
+    });
+  };
+
+  this.postUser = function (newUserObject) {
+    return $http({
+      method: 'POST',
+      data: newUserObject,
+      url: '/api/users'
     }).then(function (response) {
       return response.data;
     });
@@ -721,7 +1012,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   this.getProducts = function () {
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/api/products'
+      url: '/api/products'
     }).then(function (response) {
       return response.data;
     });
@@ -729,18 +1020,41 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     ORDERS
-      getAllOrders: show all orders (admin)
+      getUnfilledOrders: show all orders (admin)
       getUserOrders: get this user's orders
       checkUserIsLoggedIn: check user is logged in, then call confirmOrder()
       confirmOrder: check order is not empty and confirm order, then call placeOrder()
       placeOrder: post order to db (and reset order to zeroes)
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  this.getAllOrders = function () {
+  this.getUnfilledOrders = function () {
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/api/orders'
+      url: '/api/orders/unfilled'
     }).then(function (response) {
       return response.data;
+    });
+  };
+
+  this.getFilledOrders = function () {
+    return $http({
+      method: 'GET',
+      url: '/api/orders/filled'
+    }).then(function (response) {
+      return response.data;
+    });
+  };
+
+  this.markOrderFilled = function (id) {
+    return $http({
+      method: 'PUT',
+      url: '/api/orders/mark/filled/' + id
+    });
+  };
+
+  this.markOrderUnfilled = function (id) {
+    return $http({
+      method: 'PUT',
+      url: '/api/orders/mark/unfilled/' + id
     });
   };
 
@@ -748,7 +1062,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
     // console.log('ID is: ' + id);
     return $http({
       method: 'GET',
-      url: 'http://localhost:' + port + '/api/orders/' + id
+      url: '/api/orders/' + id
     }).then(function (response) {
       return response.data;
     });
@@ -756,7 +1070,6 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
 
   this.checkUserIsLoggedIn = function (orderObj) {
     // alert(user.id);
-    console.log('LOOK!:', orderObj.userId);
     if (!orderObj.userId) {
       swal({
         title: 'Oops...',
@@ -772,7 +1085,8 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   };
 
   this.confirmOrder = function (orderObj) {
-    if (!orderObj.product1 && !orderObj.product2 && !orderObj.product3) {
+    if (orderObj.quart.qty === 0 && orderObj.pint.qty === 0 && orderObj.half_pint.qty === 0) {
+      swal.resetDefaults();
       swal({
         title: 'Your order is empty!',
         text: 'Click the syrup jar icon (+/-) to add to your order',
@@ -783,30 +1097,37 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
           pints,
           halfPints,
           total = 0;
-      console.log(orderObj.product1, orderObj.product2, orderObj.product3);
-      if (!isNaN(orderObj.product1)) {
-        quarts = orderObj.product1 / 22 + ' quarts ';
-        // quarts === 1 ? quarts = ' quart, ' : quarts = ' quarts, ';
-        quarts === 1 ? quarts = quarts.replace('quarts', 'quart') : quarts;
-        total += orderObj.product1;
-      } else quarts = 0;
-      if (!isNaN(orderObj.product2)) {
-        pints = orderObj.product2 / 12 + ' pints ';
-        // pints === 1 ? pints = ' pint, ' : pints = ' pints, ';
-        total += orderObj.product2;
-      } else pints = 0;
-      if (!isNaN(orderObj.product3)) {
-        halfPints = orderObj.product3 / 8 + ' half pints ';
-        // halfPints === 1 ? halfPints = ' half pint, ' : halfPints = ' half pints ';
-        total += orderObj.product3;
-      } else halfPints = 0;
+      if (orderObj.quart.qty) {
+        // quarts = orderObj.product1 / 22;
+        quarts = orderObj.quart.qty;
+        quarts === 1 ? quarts += ' quart' : quarts += ' quarts';
+        // total += orderObj.product1;
+        total += orderObj.quart.price;
+      }
+      // else quarts = 0;
+      if (orderObj.pint.qty) {
+        // pints = orderObj.product2 / 12;
+        pints = orderObj.pint.qty;
+        pints === 1 ? pints += ' pint' : pints += ' pints';
+        // total += orderObj.product2;
+        total += orderObj.pint.price;
+      }
+      // else pints = 0;
+      if (orderObj.half_pint.qty) {
+        // halfPints = orderObj.product3 / 8;
+        halfPints = orderObj.half_pint.qty;
+        halfPints === 1 ? halfPints += ' half pint' : halfPints += ' half pints';
+        // total += orderObj.product3;
+        total += orderObj.half_pint.price;
+      }
+      // else halfPints = 0;
       swal({
-        title: 'Is this your order?',
-        text: quarts + ',' + pints + ', and ' + halfPints + 'for $' + total + '.00?',
+        title: 'Please confirm your order',
+        text: quarts + '\n' + pints + '\n' + halfPints + '\ntotal: $' + total + '.00',
         type: 'question',
         showCancelButton: true,
-        cancelButtonColor: 'RGB(217, 67, 98)',
-        confirmButtonColor: 'RGB(153, 196, 210)',
+        cancelButtonColor: 'RGB(204, 70, 77)',
+        confirmButtonColor: 'RGB(80, 103, 129)',
         confirmButtonText: 'Yes, send me the syrup!'
       }).then(function () {
         swal({
@@ -824,6 +1145,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
 
   this.placeOrder = function (orderObj) {
     $('.num').html(0); // Reset numbers to zero (so second order is not placed by accident)
+    console.log('rgsService.placeOrder obj', orderObj);
     return $http({
       method: 'POST',
       data: orderObj,
@@ -833,13 +1155,13 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     AUTHENTICATION
-      Auth functions
-      Mostly pasted in from Brett's code, with Josh's tweaks
+      Auth functions are in server.js
+      Below are unused functions pasted in from Brett's code, with Josh's tweaks
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   // this.loginLocal = function(credentials) {
   //   return $http({
   //     method: "POST",
-  //     url: 'http://localhost:' + port + '/auth/local',
+  //     url: '/auth/local',
   //     data: credentials
   //   })
   //   .then(function(res) {
@@ -853,7 +1175,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   // this.getUser = function() {
   //   return $http({
   //     method: 'GET',
-  //     url: 'http://localhost:' + port + '/auth/me'
+  //     url: '/auth/me'
   //   })
   //   .then(function(res) {
   //     // console.log(res);
@@ -867,7 +1189,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   // this.logout = function() {
   //   return $http({
   //     method: 'GET',
-  //     url: 'http://localhost:' + port + '/auth/logout'
+  //     url: '/auth/logout'
   //   }).then(function(res) {
   //     return res.data;
   //   }).catch(function(err) {
@@ -876,49 +1198,33 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   // };
 
 
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-  
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  this.getUser = function () {
-    return $http({
-      method: 'GET',
-      url: 'http://localhost:' + port + '/api/me'
-    }).then(function (res) {
-      // console.log(res);
-      return res.data;
-    }).catch(function (err) {
-      console.log(err);
-    });
-  };
-
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-    Confirm logout with Sweet Alerts fn
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  this.confirmLogout = function (res) {
-    if (res) {
-      swal({
-        title: 'Are you sure?',
-        text: "This will log you out.",
-        type: 'question',
-        showCancelButton: true,
-        cancelButtonColor: 'RGB(217, 67, 98)',
-        confirmButtonColor: 'RGB(153, 196, 210)',
-        confirmButtonText: 'Yes, log out!'
-      }).then(function () {
-        swal({
-          title: 'Bye! Thanks for visiting!',
-          // text: 'We\'ll miss you.',
-          type: 'success',
-          timer: 1100
-        });
-        //NEED TO LOG OUT
-        $state.go('landing');
-        // this.logout().then(function(res) {
-        //   alert('Am I logged out yet?');
-        // });
-      });
-    }
-  };
-
-  // FIN
+  // /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  //   Confirm logout with Sweet Alerts fn
+  // /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  // this.confirmLogout = function(res) {
+  //   if (res) {
+  //     swal({
+  //       title: 'Are you sure?',
+  //       text: "This will log you out.",
+  //       type: 'question',
+  //       showCancelButton: true,
+  //       cancelButtonColor: 'RGB(217, 67, 98)',
+  //       confirmButtonColor: 'RGB(153, 196, 210)',
+  //       confirmButtonText: 'Yes, log out!'
+  //     }).then(function() {
+  //       swal({
+  //         title: 'Bye! Thanks for visiting!',
+  //         // text: 'We\'ll miss you.',
+  //         type: 'success',
+  //         timer: 1100
+  //         }
+  //       );
+  //       //NEED TO LOG OUT
+  //       $state.go('landing');
+  //       // this.logout().then(function(res) {
+  //       //   alert('Am I logged out yet?');
+  //       // });
+  //     });
+  //   }
+  // };
 });

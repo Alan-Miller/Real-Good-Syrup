@@ -1,7 +1,6 @@
 {
   "name": "real-good-syrup",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "engines": {
     "node": "6.8.0"
@@ -34,5 +33,15 @@
     "sass": "^0.5.0",
     "sass-lint": "^1.9.1",
     "stripe": "^4.11.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alan-Miller/Real-Good-Syrup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alan-Miller/Real-Good-Syrup/issues"
+  },
+  "homepage": "https://github.com/Alan-Miller/Real-Good-Syrup#readme",
+  "description": ""
 }
