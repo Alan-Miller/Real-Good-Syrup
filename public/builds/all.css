@@ -131,7 +131,7 @@ Parallax trees
 .tree-left {
   background-image: url("../img/mountain/tree-l-branch.png");
   background-position: left bottom;
-  top: 1150px; }
+  top: 1000px; }
 
 .tree-right-back {
   background-image: url("../img/mountain/tree-r-branch.png");
@@ -836,7 +836,7 @@ h3 {
 
 #faq {
   z-index: 44;
-  margin-bottom: 100px; }
+  margin-bottom: 120px; }
 
 #contact {
   z-index: 33;
