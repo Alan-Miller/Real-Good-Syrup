@@ -17,7 +17,10 @@ angular.module('syrupApp')
         Get order details
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       element.on('click', function() {
-        scope.getOrderDetails(pending.orders_id);
+        setTimeout(function() {
+          var orderId = element.closest('ul li').find('.order-id span').html();
+          scope.getOrderDetails(orderId);
+        }, 200);
       });
 
     }

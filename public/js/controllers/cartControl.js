@@ -67,15 +67,8 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
       orderObject[$scope.products[productId - 1].short_name].qty = numOfEachSizeOfJar;
       orderObject[$scope.products[productId - 1].short_name].price = productTotal;
 
-      // for (var key in orderObject[$scope.products[productId - 1].short_name]) {
-        // if (orderObject[$scope.products[productId - 1].short_name].qty === 0) {
-          // delete orderObject[key];
-          // orderObject[$scope.products[productId - 1].short_name].qty = null;
-        // }
-      // }
     });
     orderObject.total = orderObject.quart.price + orderObject.pint.price + orderObject.half_pint.price;
-    // console.log('Here is your order:', orderObject);
     rgsService.checkUserIsLoggedIn(orderObject);
     // rgsService.confirmOrder(orderObject);
   };
