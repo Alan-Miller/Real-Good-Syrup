@@ -154,13 +154,12 @@ angular.module('syrupApp').controller('loginControl', function($scope, rgsServic
           username: newUserArr[4],
           password: newUserArr[5]
         };
-        console.log(newUserObj);
         rgsService.postUser(newUserObj);
         setTimeout(function() {
           $scope.loginLocal(newUserObj.username, newUserObj.password);
-        }, 1000);
-      },
-      function() {
+        }, 500);
+      })
+      .then(function() {
         swal.resetDefaults();
         swal({
           title: 'Welcome!',
@@ -193,6 +192,11 @@ angular.module('syrupApp').controller('loginControl', function($scope, rgsServic
 
 
 //login w/jsonwebtokens
+  // $scope.loginLocal = function(username, password) {
+  //   rgsService.loginLocal(username, password);
+  // };
+
+   //
    $scope.loginLocal = function(username, password) {
      $auth.login({
        username: username,

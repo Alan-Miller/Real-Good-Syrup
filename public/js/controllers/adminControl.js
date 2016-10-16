@@ -25,7 +25,7 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
     response.forEach(function(eachUser) {
       if (eachUser.admin) {
         eachUser.admin = 'admin';
-      } else eachUser.admin = 'not an admin';
+      } else eachUser.admin = '';
     });
     // console.log(response);
   });
@@ -44,21 +44,24 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
 
   $scope.getFilledOrders = function() {
     rgsService.getFilledOrders().then(function(response) {
-      console.log('THE RESPONSE:', response);
       $scope.filled = response;
     });
   };
   $scope.getFilledOrders();
 
+  // $scope.getOrderDetails = function(orderId) {
+  //   rgsService.getOrderDetails(orderId).then(function(response) {
+  //     $scope.details = response;
+  //   });
+  // };
+
   $scope.markOrderFilled = function(orderId) {
-    console.log('orderId:', orderId);
     rgsService.markOrderFilled(orderId).then(function(response) {
       $state.reload();
     });
   };
 
   $scope.markOrderUnfilled = function(orderId) {
-    console.log('orderId:', orderId);
     rgsService.markOrderUnfilled(orderId).then(function(response) {
       $state.reload();
     });

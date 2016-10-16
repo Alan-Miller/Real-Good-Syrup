@@ -33,7 +33,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
   this.getThisUser = function(id) {
     return $http({
       method: 'GET',
-      url: '/api/users' + id
+      url: '/api/users/' + id
     })
     .then(function(response) {
       return response.data;
@@ -59,6 +59,29 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
       method: 'POST',
       data: newUserObject,
       url: '/api/users'
+    })
+    .then(function(response) {
+      return response.data;
+    });
+  };
+
+  this.updateUserInfo = function(updatedUserInfo) {
+    return $http({
+      method: 'PUT',
+      data: updatedUserInfo,
+      url: '/api/users/info'
+    })
+    .then(function(response) {
+      return response.data;
+    });
+  };
+
+  this.updatePassword = function(updatedPassword) {
+    // console.log(updatedPassword);
+    return $http({
+      method: 'PUT',
+      data: updatedPassword,
+      url: '/api/users/password'
     })
     .then(function(response) {
       return response.data;
@@ -126,6 +149,16 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     return $http({
       method: 'GET',
       url: '/api/orders/' + id
+    }).then(function(response) {
+      return response.data;
+    });
+  };
+
+  this.getOrderDetails = function(id) {
+    // console.log('ID is: ' + id);
+    return $http({
+      method: 'GET',
+      url: '/api/orders/details/' + id
     }).then(function(response) {
       return response.data;
     });
@@ -203,13 +236,14 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
         //NEED TO LOG OUT
         serviceScope.placeOrder(orderObj);
         // $state.go('patron');
+        // $state.go('cart');
+        $state.reload();
       });
     }
   };
 
   this.placeOrder = function(orderObj) {
     $('.num').html(0); // Reset numbers to zero (so second order is not placed by accident)
-    console.log('rgsService.placeOrder obj', orderObj);
     return $http({
       method: 'POST',
       data: orderObj,

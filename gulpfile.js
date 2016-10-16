@@ -13,9 +13,10 @@ var sass = require('gulp-sass');
 var paths = {
   allJs: './public/js/**/*.js',
   // allJs: './public/**/*.js',
-  // allStyles: './public/styles/styles.scss'
-  allStyles: './public/styles/main{.scss,.css}'
-  // allStyles: './public/styles/*{.scss,.css}'
+  // allStyles: './public/styles/styles.scss',
+  allStyles: './public/styles/main{.scss,.css}',
+  // allStyles: './public/styles/*{.scss,.css}',
+  indexHtml: './public/index.html'
 };
 
 
@@ -53,7 +54,7 @@ gulp.task('default', ['sass']);
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 gulp.watch(paths.allStyles, ['sass']);
 // gulp.watch(['./public/styles/trees{.scss,.css}'], ['sass']);
-// gulp.watch([paths.allJs], ['js']);
+gulp.watch([paths.allJs, paths.indexHtml], ['js']);
 
 
 

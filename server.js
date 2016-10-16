@@ -29,8 +29,8 @@ try {
 }
 
 var db = massive.connectSync({
-  // connectionString: 'postgres://ashman@localhost:5432/rgs'
   connectionString: process.env.DATABASE_URL
+  // connectionString: 'postgres://ashman@localhost:5432/rgs'
 });
 
 // app.set('database', massive.connectSync({
@@ -304,11 +304,13 @@ function getSafeUser (user) {
 app.get('/api/users', ensureAuthenticated, controller.getUsers);
 app.get('/api/users/:id', ensureAuthenticated, controller.getThisUser);
 app.post('/api/users', controller.postUser);
-// app.put('/api/users/:id', ensureAuthenticated, controller.updateUser);
+app.put('/api/users/info', ensureAuthenticated, controller.updateUserInfo);
+app.put('/api/users/password', controller.updatePassword);
 
 app.get('/api/orders/unfilled', ensureAuthenticated, controller.getUnfilledOrders);
 app.get('/api/orders/filled', ensureAuthenticated, controller.getFilledOrders);
 app.get('/api/orders/:id', ensureAuthenticated, controller.getUserOrders);
+app.get('/api/orders/details/:id', ensureAuthenticated, controller.getOrderDetails);
 app.post('/api/orders', ensureAuthenticated, controller.placeOrder);
 app.put('/api/orders/mark/filled/:id', ensureAuthenticated, controller.markOrderFilled);
 app.put('/api/orders/mark/unfilled/:id', ensureAuthenticated, controller.markOrderUnfilled);
