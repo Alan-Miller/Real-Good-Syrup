@@ -164,7 +164,11 @@ angular.module('syrupApp').controller('loginControl', function($scope, rgsServic
         swal({
           title: 'Welcome!',
           confirmButtonText: 'Yay!',
-          showCancelButton: false
+          showCancelButton: false,
+          imageUrl: '../../img/maple-leaf-small.png',
+          imageWidth: 100,
+          imageHeight: 100,
+          timer: 2100
         });
       },
       function() {
