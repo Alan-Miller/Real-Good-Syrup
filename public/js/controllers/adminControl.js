@@ -27,7 +27,6 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
         eachUser.admin = 'admin';
       } else eachUser.admin = '';
     });
-    // console.log(response);
   });
 
 

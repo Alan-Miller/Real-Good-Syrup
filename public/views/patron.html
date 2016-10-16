@@ -13,7 +13,7 @@
     <section class="order-section" scroll-element-not-document>
       <div class="big-white">Orders</div>
       <ol class="past-orders">
-        <li ng-repeat="order in orders">
+        <li ng-repeat="order in orders | orderBy: 'date'">
           <div class="order">
             <section>{{order.name}}</section>
             <section>{{order.product_total}}</section>

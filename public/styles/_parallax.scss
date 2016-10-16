@@ -15,17 +15,16 @@ Parallax trees
   position: fixed;
   top: 0px;
   left: 0px;
-  z-index: 30;
+  z-index: 29;
   width: 100%;
   height: 100vh;
 }
 
 .tree {
-  height: 5000px;
+  height: 7000px;
   width: 100%;
   background-repeat: no-repeat;
   position: absolute;
-  // bottom: 0px;
   z-index: 3;
 }
 // .tree-left {
@@ -39,57 +38,80 @@ Parallax trees
 //   bottom: -7100px;
 // }
 .tree-left {
-  background-image: url('../img/tree-l.png');
-  // background-image: url('../img/trunk-l.png');
-  // background-repeat: repeat-y;
-  // background-position: left top;
+  background-image: url('../img/mountain/tree-l-branch.png');
   background-position: left bottom;
-  top: 1000px;
+  top: 1150px;
 }
-.tree-right {
-  background-image: url('../img/tree-r.png');
-  background-position: right bottom;
-  top: 1000px;
-}
-.tree-left-back {
-  background-image: url('../img/tree-l.png');
-  background-position: left bottom;
-  top: 100px;
-  left: 11%;
-}
+// .tree-right {
+//   background-image: url('../img/tree-r.png');
+//   background-position: right bottom;
+//   top: 1000px;
+// }
+// .tree-left-back {
+//   background-image: url('../img/tree-l.png');
+//   background-position: left bottom;
+//   top: -1700px;
+//   left: 11%;
+// }
 .tree-right-back {
-  background-image: url('../img/tree-r.png');
+  background-image: url('../img/mountain/tree-r-branch.png');
   background-position: right bottom;
-  top: 100px;
-  right: 18%;
+  top: -1450px;
+  // right: 18%;
 }
-.tree-deep {
-  background-image: url('../img/tree-l.png');
-  background-position: center bottom;
-  top: 160px;
-}
+// .tree-deep {
+//   background-image: url('../img/tree-l.png');
+//   background-position: center bottom;
+//   top: 160px;
+// }
 
 .hill {
-  height: 1000px;
+  height: 1500px;
   width: 100%;
   position: absolute;
   background-repeat: no-repeat;
   background-position: center bottom;
 }
 .hill-fg {
-  background-image: url('../img/hill.png');
-  z-index: 2;
-  top: 450px;
+  background-image: url('../img/mountain/hill1.png');
+  z-index: 3;
+  height: 2000px;
+  top: 11400px;
 }
 .hill-bg {
-  background-image: url('../img/hill2.png');
-  z-index: 1;
-  top: 350px;
+  background-image: url('../img/mountain/hill2.png');
+  z-index: 2;
+  top: -280px;
 }
 .hill-dbg {
-  background-image: url('../img/hill3.png');
+  background-image: url('../img/mountain/hill3.png');
+  z-index: 1;
+  top: -500px;
+}
+.hill-ddbg {
+  background-image: url('../img/mountain/hill4.png');
   z-index: 0;
-  top: 250px;
+  top: -500px;
+}
+
+.clouds {
+  height: 1000px;
+  width: 2200px;
+  z-index: -1;
+  background-image: url('../img/mountain/clouds.png');
+  position: absolute;
+  left: -300px;
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+.sky {
+  height: 1000px;
+  width: 100%;
+  z-index: -2;
+  background-image: url('../img/mountain/sky.png');
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: center top;
 }
 
 

@@ -46,9 +46,7 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
   $scope.placeOrder = function() {
     var orderObject = {};
     var user = rgsService.getCurrentUser();
-    // console.log('THE USER', user);
     orderObject.userId = user.id;
-    // console.log(orderObject.userId);
 
     $('.i-want').each(function(index, val) {
 

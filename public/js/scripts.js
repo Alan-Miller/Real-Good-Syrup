@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
   STICKY NAV
     Nav scrolls to top and sticks
@@ -26,6 +27,7 @@ $(document).ready(function() {
       $('#nav-buffer').css('display', 'none');
     }
   });
+
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
   SCROLL TO STATE
@@ -108,16 +110,21 @@ $(document).ready(function() {
     $('.snowflake-three').css({'transform': 'translate(0px, ' + (winScroll) * 0.65 + '%)' + leafSpin});
 
     // TREES
-    $('.tree-left').css({'transform': 'translate(0px, ' + (winScroll) * -1.8 + 'px)'});
-    $('.tree-right').css({'transform': 'translate(0px, ' + (winScroll) * -1.8 + 'px)'});
-    $('.tree-left-back').css({'transform': 'translate(0px, ' + (winScroll) / -30 + '%)'});
-    $('.tree-right-back').css({'transform': 'translate(0px, ' + (winScroll) / -30 + '%)'});
-    $('.tree-deep').css({'transform': 'translate(0px, ' + (winScroll) / -40 + '%)'});
+    $('.tree-left').css({'transform': 'translate(0px, ' + (winScroll) * -2 + 'px)'});
+    // $('.tree-right').css({'transform': 'translate(0px, ' + (winScroll) * -1.4 + 'px)'});
+    // $('.tree-left-back').css({'transform': 'translate(0px, ' + (winScroll) / -50 + '%)'});
+    $('.tree-right-back').css({'transform': 'translate(0px, ' + (winScroll) / -40 + '%)'});
+    // $('.tree-deep').css({'transform': 'translate(0px, ' + (winScroll) / -40 + '%)'});
 
     // HILLS
-    $('.hill-fg').css({'transform': 'translate(0px, ' + (winScroll) / -50 + '%)'});
-    $('.hill-bg').css({'transform': 'translate(0px, ' + (winScroll) / -75 + '%)'});
-    $('.hill-dbg').css({'transform': 'translate(0px, ' + (winScroll) / -95 + '%)'});
+    $('.hill-fg').css({'transform': 'translate(0px, ' + (winScroll) / -5 + '%)'});
+    $('.hill-bg').css({'transform': 'translate(0px, ' + (winScroll) / -125 + '%)'});
+    $('.hill-dbg').css({'transform': 'translate(0px, ' + (winScroll) / -250 + '%)'});
+    $('.hill-ddbg').css({'transform': 'translate(0px, ' + (winScroll) / -400 + '%)'});
+
+    // SKY
+    $('.clouds').css({'transform': 'translate(' + (winScroll) / 1500 + '%, ' + (winScroll) / -1800 + '%)'});
+    $('.sky').css({'transform': 'translate(0px, ' + (winScroll) / -2000 + '%)'});
 
 
     // $('.hill').css({'transform': 'translate(0px, ' + (bottomOfPageOffset + winScroll) / -40 + '%)'});
