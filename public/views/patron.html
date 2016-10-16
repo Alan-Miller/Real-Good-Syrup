@@ -2,7 +2,7 @@
 
   <nav class="patron-nav">
     <h2 class="teko">
-      {{user.firstname}}'s Info
+      My info
     </h2>
     <div>Welcome, {{user.firstname}} {{user.lastname}}</div>
     <div class="logout-btn" ng-click="logout()">LOG OUT</div>
@@ -10,8 +10,8 @@
 
   <div class="user-main">
 
-    <section class="order-section" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';">
-      <div class="big-blue">Orders</div>
+    <section class="order-section" scroll-element-not-document>
+      <div class="big-white">Orders</div>
       <ol class="past-orders">
         <li ng-repeat="order in orders">
           <div class="order">
@@ -23,11 +23,22 @@
       </ol>
     </section>
 
-    <section>
-      <div class="big-blue">Account info</div>
-      <div>username: {{user.firstname}} {{user.lastname}}</div>
-      <div>Shipping address: {{user.address}} {{user.zip}}</div>
+    <section class="my-info-section" scroll-element-not-document>
+      <div class="big-white user-info">User info <span class="edit" ng-click="updateUserInfo()">(edit)<span class="edit-gear"></span></span></div>
+      <ol class="my-info">
+        <li>Name:
+          <section>{{user.firstname}} {{user.lastname}}</section>
+        </li>
+        <li>Username:
+          <section>{{user.username}}</section>
+        </li>
+        <li>Shipping address:
+          <section>{{user.address}}</section>
+          <section>{{user.zip}}</section>
+        </li>
+      </ol>
 
+      <div class="big-white username-and-password"><span class="edit" ng-click="updatePassword()">Edit password<span class="edit-gear"></span></span></div>
     </section>
 
   </div>

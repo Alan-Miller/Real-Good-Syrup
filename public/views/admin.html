@@ -13,7 +13,7 @@
         <li ng-repeat="yoozer in users | orderBy : 'id'">{{yoozer.id}}
           <section>{{yoozer.firstname}} {{yoozer.lastname}}</section>
           <section>{{yoozer.address}} {{yoozer.zip}}</section>
-          <section>{{yoozer.admin}}</section>
+          <section class="little-red">{{yoozer.admin}}</section>
         </li>
       </ul>
     </span>
@@ -25,11 +25,16 @@
         <li ng-repeat="pending in unfilled | orderBy : 'date_priority'" ng-click="test(order)">
             <!-- <section class="order">{{order.id}}</section> -->
             <span>
-              <section>{{pending.date_priority | date: "MMMM d, yyyy"}}</section>
+              <section>{{pending.date | date: "MMMM d, yyyy"}}</section>
               <section>{{pending.firstname}} {{pending.lastname}} <span class="user-id">id: {{pending.users_id}}</span></section>
-              <section>{{pending.name}}</section>
-              <section>{{pending.num_products}} items</section>
+              <section order-details class="pointer little-red">{{pending.num_items_in_order}} item(s)</section>
+              <!-- <section order-details class="pointer little-red" ng-click="getOrderDetails(pending.orders_id)">{{pending.num_items_in_order}} item(s)</section> -->
+              <hr>
+              <section ng-repeat="detail in details">
+                <section>{{detail.product_name}} x {{detail.qty}} = {{detail.product_total}}</section>
+              </section>
             </span>
+            <div class="order-id">order<br> # {{pending.orders_id}}</div>
             <div class="mark-filled" ng-click="markOrderFilled(pending.orders_id)"></div>
         </li>
       </ul>
@@ -42,11 +47,11 @@
         <li ng-repeat="completed in filled | orderBy : 'date_priority'" ng-click="test(order)">
             <!-- <section class="order">{{order.id}}</section> -->
             <span>
-              <section>{{completed.date_priority | date: "MMMM d, yyyy"}}</section>
+              <section>{{completed.date | date: "MMMM d, yyyy"}}</section>
               <section>{{completed.firstname}} {{completed.lastname}} <span class="user-id">id: {{completed.users_id}}</span></section>
-              <section>{{completed.name}}</section>
-              <section>{{completed.num_products}} items</section>
+              <section>{{completed.num_items_in_order}} item(s)</section>
             </span>
+            <div class="order-id">order # {{completed.orders_id}}</div>
             <div class="mark-unfilled flex-centered" ng-click="markOrderUnfilled(completed.orders_id)">/</div>
         </li>
       </ul>

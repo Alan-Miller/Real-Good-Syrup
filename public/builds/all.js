@@ -230,66 +230,6 @@ angular.module('syrupApp', ['ui.router', 'satellizer', 'angular-stripe']).config
   $authProvider.signupUrl = '/auth/signup';
 });
 
-angular.module('syrupApp').directive('addSubtract', function () {
-  return {
-    restrict: 'AE',
-    link: function link(scope, element, attribute) {
-
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-        HOVER OVER ADD/SUB BUTTON
-          Grow the add/subtract section
-          Create highlight behind button
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-      element.hover(function () {
-        element.parent().find('.add').removeClass('add-sub-padding');
-        element.addClass('add-sub-padding');
-        element.parent().find('section').addClass('white-highlight');
-      }, function () {
-        $('.add').addClass('add-sub-padding');
-        $('.sub').removeClass('add-sub-padding');
-        element.parent().find('section').removeClass('white-highlight');
-      });
-
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-        Add/subtract jars of syrup in cart
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-      element.on('click', function () {
-        var numJars = element.closest('.one-product').find('.num').html();
-        // var numJars = element.parent().parent().parent().find('.i-want').find('.num').html();
-        if (element.html() === '+') {
-          numJars++;
-        } else if (element.html() === '-' && numJars > 0) {
-          numJars--;
-        }
-        element.closest('.one-product').find('.num').html(numJars);
-      });
-    }
-  };
-});
-
-angular.module('syrupApp').directive('navLogout', function (rgsService) {
-  return {
-    restrict: 'AE',
-    controller: function controller($scope, $state, $auth) {
-
-      $scope.logout = function () {
-        $auth.logout().then(function (res) {
-          $('.admin-fade').fadeIn('fast');
-          $('.logout-nav').fadeOut('fast');
-          $('.my-info-nav').fadeOut('fast');
-          $('body').removeClass('no-scroll');
-          rgsService.setUser({ id: false });
-          $state.go('landing');
-        });
-      };
-
-      $('.logout-nav').on('click', function () {
-        $scope.logout();
-      });
-    }
-  };
-});
-
 $(document).ready(function () {
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -432,24 +372,6 @@ $(document).ready(function () {
 
 });
 
-angular.module('syrupApp').directive('shortenName', function () {
-  return {
-    restrict: 'AE',
-    link: function link(scope, element, attribute) {
-
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-        Shorten product name
-          Runs regex on db name
-      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-      window.setTimeout(function () {
-        var productName = element.html();
-        productName = productName.replace(/\s\(\d\d?\soz\.\)/g, '').toLowerCase();
-        element.html(productName);
-      }, 88);
-    }
-  };
-});
-
 angular.module('syrupApp').controller('aboutControl', function ($scope) {});
 
 angular.module('syrupApp').controller('adminControl', function ($scope, rgsService, $state, $auth) {
@@ -476,7 +398,7 @@ angular.module('syrupApp').controller('adminControl', function ($scope, rgsServi
     response.forEach(function (eachUser) {
       if (eachUser.admin) {
         eachUser.admin = 'admin';
-      } else eachUser.admin = 'not an admin';
+      } else eachUser.admin = '';
     });
     // console.log(response);
   });
@@ -494,21 +416,24 @@ angular.module('syrupApp').controller('adminControl', function ($scope, rgsServi
 
   $scope.getFilledOrders = function () {
     rgsService.getFilledOrders().then(function (response) {
-      console.log('THE RESPONSE:', response);
       $scope.filled = response;
     });
   };
   $scope.getFilledOrders();
 
+  // $scope.getOrderDetails = function(orderId) {
+  //   rgsService.getOrderDetails(orderId).then(function(response) {
+  //     $scope.details = response;
+  //   });
+  // };
+
   $scope.markOrderFilled = function (orderId) {
-    console.log('orderId:', orderId);
     rgsService.markOrderFilled(orderId).then(function (response) {
       $state.reload();
     });
   };
 
   $scope.markOrderUnfilled = function (orderId) {
-    console.log('orderId:', orderId);
     rgsService.markOrderUnfilled(orderId).then(function (response) {
       $state.reload();
     });
@@ -560,7 +485,6 @@ angular.module('syrupApp').controller('cartControl', function ($scope, rgsServic
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   rgsService.getProducts().then(function (response) {
     $scope.products = response;
-    console.log('$prod:', $scope.products);
   });
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -601,8 +525,7 @@ angular.module('syrupApp').controller('cartControl', function ($scope, rgsServic
       // }
     });
     orderObject.total = orderObject.quart.price + orderObject.pint.price + orderObject.half_pint.price;
-    // console.log(orderObject);
-    console.log('Here is your order:', orderObject);
+    // console.log('Here is your order:', orderObject);
     rgsService.checkUserIsLoggedIn(orderObject);
     // rgsService.confirmOrder(orderObject);
   };
@@ -798,12 +721,11 @@ angular.module('syrupApp').controller('loginControl', function ($scope, rgsServi
         username: newUserArr[4],
         password: newUserArr[5]
       };
-      console.log(newUserObj);
       rgsService.postUser(newUserObj);
       setTimeout(function () {
         $scope.loginLocal(newUserObj.username, newUserObj.password);
-      }, 1000);
-    }, function () {
+      }, 500);
+    }).then(function () {
       swal.resetDefaults();
       swal({
         title: 'Welcome!',
@@ -832,6 +754,11 @@ angular.module('syrupApp').controller('loginControl', function ($scope, rgsServi
 
 
   //login w/jsonwebtokens
+  // $scope.loginLocal = function(username, password) {
+  //   rgsService.loginLocal(username, password);
+  // };
+
+  //
   $scope.loginLocal = function (username, password) {
     $auth.login({
       username: username,
@@ -882,18 +809,95 @@ angular.module('syrupApp').controller('loginControl', function ($scope, rgsServi
 
 angular.module('syrupApp').controller('patronControl', function ($scope, rgsService, $state, $auth, requestUser) {
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    ADMIN LOCKOUT
+      Lock admin out of other areas of the site
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $('.login-nav').fadeOut('fast');
   $('.logout-nav').fadeIn('fast');
   $('.my-info-nav').fadeIn('fast');
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
+      $scope.user: Get user
+      updateUserInfo: Update user info
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
   // $scope.user = rgsService.getCurrentUser();
   $scope.user = requestUser;
-  // console.log($scope.user);
+  console.log('$scope.user', $scope.user);
+  var dog = 'happy';
   // console.log(rgsService.userId);
 
+
+  $scope.updateUserInfo = function () {
+    swal({
+      title: 'Edit your account info',
+      html: 'First name: <input id="swal-input1" class="swal-input" onfocus="this.select()" autofocus placeholder="First name">' + 'Last name: <input id="swal-input2" class="swal-input" onfocus="this.select()" placeholder="Last name">' + 'Username: <input id="swal-input3" class="swal-input" onfocus="this.select()" placeholder="Username">' + 'Shipping address: <input id="swal-input4" class="swal-input" onfocus="this.select()" placeholder="Address">' + 'Zip code: <input id="swal-input5" class="swal-input" onfocus="this.select()" placeholder="Zip">',
+      // type: 'info',
+      onOpen: function onOpen() {
+        $('#swal-input1').val($scope.user.firstname);
+        $('#swal-input2').val($scope.user.lastname);
+        $('#swal-input3').val($scope.user.username);
+        $('#swal-input4').val($scope.user.address);
+        $('#swal-input5').val($scope.user.zip);
+      },
+      showCancelButton: true,
+      cancelButtonColor: 'RGB(204, 70, 77)',
+      confirmButtonColor: 'RGB(80, 103, 129)',
+      confirmButtonText: 'Looks good!'
+    }).then(function () {
+      var updatedUserInfo = {
+        firstname: $('#swal-input1').val(),
+        lastname: $('#swal-input2').val(),
+        username: $('#swal-input3').val(),
+        address: $('#swal-input4').val(),
+        zip: $('#swal-input5').val(),
+        id: $scope.user.id
+      };
+      rgsService.updateUserInfo(updatedUserInfo).then(function (response) {
+        $state.reload();
+      });
+    });
+  };
+
+  $scope.updatePassword = function () {
+    swal({
+      title: 'Edit your password',
+      html: 'New password: <input id="swal-new1" class="swal-input" onfocus="this.select()" type="password" placeholder="Enter password" autofocus>' + 'New password (again): <input id="swal-new2" class="swal-input" onfocus="this.select()" type="password" placeholder="Enter password again">',
+      type: 'info',
+      preConfirm: function preConfirm() {
+        return new Promise(function (resolve) {
+          if ($('#swal-new1').val() === $('#swal-new2').val()) {
+            resolve();
+          } else {
+            swal({
+              title: 'Oops...',
+              text: 'New password inputs do not match! Try again!',
+              type: 'error'
+            });
+          }
+        });
+      },
+      showCancelButton: true,
+      cancelButtonColor: 'RGB(204, 70, 77)',
+      confirmButtonColor: 'RGB(80, 103, 129)',
+      confirmButtonText: 'Done!'
+    }).then(function () {
+      var updatedPassword = {
+        newPassword: $('#swal-new1').val(),
+        id: $scope.user.id
+      };
+      rgsService.updatePassword(updatedPassword).then(function (response) {
+        swal({
+          title: 'Success',
+          text: 'Your password has been changed',
+          type: 'success',
+          timer: 2100
+        });
+      });
+    });
+  };
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     ORDERS
@@ -933,14 +937,130 @@ angular.module('syrupApp').controller('patronControl', function ($scope, rgsServ
 
 angular.module('syrupApp').controller('processControl', function ($scope) {});
 
-angular.module('syrupApp').controller('productsControl', function ($scope, rgsService) {
+angular.module('syrupApp').directive('addSubtract', function () {
+  return {
+    restrict: 'AE',
+    link: function link(scope, element, attribute) {
 
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-    PRODUCTS
-  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  rgsService.getProducts().then(function (response) {
-    $scope.products = response;
-  });
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+        HOVER OVER ADD/SUB BUTTON
+          Grow the add/subtract section
+          Create highlight behind button
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+      element.hover(function () {
+        element.parent().find('.add').removeClass('add-sub-padding');
+        element.addClass('add-sub-padding');
+        element.parent().find('section').addClass('white-highlight');
+      }, function () {
+        $('.add').addClass('add-sub-padding');
+        $('.sub').removeClass('add-sub-padding');
+        element.parent().find('section').removeClass('white-highlight');
+      });
+
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+        Add/subtract jars of syrup in cart
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+      element.on('click', function () {
+        var numJars = element.closest('.one-product').find('.num').html();
+        // var numJars = element.parent().parent().parent().find('.i-want').find('.num').html();
+        if (element.html() === '+') {
+          numJars++;
+        } else if (element.html() === '-' && numJars > 0) {
+          numJars--;
+        }
+        element.closest('.one-product').find('.num').html(numJars);
+      });
+    }
+  };
+});
+
+angular.module('syrupApp').directive('navLogout', function (rgsService) {
+  return {
+    restrict: 'AE',
+    controller: function controller($scope, $state, $auth) {
+
+      $scope.logout = function () {
+        $auth.logout().then(function (res) {
+          $('.admin-fade').fadeIn('fast');
+          $('.logout-nav').fadeOut('fast');
+          $('.my-info-nav').fadeOut('fast');
+          $('body').removeClass('no-scroll');
+          rgsService.setUser({ id: false });
+          $state.go('landing');
+        });
+      };
+
+      $('.logout-nav').on('click', function () {
+        $scope.logout();
+      });
+    }
+  };
+});
+
+angular.module('syrupApp').directive('orderDetails', function () {
+  return {
+    restrict: 'AE',
+    controller: function controller($scope, rgsService) {
+
+      $scope.getOrderDetails = function (orderId) {
+        rgsService.getOrderDetails(orderId).then(function (response) {
+          $scope.details = response;
+        });
+      };
+    },
+    link: function link(scope, element, attribute) {
+
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+        Get order details
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+      element.on('click', function () {
+        scope.getOrderDetails(pending.orders_id);
+      });
+    }
+  };
+});
+
+angular.module('syrupApp').directive('scrollElementNotDocument', function () {
+  return {
+    restrict: 'AE',
+    link: function link(scope, element, attribute) {
+
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+        Scroll element only
+          Does not scroll document when user scrolls to bottom of element
+          To scroll the document, move mouse off element
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+      element.hover(function () {
+        $(document.body).css('overflow', 'hidden');
+      }, function () {
+        $(document.body).css('overflow', 'auto');
+      });
+    }
+  };
+});
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  Scrolling element does not scroll document body
+    The code below can be inserted inline to elements elements to prevent scrolling
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+// onmouseover="document.body.style.overflow='hidden';"onmouseout="document.body.style.overflow='auto';"
+
+angular.module('syrupApp').directive('shortenName', function () {
+  return {
+    restrict: 'AE',
+    link: function link(scope, element, attribute) {
+
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+        Shorten product name
+          Runs regex on db name
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+      window.setTimeout(function () {
+        var productName = element.html();
+        productName = productName.replace(/\s\(\d\d?\soz\.\)/g, '').toLowerCase();
+        element.html(productName);
+      }, 88);
+    }
+  };
 });
 
 angular.module('syrupApp').service('rgsService', function ($http, $state) {
@@ -977,7 +1097,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   this.getThisUser = function (id) {
     return $http({
       method: 'GET',
-      url: '/api/users' + id
+      url: '/api/users/' + id
     }).then(function (response) {
       return response.data;
     });
@@ -1000,6 +1120,27 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
       method: 'POST',
       data: newUserObject,
       url: '/api/users'
+    }).then(function (response) {
+      return response.data;
+    });
+  };
+
+  this.updateUserInfo = function (updatedUserInfo) {
+    return $http({
+      method: 'PUT',
+      data: updatedUserInfo,
+      url: '/api/users/info'
+    }).then(function (response) {
+      return response.data;
+    });
+  };
+
+  this.updatePassword = function (updatedPassword) {
+    // console.log(updatedPassword);
+    return $http({
+      method: 'PUT',
+      data: updatedPassword,
+      url: '/api/users/password'
     }).then(function (response) {
       return response.data;
     });
@@ -1063,6 +1204,16 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
     return $http({
       method: 'GET',
       url: '/api/orders/' + id
+    }).then(function (response) {
+      return response.data;
+    });
+  };
+
+  this.getOrderDetails = function (id) {
+    // console.log('ID is: ' + id);
+    return $http({
+      method: 'GET',
+      url: '/api/orders/details/' + id
     }).then(function (response) {
       return response.data;
     });
@@ -1139,13 +1290,14 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
         //NEED TO LOG OUT
         serviceScope.placeOrder(orderObj);
         // $state.go('patron');
+        // $state.go('cart');
+        $state.reload();
       });
     }
   };
 
   this.placeOrder = function (orderObj) {
     $('.num').html(0); // Reset numbers to zero (so second order is not placed by accident)
-    console.log('rgsService.placeOrder obj', orderObj);
     return $http({
       method: 'POST',
       data: orderObj,

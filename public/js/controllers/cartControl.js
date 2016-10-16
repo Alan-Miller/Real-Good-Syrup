@@ -34,7 +34,6 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   rgsService.getProducts().then(function(response) {
     $scope.products = response;
-    console.log('$prod:', $scope.products);
   });
 
 
@@ -76,8 +75,7 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
       // }
     });
     orderObject.total = orderObject.quart.price + orderObject.pint.price + orderObject.half_pint.price;
-    // console.log(orderObject);
-    console.log('Here is your order:', orderObject);
+    // console.log('Here is your order:', orderObject);
     rgsService.checkUserIsLoggedIn(orderObject);
     // rgsService.confirmOrder(orderObject);
   };

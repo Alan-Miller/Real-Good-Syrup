@@ -32,11 +32,18 @@ module.exports = {
       res.status(200).json(user);
     });
   },
-  // updateUser: function(req, res) {
-  //   db.update_user([req.params.id, req.body.firstname, req.body.lastname, req.body.address, req.body.zip], function(err, user) {
-  //     res.status(200).json(user);
-  //   });
-  // },
+  updateUserInfo: function(req, res) {
+    db.update_user_info([req.body.firstname, req.body.lastname, req.body.username, req.body.address, req.body.zip, req.body.id], function(err, user) {
+      res.status(200).json(user);
+    });
+  },
+  updatePassword: function(req, res) {
+    console.log(req.body.newPassword);
+    console.log(req.body.id);
+    db.update_password([req.body.newPassword, req.body.id], function(err, user) {
+      res.status(200).json(user);
+    });
+  },
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     PRODUCTS
@@ -77,12 +84,12 @@ module.exports = {
 
   markOrderFilled: function(req, res) {
     db.update_order_mark_filled([req.params.id], function(err, order) {
-      db.get_unfilled_orders(function(err, unfilled) {
-        db.get_filled_orders(function(err, filled) {
-          res.status(200).json(filled);
+      // db.get_unfilled_orders(function(err, unfilled) {
+        // db.get_filled_orders(function(err, filled) {
+          res.status(200).json(order);
         });
-      });
-    });
+      // });
+    // });
   },
 
   markOrderUnfilled: function(req, res) {
@@ -98,6 +105,12 @@ module.exports = {
   getUserOrders: function(req, res) {
     db.get_user_orders([req.params.id], function(err, orders) {
       res.status(200).json(orders);
+    });
+  },
+
+  getOrderDetails: function(req, res) {
+    db.get_order_details([req.params.id], function(err, details) {
+      res.status(200).json(details);
     });
   },
 
