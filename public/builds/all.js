@@ -338,16 +338,21 @@ $(document).ready(function () {
     $('.snowflake-three').css({ 'transform': 'translate(0px, ' + winScroll * 0.65 + '%)' + leafSpin });
 
     // TREES
-    $('.tree-left').css({ 'transform': 'translate(0px, ' + winScroll * -1.8 + 'px)' });
-    $('.tree-right').css({ 'transform': 'translate(0px, ' + winScroll * -1.8 + 'px)' });
-    $('.tree-left-back').css({ 'transform': 'translate(0px, ' + winScroll / -30 + '%)' });
-    $('.tree-right-back').css({ 'transform': 'translate(0px, ' + winScroll / -30 + '%)' });
-    $('.tree-deep').css({ 'transform': 'translate(0px, ' + winScroll / -40 + '%)' });
+    $('.tree-left').css({ 'transform': 'translate(0px, ' + winScroll * -2 + 'px)' });
+    // $('.tree-right').css({'transform': 'translate(0px, ' + (winScroll) * -1.4 + 'px)'});
+    // $('.tree-left-back').css({'transform': 'translate(0px, ' + (winScroll) / -50 + '%)'});
+    $('.tree-right-back').css({ 'transform': 'translate(0px, ' + winScroll / -40 + '%)' });
+    // $('.tree-deep').css({'transform': 'translate(0px, ' + (winScroll) / -40 + '%)'});
 
     // HILLS
-    $('.hill-fg').css({ 'transform': 'translate(0px, ' + winScroll / -50 + '%)' });
-    $('.hill-bg').css({ 'transform': 'translate(0px, ' + winScroll / -75 + '%)' });
-    $('.hill-dbg').css({ 'transform': 'translate(0px, ' + winScroll / -95 + '%)' });
+    $('.hill-fg').css({ 'transform': 'translate(0px, ' + winScroll / -5 + '%)' });
+    $('.hill-bg').css({ 'transform': 'translate(0px, ' + winScroll / -125 + '%)' });
+    $('.hill-dbg').css({ 'transform': 'translate(0px, ' + winScroll / -250 + '%)' });
+    $('.hill-ddbg').css({ 'transform': 'translate(0px, ' + winScroll / -400 + '%)' });
+
+    // SKY
+    $('.clouds').css({ 'transform': 'translate(' + winScroll / 1500 + '%, ' + winScroll / -1800 + '%)' });
+    $('.sky').css({ 'transform': 'translate(0px, ' + winScroll / -2000 + '%)' });
 
     // $('.hill').css({'transform': 'translate(0px, ' + (bottomOfPageOffset + winScroll) / -40 + '%)'});
     // $('.tree-center').css({'transform': 'translate(0px, ' + (bottomOfPageOffset + winScroll) / -30 + '%)'});
@@ -400,7 +405,6 @@ angular.module('syrupApp').controller('adminControl', function ($scope, rgsServi
         eachUser.admin = 'admin';
       } else eachUser.admin = '';
     });
-    // console.log(response);
   });
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -497,9 +501,7 @@ angular.module('syrupApp').controller('cartControl', function ($scope, rgsServic
   $scope.placeOrder = function () {
     var orderObject = {};
     var user = rgsService.getCurrentUser();
-    // console.log('THE USER', user);
     orderObject.userId = user.id;
-    // console.log(orderObject.userId);
 
     $('.i-want').each(function (index, val) {
 
@@ -578,13 +580,25 @@ angular.module('syrupApp').controller('landingControl', function ($scope) {});
 
 angular.module('syrupApp').controller('loginControl', function ($scope, rgsService, $state, $auth) {
 
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    CREATE NEW USER
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.createNew = function () {
     swal.setDefaults({
       confirmButtonText: 'Next &rarr;',
       confirmButtonColor: 'RGB(204, 70, 77)',
       showCancelButton: true,
       animation: false,
-      progressSteps: ['1', '2', '3', '4', '5', '6']
+      progressSteps: ['1', '2', '3', '4', '5', '6'],
+      inputValidator: function inputValidator(value) {
+        return new Promise(function (resolve, reject) {
+          if (value) {
+            resolve();
+          } else {
+            reject('You need to enter a value!');
+          }
+        });
+      }
     });
 
     var newUserArr = [];
@@ -818,14 +832,11 @@ angular.module('syrupApp').controller('patronControl', function ($scope, rgsServ
     USERS
       $scope.user: Get user
       updateUserInfo: Update user info
+      updatePassword: Update password
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   // $scope.user = rgsService.getCurrentUser();
   $scope.user = requestUser;
-  console.log('$scope.user', $scope.user);
-  var dog = 'happy';
-  // console.log(rgsService.userId);
-
 
   $scope.updateUserInfo = function () {
     swal({
@@ -865,8 +876,14 @@ angular.module('syrupApp').controller('patronControl', function ($scope, rgsServ
       type: 'info',
       preConfirm: function preConfirm() {
         return new Promise(function (resolve) {
-          if ($('#swal-new1').val() === $('#swal-new2').val()) {
+          if ($('#swal-new1').val() && $('#swal-new1').val() === $('#swal-new2').val()) {
             resolve();
+          } else if ($('#swal-new1').val() === $('#swal-new2').val()) {
+            swal({
+              title: 'Oops...',
+              text: 'You need to enter a value!',
+              type: 'error'
+            });
           } else {
             swal({
               title: 'Oops...',
@@ -966,6 +983,30 @@ angular.module('syrupApp').directive('addSubtract', function () {
           numJars--;
         }
         element.closest('.one-product').find('.num').html(numJars);
+      });
+    }
+  };
+});
+
+angular.module('syrupApp').directive('fadeIn', function () {
+  return {
+    restrict: 'AE',
+    link: function link(scope, elem, attribute) {
+
+      var elemOffset = elem.offset().top - 100;
+      var elemOpacity = Math.pow($(window).scrollTop(), 2) / Math.pow(elemOffset, 2);
+      // alert(navOffset);
+
+      $(window).resize(function () {
+        elemOffset = elem.offset().top;
+        elemOpacity = $(window).scrollTop() / elemOffset;
+      });
+
+      $(window).on('scroll', function () {
+        // if ($(window).scrollTop() >= elem.offset().top - 400) {
+        elemOpacity = Math.pow($(window).scrollTop(), 5) / Math.pow(elemOffset, 5);
+        elem.css({ 'opacity': elemOpacity });
+        // } else elem.css({'opacity': 0});
       });
     }
   };
@@ -1108,7 +1149,6 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
       method: 'GET',
       url: '/api/me'
     }).then(function (res) {
-      console.log('is it the user', res);
       return res.data;
     }).catch(function (err) {
       console.log(err);
@@ -1249,29 +1289,27 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
           halfPints,
           total = 0;
       if (orderObj.quart.qty) {
-        // quarts = orderObj.product1 / 22;
         quarts = orderObj.quart.qty;
-        quarts === 1 ? quarts += ' quart' : quarts += ' quarts';
-        // total += orderObj.product1;
+        if (quarts === 1) {
+          quarts += ' quart';
+        } else quarts += ' quarts';
         total += orderObj.quart.price;
       }
-      // else quarts = 0;
       if (orderObj.pint.qty) {
-        // pints = orderObj.product2 / 12;
         pints = orderObj.pint.qty;
-        pints === 1 ? pints += ' pint' : pints += ' pints';
+        if (pints === 1) {
+          pints += ' pint';
+        } else pints += ' pints';
         // total += orderObj.product2;
         total += orderObj.pint.price;
       }
-      // else pints = 0;
       if (orderObj.half_pint.qty) {
-        // halfPints = orderObj.product3 / 8;
         halfPints = orderObj.half_pint.qty;
-        halfPints === 1 ? halfPints += ' half pint' : halfPints += ' half pints';
-        // total += orderObj.product3;
+        if (halfPints === 1) {
+          halfPints += ' half pint';
+        } else halfPints += ' half pints';
         total += orderObj.half_pint.price;
       }
-      // else halfPints = 0;
       swal({
         title: 'Please confirm your order',
         text: quarts + '\n' + pints + '\n' + halfPints + '\ntotal: $' + total + '.00',

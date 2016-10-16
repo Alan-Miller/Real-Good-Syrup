@@ -14,9 +14,6 @@ module.exports = {
       Update user
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   getUsers: function(req, res) {
-    // if (/* I'm not allowed to see all users because I'm an admin */) {
-    //   /* return an error */
-    // }
     db.get_users(function(err, users) {
       res.status(200).json(users);
     });
@@ -56,9 +53,6 @@ module.exports = {
     });
   },
   updateProducts: function(req, res) {
-    // if (/* I'm not allowed to see all users because I'm not an admin */) {
-    //   /* return an error */
-    // }
     db.update_products([req.params.id, req.body.price_per], function(err, product) {
       res.status(200).json(product);
     });

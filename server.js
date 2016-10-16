@@ -305,7 +305,7 @@ app.get('/api/users', ensureAuthenticated, controller.getUsers);
 app.get('/api/users/:id', ensureAuthenticated, controller.getThisUser);
 app.post('/api/users', controller.postUser);
 app.put('/api/users/info', ensureAuthenticated, controller.updateUserInfo);
-app.put('/api/users/password', controller.updatePassword);
+app.put('/api/users/password', ensureAuthenticated, controller.updatePassword);
 
 app.get('/api/orders/unfilled', ensureAuthenticated, controller.getUnfilledOrders);
 app.get('/api/orders/filled', ensureAuthenticated, controller.getFilledOrders);

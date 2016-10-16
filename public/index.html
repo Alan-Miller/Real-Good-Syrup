@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./builds/all.css">
     <!-- <link rel="stylesheet" href="./styles/reset.css"> -->
     <!-- <link rel="stylesheet" href="./styles/fonts.css"> -->
+    <!-- <link rel="stylesheet" href="./styles/parallax.css"> -->
     <!-- <link rel="stylesheet" href="./styles/main.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/5.2.0/sweetalert2.css">
   </head>
@@ -29,19 +30,18 @@
 </div>
 
 <div class="parallax-layer-back">
-  <!-- <section class="tree tree-left"></section> -->
+  <section class="tree tree-left"></section>
   <!-- <section class="tree tree-right"><</section> -->
-  <!-- <section class="tree tree-left-back"><</section>
-  <section class="tree tree-right-back"><</section> -->
-
+  <!-- <section class="tree tree-left-back"><</section> -->
+  <section class="tree tree-right-back"><</section>
   <!-- <section class="tree tree-deep"></section> -->
-  <!-- <section class="hill hill-fg"></section> -->
-  <!-- <section class="hill hill-bg"></section> -->
-  <!-- <section class="hill hill-dbg"></section> -->
-  <!-- <section class="layer hill"><img src="../img/hill.png"></section>
-  <section class="layer tree-center"><img src="../img/tree3.png"></section>
-  <section class="layer tree-right"><img src="../img/tree-r.png"></section>
-  <section class="layer tree-left"><img src="../img/tree-l.png"></section> -->
+
+  <section class="hill hill-fg"></section>
+  <section class="hill hill-bg"></section>
+  <section class="hill hill-dbg"></section>
+  <section class="hill hill-ddbg"></section>
+  <section class="clouds"></section>
+  <section class="sky"></section>
 </div>
 
 
@@ -61,7 +61,6 @@
         <li ui-sref="cart" class="cart-nav admin-fade">Buy</li>
         <li ui-sref="about" class="about-nav admin-fade">About us</li>
         <li ui-sref="process" class="process-nav admin-fade">Our process</li>
-        <!-- <li ui-sref="products" class="products-nav">Bottle sizes</li> -->
         <li class="contact-nav admin-fade">Contact us</li>
         <li ui-sref="login" class="login-nav admin-fade"><span class="teko">log in</span></li>
         <li ui-sref="patron" class="my-info-nav patron-fade">my info</li>
@@ -71,17 +70,10 @@
 
     <div id="second">
       <section class="leaves leaves-nav-down"></section>
-      <!-- <section class="falling-leaf"></section>
-      <section class="falling-leaf leaf-two"></section> -->
-      <!-- <section class="falling-leaf leaf-three"></section> -->
-      <section ui-view="second" id="cart"></section>
+      <section fade-in ui-view="second" id="cart"></section>
     </div>
 
     <div id="third">
-      <!-- <section class="layer hill"><img src="../img/hill.png"></section>
-      <section class="layer tree-center"><img src="../img/tree3.png"></section>
-      <section class="layer tree-right"><img src="../img/tree-r.png"></section>
-      <section class="layer tree-left"><img src="../img/tree-l.png"></section> -->
       <section class="routed-content" ui-view="third"></section>
     </div>
 
@@ -116,6 +108,7 @@
     <!-- <script type="text/javascript" src="./js/controllers/productsControl.js"></script> -->
     <script type="text/javascript" src="./js/services/rgsService.js"></script>
     <script type="text/javascript" src="./js/directives/addSubtract.js"></script>
+    <script type="text/javascript" src="./js/directives/fadeIn.js"></script>
     <script type="text/javascript" src="./js/directives/navLogout.js"></script>
     <script type="text/javascript" src="./js/directives/orderDetails.js"></script>
     <script type="text/javascript" src="./js/directives/scrollElementNotDocument.js"></script>

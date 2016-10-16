@@ -14,13 +14,11 @@ angular.module('syrupApp').controller('patronControl', function($scope, rgsServi
     USERS
       $scope.user: Get user
       updateUserInfo: Update user info
+      updatePassword: Update password
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   // $scope.user = rgsService.getCurrentUser();
   $scope.user = requestUser;
-  console.log('$scope.user', $scope.user);
-  var dog = 'happy';
-  // console.log(rgsService.userId);
 
 
   $scope.updateUserInfo = function() {
@@ -70,8 +68,14 @@ angular.module('syrupApp').controller('patronControl', function($scope, rgsServi
       type: 'info',
       preConfirm: function() {
         return new Promise(function(resolve) {
-          if ($('#swal-new1').val() === $('#swal-new2').val()) {
+          if ($('#swal-new1').val() && $('#swal-new1').val() === $('#swal-new2').val()) {
             resolve();
+          } else if ($('#swal-new1').val() === $('#swal-new2').val()) {
+            swal({
+              title: 'Oops...',
+              text: 'You need to enter a value!',
+              type: 'error'
+            });
           } else {
             swal({
               title: 'Oops...',

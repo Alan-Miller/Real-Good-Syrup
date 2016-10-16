@@ -1,6 +1,8 @@
 angular.module('syrupApp').controller('loginControl', function($scope, rgsService, $state, $auth) {
 
-
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+    CREATE NEW USER
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $scope.createNew = function() {
     swal.setDefaults({
       confirmButtonText: 'Next &rarr;',
@@ -8,15 +10,15 @@ angular.module('syrupApp').controller('loginControl', function($scope, rgsServic
       showCancelButton: true,
       animation: false,
       progressSteps: ['1', '2', '3', '4', '5', '6'],
-      // inputValidator: function(value) {
-      //   return new Promise(function(resolve, reject) {
-      //     if (value) {
-      //       resolve();
-      //     } else {
-      //       reject('You need to enter a value!');
-      //     }
-      //   });
-      // }
+      inputValidator: function(value) {
+        return new Promise(function(resolve, reject) {
+          if (value) {
+            resolve();
+          } else {
+            reject('You need to enter a value!');
+          }
+        });
+      }
     });
 
     var newUserArr = [];

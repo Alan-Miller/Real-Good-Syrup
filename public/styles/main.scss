@@ -19,7 +19,7 @@ $user-main-height: calc(100% - 100px);
 
 @import "../styles/reset";
 @import "../styles/fonts";
-@import "../styles/trees";
+@import "../styles/parallax";
 
 
 
@@ -28,7 +28,7 @@ body.no-scroll {
 }
 
 html {
-  color: $beige;
+  color: black;
   font-family: 'Raleway', sans-serif;
   background-color: $darkbrown;
   outline: none;
@@ -245,7 +245,7 @@ h3 {
 }
 
 #fourth {
-  height: 300px;
+  min-height: 300px;
   background-color: $sky;
   background-repeat: no-repeat;
   overflow: hidden;
@@ -278,15 +278,15 @@ h3 {
   font-size: 2.7rem;
   color: $lightred;
   position: relative;
-  left: -36px;
-  padding-bottom: 17px;
+  // left: -36px;
+  padding: 17px;
   position: relative;
   // z-index: 44;
 }
 
 .all-products {
   min-height: 600px;
-  width: 100vw;
+  width: 95vw;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -300,8 +300,8 @@ h3 {
 .one-product {
   width: calc(100% / 3);
   margin: 0 14px;
-  background-color: rgba(233, 233, 233, 0.3);
-  border-radius: 90px;
+  background-color: rgba(240, 240, 240, 0.5);
+  border-radius: 11px 167px;
   border: 4px dotted rgba(233, 233, 233, 1);
   display: flex;
   flex-direction: column;
@@ -324,13 +324,13 @@ h3 {
   position: relative;
   // z-index: 20;
   background: url('../img/rgs.png') no-repeat center center;
-  min-height: 300px;
+  min-height: 250px;
   min-width: 100%;
-  -webkit-background-size: 130px;
-     -moz-background-size: 130px;
-      -ms-background-size: 130px;
-       -o-background-size: 130px;
-          background-size: 130px;
+  -webkit-background-size: 120px;
+     -moz-background-size: 120px;
+      -ms-background-size: 120px;
+       -o-background-size: 120px;
+          background-size: 120px;
 }
 .product-name-and-price {
   transform: rotate(-30deg);
@@ -695,8 +695,8 @@ h3 {
   }
 }
 
-#process, #faq, #contact {
-  // background-color: rgba(0, 0, 0, 0.8);
+#process, #faq {
+  background-color: rgba(240, 240, 240, 0.5);
   border-radius: 18px;
   position: relative;
   // padding: 9px;
@@ -704,6 +704,12 @@ h3 {
 }
 #faq {
   z-index: 44;
+  margin-bottom: 100px;
+}
+#contact {
+  z-index: 33;
+  position: relative;
+  color: white;
 }
 
 .rgs {
@@ -779,4 +785,7 @@ h3 {
 
 .pointer {
   cursor: pointer;
+}
+.hidden {
+  visibility: hidden;
 }

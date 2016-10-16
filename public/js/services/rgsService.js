@@ -46,7 +46,6 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
       url: '/api/me'
     })
     .then(function(res) {
-      console.log('is it the user', res);
       return res.data;
     })
     .catch(function(err) {
@@ -194,29 +193,27 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     else {
       var quarts, pints, halfPints, total = 0;
       if (orderObj.quart.qty) {
-        // quarts = orderObj.product1 / 22;
         quarts = orderObj.quart.qty;
-        quarts === 1 ? quarts += ' quart' : quarts += ' quarts';
-        // total += orderObj.product1;
+        if (quarts === 1) {
+          quarts += ' quart';
+        } else quarts += ' quarts';
         total += orderObj.quart.price;
       }
-      // else quarts = 0;
       if (orderObj.pint.qty) {
-        // pints = orderObj.product2 / 12;
         pints = orderObj.pint.qty;
-        pints === 1 ? pints += ' pint' : pints += ' pints';
+        if (pints === 1) {
+          pints += ' pint';
+        } else pints += ' pints';
         // total += orderObj.product2;
         total += orderObj.pint.price;
       }
-      // else pints = 0;
       if (orderObj.half_pint.qty) {
-        // halfPints = orderObj.product3 / 8;
         halfPints = orderObj.half_pint.qty;
-        halfPints === 1 ? halfPints += ' half pint' : halfPints += ' half pints';
-        // total += orderObj.product3;
+        if (halfPints === 1) {
+          halfPints += ' half pint';
+        } else halfPints += ' half pints';
         total += orderObj.half_pint.price;
       }
-      // else halfPints = 0;
       swal({
         title: 'Please confirm your order',
         text: quarts + '\n'  + pints + '\n' + halfPints + '\ntotal: $' + total + '.00',
@@ -250,8 +247,6 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
       url: '/api/orders'
     });
   };
-
-
 
 
 
