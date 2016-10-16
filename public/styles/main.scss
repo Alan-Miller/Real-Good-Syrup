@@ -301,8 +301,8 @@ h3 {
   width: calc(100% / 3);
   margin: 0 14px;
   background-color: rgba(240, 240, 240, 0.5);
-  border-radius: 11px 167px;
-  border: 4px dotted rgba(233, 233, 233, 1);
+  border-radius: 167px 11px;
+  border: 8px inset rgba(233, 233, 233, 1);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -337,7 +337,7 @@ h3 {
   font-size: 1.7rem;
   background-color: white;
   border-radius: 5px;
-  border: 3px dotted RGB(255, 208, 165);
+  border: 3px dotted $mapleorange;
   padding: 9px;
 }
 
@@ -498,12 +498,12 @@ h3 {
 
 
 .product-id {
-  font-size: 4.2em;
+  font-size: 2.2em;
   // font-family: 'Raleway', serif;
   position: absolute;
-  color: white;
-  top: 30px;
-  left: 40px;
+  color: gray;
+  top: 50px;
+  left: 50px;
 }
 
 #patron, #admin {
