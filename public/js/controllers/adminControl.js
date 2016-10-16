@@ -49,6 +49,7 @@ angular.module('syrupApp').controller('adminControl', function($scope, rgsServic
   };
   $scope.getFilledOrders();
 
+  // The getOrderDetails fn is in orderDetails.js (directive)
   // $scope.getOrderDetails = function(orderId) {
   //   rgsService.getOrderDetails(orderId).then(function(response) {
   //     $scope.details = response;

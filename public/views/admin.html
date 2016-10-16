@@ -20,11 +20,9 @@
 
     <span class="order-section">
       <span class="big-blue">Pending orders</span>
-      <!-- <h3>Users</h3> -->
       <ul class="unfilled-orders">
         <li ng-repeat="pending in unfilled | orderBy : 'date_priority'" ng-click="test(order)">
-            <!-- <section class="order">{{order.id}}</section> -->
-            <span>
+            <span class="order-info">
               <section>{{pending.date | date: "MMMM d, yyyy"}}</section>
               <section>{{pending.firstname}} {{pending.lastname}} <span class="user-id">id: {{pending.users_id}}</span></section>
               <section order-details class="pointer little-red">{{pending.num_items_in_order}} item(s)</section>
@@ -34,7 +32,7 @@
                 <section>{{detail.product_name}} x {{detail.qty}} = {{detail.product_total}}</section>
               </section>
             </span>
-            <div class="order-id">order<br> # {{pending.orders_id}}</div>
+            <div class="order-id">order<br> # <span>{{pending.orders_id}}</span></div>
             <div class="mark-filled" ng-click="markOrderFilled(pending.orders_id)"></div>
         </li>
       </ul>
@@ -42,17 +40,19 @@
 
     <span class="order-section">
       <span class="big-blue">Filled orders</span>
-      <!-- <h3>Users</h3> -->
       <ul class="filled-orders">
         <li ng-repeat="completed in filled | orderBy : 'date_priority'" ng-click="test(order)">
-            <!-- <section class="order">{{order.id}}</section> -->
             <span>
               <section>{{completed.date | date: "MMMM d, yyyy"}}</section>
               <section>{{completed.firstname}} {{completed.lastname}} <span class="user-id">id: {{completed.users_id}}</span></section>
-              <section>{{completed.num_items_in_order}} item(s)</section>
+              <section order-details class="pointer little-red">{{pending.num_items_in_order}} item(s)</section>
+              <hr>
+              <section ng-repeat="detail in details">
+                <section>{{detail.product_name}} x {{detail.qty}} = {{detail.product_total}}</section>
+              </section>
             </span>
-            <div class="order-id">order # {{completed.orders_id}}</div>
-            <div class="mark-unfilled flex-centered" ng-click="markOrderUnfilled(completed.orders_id)">/</div>
+            <div class="order-id">order<br> # <span>{{completed.orders_id}}</span></div>
+            <div class="mark-unfilled" ng-click="markOrderUnfilled(completed.orders_id)"></div>
         </li>
       </ul>
     </span>

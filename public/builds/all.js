@@ -421,6 +421,7 @@ angular.module('syrupApp').controller('adminControl', function ($scope, rgsServi
   };
   $scope.getFilledOrders();
 
+  // The getOrderDetails fn is in orderDetails.js (directive)
   // $scope.getOrderDetails = function(orderId) {
   //   rgsService.getOrderDetails(orderId).then(function(response) {
   //     $scope.details = response;
@@ -516,16 +517,8 @@ angular.module('syrupApp').controller('cartControl', function ($scope, rgsServic
       orderObject[$scope.products[productId - 1].short_name].productId = Number(productId);
       orderObject[$scope.products[productId - 1].short_name].qty = numOfEachSizeOfJar;
       orderObject[$scope.products[productId - 1].short_name].price = productTotal;
-
-      // for (var key in orderObject[$scope.products[productId - 1].short_name]) {
-      // if (orderObject[$scope.products[productId - 1].short_name].qty === 0) {
-      // delete orderObject[key];
-      // orderObject[$scope.products[productId - 1].short_name].qty = null;
-      // }
-      // }
     });
     orderObject.total = orderObject.quart.price + orderObject.pint.price + orderObject.half_pint.price;
-    // console.log('Here is your order:', orderObject);
     rgsService.checkUserIsLoggedIn(orderObject);
     // rgsService.confirmOrder(orderObject);
   };
@@ -1014,7 +1007,10 @@ angular.module('syrupApp').directive('orderDetails', function () {
         Get order details
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       element.on('click', function () {
-        scope.getOrderDetails(pending.orders_id);
+        setTimeout(function () {
+          var orderId = element.closest('ul li').find('.order-id span').html();
+          scope.getOrderDetails(orderId);
+        }, 200);
       });
     }
   };
