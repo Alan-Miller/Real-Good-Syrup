@@ -1004,7 +1004,7 @@ angular.module('syrupApp').directive('fadeIn', function () {
 
       $(window).on('scroll', function () {
         // if ($(window).scrollTop() >= elem.offset().top - 400) {
-        elemOpacity = Math.pow($(window).scrollTop(), 5) / Math.pow(elemOffset, 5);
+        elemOpacity = Math.pow($(window).scrollTop(), 12) / Math.pow(elemOffset, 12);
         elem.css({ 'opacity': elemOpacity });
         // } else elem.css({'opacity': 0});
       });
