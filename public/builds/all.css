@@ -490,7 +490,7 @@ h3 {
   margin: 0 14px;
   background-color: rgba(240, 240, 240, 0.65);
   border-radius: 167px 11px;
-  border: 8px inset #e9e9e9;
+  border: 4px double #e9e9e9;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -671,7 +671,7 @@ h3 {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(121, 80, 80, 0.95);
+  background-color: rgba(121, 80, 80, 0.55);
   color: white;
   z-index: 42; }
 
@@ -751,8 +751,7 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: scroll;
-  color: white; }
+  overflow: scroll; }
   .order-section div, .my-info-section div {
     margin: 10px 0; }
   .order-section ol, .my-info-section ol {
@@ -760,14 +759,14 @@ h3 {
 
 .my-info-section {
   justify-content: flex-start;
-  color: RGB(110, 143, 179); }
+  background-color: white;
+  color: black; }
   .my-info-section li {
     padding: 10px 0; }
 
 .my-info section {
   position: relative;
   left: 30px;
-  color: white;
   padding: 10px 0; }
 
 .unfilled-orders, .filled-orders, .past-orders {
@@ -830,7 +829,13 @@ h3 {
 .all-users {
   list-style: none; }
   .all-users li {
-    margin: 10px; }
+    margin: 10px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 2px; }
+  .all-users li:nth-child(even) {
+    background-color: RGB(110, 143, 179); }
 
 #process, #faq {
   background-color: rgba(240, 240, 240, 0.65);

@@ -305,7 +305,7 @@ h3 {
   margin: 0 14px;
   background-color: $whitebackground;
   border-radius: 167px 11px;
-  border: 8px inset rgba(233, 233, 233, 1);
+  border: 4px double rgba(233, 233, 233, 1);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -513,7 +513,7 @@ h3 {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(121, 80, 80, .95);
+  background-color: rgba(121, 80, 80, .55 );
   color: white;
   z-index: 42;
 }
@@ -597,7 +597,7 @@ h3 {
   flex-direction: column;
   justify-content: space-between;
   overflow: scroll;
-  color: white;
+  // color: white;
   div {
     margin: 10px 0;
   }
@@ -607,7 +607,8 @@ h3 {
 }
 .my-info-section {
   justify-content: flex-start;
-  color: $maplelightblue;
+  background-color: white;
+  color: black;
   li {
     padding: 10px 0;
   }
@@ -615,7 +616,7 @@ h3 {
 .my-info section {
   position: relative;
   left: 30px;
-  color: white;
+  // color: white;
   padding: 10px 0;
 }
 
@@ -695,6 +696,13 @@ h3 {
   list-style: none;
   li {
     margin: 10px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 2px;
+  }
+  li:nth-child(even) {
+    background-color: $maplelightblue;
   }
 }
 

@@ -7,19 +7,19 @@
   <div class="admin-content">
 
     <span class="order-section">
-      <span class="big-blue">Users</span>
+      <span class="big-white">Users</span>
       <!-- <h3>Users</h3> -->
       <ul class="all-users">
         <li ng-repeat="yoozer in users | orderBy : 'id'">{{yoozer.id}}
           <section>{{yoozer.firstname}} {{yoozer.lastname}}</section>
           <section>{{yoozer.address}} {{yoozer.zip}}</section>
-          <section class="little-red">{{yoozer.admin}}</section>
+          <section>{{yoozer.admin}}</section>
         </li>
       </ul>
     </span>
 
     <span class="order-section">
-      <span class="big-blue">Pending orders</span>
+      <span class="big-white">Pending orders</span>
       <ul class="unfilled-orders">
         <li ng-repeat="pending in unfilled | orderBy : 'date_priority'" ng-click="test(order)">
             <span class="order-info">
@@ -39,7 +39,7 @@
     </span>
 
     <span class="order-section">
-      <span class="big-blue">Filled orders</span>
+      <span class="big-white">Filled orders</span>
       <ul class="filled-orders">
         <li ng-repeat="completed in filled | orderBy : 'date_priority'" ng-click="test(order)">
             <span>

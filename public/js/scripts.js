@@ -104,7 +104,6 @@ $(document).ready(function() {
     $('.leaf-one').css({'transform': 'translate(0px, ' + (winScroll) * 0.45 + '%)' + 'rotate(' + winScroll / 4.8 + 'deg)'});
     $('.leaf-two').css({'transform': leafFall + ' rotate(-' + winScroll / 5 + 'deg)'});
     $('.leaf-three').css({'transform': 'translate(0px, ' + (winScroll) * 0.9 + '%)' + leafSpin});
-
     $('.leaf-four').css({'transform': 'translate(0px, ' + (winScroll) * 0.45 + '%)' + leafSpin});
     $('.leaf-five').css({'transform': leafFall + ' rotate(' + winScroll + 'deg)'});
     $('.leaf-six').css({'transform': 'translate(0px, ' + (winScroll) * 0.5 + '%)' + leafSpin});
