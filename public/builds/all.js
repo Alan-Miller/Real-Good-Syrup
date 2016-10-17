@@ -240,11 +240,11 @@ $(document).ready(function () {
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   var nav = $('#main-nav');
   var navOffset = nav.offset().top;
-  // alert(navOffset);
 
   $(window).resize(function () {
+    // setTimeout(function() {
     navOffset = nav.offset().top;
-    // alert(navOffset);
+    // }, 500);
   });
 
   $(window).on('scroll', function () {
@@ -301,7 +301,7 @@ $(document).ready(function () {
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     PARALLAX EFFECTS
       Splash section
-      Falling leaves and snowflakes
+      Falling leaves
       Trees
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   // var treeRoots = ($('#footer').offset().top + $('#footer').outerHeight(true)) -
@@ -324,18 +324,18 @@ $(document).ready(function () {
     $('.splash-bg').css({ 'opacity': splashOpacity });
     $('.leaves-splash-bg').css({ 'transform': 'translate(0px, ' + winScroll / 10 + '%)' });
 
-    // FALLING LEAVES AND SNOWFLAKES
+    // FALLING LEAVES
     var leafFall = 'translate(0px, ' + winScroll * 1.1 + '%)';
     var leafSpin = 'rotate(-' + winScroll / 3 + 'deg)';
     var leaf = leafFall + ' ' + leafSpin;
 
-    $('.leaf-one').css({ 'transform': 'translate(0px, ' + winScroll * 0.45 + '%)' + leafSpin });
+    $('.leaf-one').css({ 'transform': 'translate(0px, ' + winScroll * 0.45 + '%)' + 'rotate(' + winScroll / 4.8 + 'deg)' });
     $('.leaf-two').css({ 'transform': leafFall + ' rotate(-' + winScroll / 5 + 'deg)' });
-    $('.leaf-three').css({ 'transform': 'translate(0px, ' + winScroll * 1.4 + '%)' + leafSpin });
+    $('.leaf-three').css({ 'transform': 'translate(0px, ' + winScroll * 0.9 + '%)' + leafSpin });
 
-    $('.snowflake-one').css({ 'transform': 'translate(0px, ' + winScroll * 0.45 + '%)' + leafSpin });
-    $('.snowflake-two').css({ 'transform': leafFall + ' rotate(-' + winScroll / 1.2 + 'deg)' });
-    $('.snowflake-three').css({ 'transform': 'translate(0px, ' + winScroll * 0.65 + '%)' + leafSpin });
+    $('.leaf-four').css({ 'transform': 'translate(0px, ' + winScroll * 0.45 + '%)' + leafSpin });
+    $('.leaf-five').css({ 'transform': leafFall + ' rotate(' + winScroll + 'deg)' });
+    $('.leaf-six').css({ 'transform': 'translate(0px, ' + winScroll * 0.5 + '%)' + leafSpin });
 
     // TREES
     $('.tree-left').css({ 'transform': 'translate(0px, ' + winScroll * -2 + 'px)' });
@@ -351,7 +351,7 @@ $(document).ready(function () {
     $('.hill-ddbg').css({ 'transform': 'translate(0px, ' + winScroll / -400 + '%)' });
 
     // SKY
-    $('.clouds').css({ 'transform': 'translate(' + winScroll / 1500 + '%, ' + winScroll / -1800 + '%)' });
+    $('.clouds').css({ 'transform': 'translate(' + winScroll / 1200 + '%, ' + winScroll / -1800 + '%)' });
     $('.sky').css({ 'transform': 'translate(0px, ' + winScroll / -2000 + '%)' });
 
     // $('.hill').css({'transform': 'translate(0px, ' + (bottomOfPageOffset + winScroll) / -40 + '%)'});
@@ -738,7 +738,7 @@ angular.module('syrupApp').controller('loginControl', function ($scope, rgsServi
         title: 'Welcome!',
         confirmButtonText: 'Yay!',
         showCancelButton: false,
-        imageUrl: '../../img/maple-leaf-small.png',
+        imageUrl: '../../img/maple-leaf-orange-painted.png',
         imageWidth: 100,
         imageHeight: 100,
         timer: 2100

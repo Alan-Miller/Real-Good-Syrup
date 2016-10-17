@@ -38,7 +38,7 @@ Parallax trees
 //   bottom: -7100px;
 // }
 .tree-left {
-  background-image: url('../img/mountain/tree-l-branch.png');
+  background-image: url('../img/valley/tree-l.png');
   background-position: left bottom;
   top: 1000px;
 }
@@ -54,7 +54,7 @@ Parallax trees
 //   left: 11%;
 // }
 .tree-right-back {
-  background-image: url('../img/mountain/tree-r-branch.png');
+  background-image: url('../img/valley/tree-r.png');
   background-position: right bottom;
   top: -1450px;
   // right: 18%;
@@ -73,23 +73,23 @@ Parallax trees
   background-position: center bottom;
 }
 .hill-fg {
-  background-image: url('../img/mountain/hill1.png');
+  background-image: url('../img/valley/hill1.png');
   z-index: 3;
   height: 2000px;
   top: 11400px;
 }
 .hill-bg {
-  background-image: url('../img/mountain/hill2.png');
+  background-image: url('../img/valley/hill2.png');
   z-index: 2;
   top: -280px;
 }
 .hill-dbg {
-  background-image: url('../img/mountain/hill3.png');
+  background-image: url('../img/valley/hill3.png');
   z-index: 1;
   top: -500px;
 }
 .hill-ddbg {
-  background-image: url('../img/mountain/hill4.png');
+  background-image: url('../img/valley/hill4.png');
   z-index: 0;
   top: -500px;
 }
@@ -98,7 +98,7 @@ Parallax trees
   height: 1000px;
   width: 2200px;
   z-index: -1;
-  background-image: url('../img/mountain/clouds.png');
+  background-image: url('../img/valley/clouds.png');
   position: absolute;
   left: -300px;
   background-repeat: no-repeat;
@@ -108,7 +108,7 @@ Parallax trees
   height: 1000px;
   width: 100%;
   z-index: -2;
-  background-image: url('../img/mountain/sky.png');
+  background-image: url('../img/valley/sky.png');
   position: absolute;
   background-repeat: no-repeat;
   background-position: center top;
@@ -155,10 +155,10 @@ Parallax trees
 }
 
 
-.falling-leaf, .falling-snowflake {
+.falling-leaf {
   height: 100px;
   width: 100px;
-  background-image: url('../img/maple-leaf-small.png');
+  background-image: url('../img/maple-leaf-red.png');
   background-size: 100px;
   background-repeat: no-repeat;
   position: relative;
@@ -167,123 +167,29 @@ Parallax trees
   // left: 200px;
 }
 .leaf-one {
-  // top: -1300px;
   top: 100px;
-  left: 3%;
+  left: 13%;
+  background-image: url('../img/maple-leaf-orange-painted.png');
 }
 .leaf-two {
-  // top: -700px;
   top: -50px;
   left: 64%;
 }
 .leaf-three {
-  // top: -1800px;
   top: -750px;
-  right: 4%;
+  left: 84%;
 }
 
-.snowflake-one {
-  // top: -1300px;
+.leaf-four {
   top: -900px;
   left: 3%;
-  // background-color: red;
 }
-.snowflake-two {
-  // top: -700px;
-  top: -1050px;
-  left: 44%;
-  // background-color: blue;
+.leaf-five {
+  left: 64%;
+  background-image: url('../img/maple-leaf-orange-painted.png');
 }
-.snowflake-three {
-  // top: -1800px;
+.leaf-six {
   top: -950px;
-  right: 17%;
-  // background-color: green;
+  left: 77%;
+  background-image: url('../img/maple-leaf-yellow-painted.png');
 }
-
-
-
-
-
-
-// #second .tree-center {
-//   top: 800px;
-// }
-
-// .trees {
-//   display: flex;
-//   // flex-direction: column;
-//   justify-content: flex-end;
-// }
-//
-// .trees img {
-//   position: fixed;
-//   z-index: 3;
-// }
-//
-// .tree-right img, .tree-left img, .tree-center img, .hill img {
-//   position: fixed;
-//   z-index: 5;
-//   // display: none;
-// }
-// .tree-left img {
-//   left: 0px;
-//   bottom: -800px;
-// }
-// .tree-right img {
-//   right: 0px;
-//   // bottom: -800px;
-// }
-// .tree-center img {
-//   left: 20%;
-//   bottom: 150px;
-//   // transform: translateX(-50%);
-// }
-// .hill img {
-//   left: 0px;
-//   bottom: 1900px;
-// }
-
-
-
-
-
-
-
-//
-// .parallax {
-//   z-index: 1000;
-//   position: relative;
-//   top: 0px;
-//   left: 0px;
-//   perspective: 1px;
-//   height: 100vh;
-//   overflow-x: hidden;
-//   overflow-y: auto;
-//   // background-color: yellow;
-//   color: black;
-//
-// }
-// .parallax__layer {
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-//   bottom: 0;
-//   left: 0;
-//   opacity: 0.3;
-// }
-// .parallax__layer__base {
-//   transform: translateZ(0);
-//   height: 200vh;
-//   background-color: red;
-// }
-// .parallax__layer__back {
-//   transform: translateZ(-1px) scale(2);
-//   background-color: green;
-//   background-image: url('../img/tree-r.png');
-//   background-repeat: no-repeat;
-//   background-position: center right;
-// }
-// .parallax__layer__deep {
-//   transform: translateZ(-2px) scale(3);
-// }
