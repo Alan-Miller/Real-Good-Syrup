@@ -1,0 +1,62 @@
+@media(max-width: 1000px) {
+  .all-products {
+    width: 95vw;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .one-product {
+    min-width: 55%;
+    max-width: 75%;
+    margin: 14px 0;
+    border-radius: 70px;
+    border: 8px inset rgba(233, 233, 233, 1);
+  }
+  .tree-left {
+    display: none;
+  }
+  .tree-right-back {
+    position: absolute;
+    right: -150px;
+  }
+  .i-want {
+    text-align: center;
+    position: relative;
+    bottom: 70px;
+    font-size: 1.7em;
+  }
+  .hill-fg, .contact-nav, .small-logo, .my-info-nav {
+    display: none;
+  }
+  .login-nav, .logout-nav {
+    position: inherit;
+    font-size: 0.8em;
+  }
+  .admin-content, .user-main {
+    flex-direction: column;
+  }
+  .order-section:nth-child(1) {
+    display: none;
+  }
+  .order-section, .my-info-section {
+    width: 50%;
+  }
+
+}
+
+
+@media(max-width: 500px) {
+  .splash-bg {
+    background-image: url('../img/rgs-logo.png');
+    -webkit-background-size: 500px;
+       -moz-background-size: 500px;
+        -ms-background-size: 500px;
+         -o-background-size: 500px;
+            background-size: 500px;
+  }
+  .login-nav, .logout-nav {
+    position: inherit;
+    font-size: 0.7em;
+  }
+}

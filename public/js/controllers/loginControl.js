@@ -167,7 +167,7 @@ angular.module('syrupApp').controller('loginControl', function($scope, rgsServic
           title: 'Welcome!',
           confirmButtonText: 'Yay!',
           showCancelButton: false,
-          imageUrl: '../../img/maple-leaf-small.png',
+          imageUrl: '../../img/maple-leaf-orange-painted.png',
           imageWidth: 100,
           imageHeight: 100,
           timer: 2100
