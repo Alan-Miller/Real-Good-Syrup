@@ -11,7 +11,7 @@
     max-width: 75%;
     margin: 14px 0;
     border-radius: 70px;
-    border: 8px inset rgba(233, 233, 233, 1);
+    border: 8px double rgba(233, 233, 233, 1);
   }
   .tree-left {
     display: none;
@@ -58,5 +58,193 @@
   .login-nav, .logout-nav {
     position: inherit;
     font-size: 0.7em;
+  }
+  .all-products {
+    width: 95vw;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .one-product {
+    min-width: 85%;
+    margin: 14px 0;
+    border-radius: 20px;
+    border: 8px double rgba(233, 233, 233, 1);
+  }
+  .product-name-and-price {
+    font-size: 1.3rem;
+    border: 2px dotted $mapleorange;
+    padding: 5px;
+  }
+  #third p, #contact p, #admin p, #login p,  #about p, #patron p {
+    margin: 14px;
+    font-size: 1rem;
+    line-height: 1.6em;
+  }
+  .leaf-two, .leaf-three, .leaf-four, .leaf-five, .cart-nav {
+    display: none;
+  }
+  .routed-content {
+    padding: 40px 5%;
+  }
+  #main-nav {
+    font-size: 0.5em;
+  }
+  .pacifico, .login-nav, .logout-nav {
+    font-family: 'Raleway', serif;
+  }
+  .login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+    min-height: 100px;
+    background-color: rgba(255, 255, 255, .55);
+    border-radius: 10px;
+    padding: 18px 10px;
+    color: rgb(111, 111, 111);
+    z-index: 42;
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    input {
+      margin: 10px;
+      padding: 4px;
+      font-size: 1.4em;
+      max-width: 275px;
+      display: flex;
+      flex-direction: column;
+      outline-color: $maplered;
+      color: $maplered;
+      outline-width: medium;
+    }
+    .login-btn {
+      margin: 5px 5px 5px 5px;
+      padding: 8px;
+      background-color: $maplered;
+      border-top: solid 2px $maplelightred;
+      border-right: solid 2px $mapledarkred;
+      border-bottom: solid 2px $mapledarkred;
+      border-left: solid 2px $maplelightred;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      font-family: 'Raleway', serif;
+      outline: none;
+    }
+    .login-btn.new-login {
+      background-color: $mapleblue;
+      border-top: solid 2px $maplelightblue;
+      border-right: solid 2px $mapledarkblue;
+      border-bottom: solid 2px $mapledarkblue;
+      border-left: solid 2px $maplelightblue;
+      border-radius: 12px;
+      margin: 5px 5px 5px 5px;
+    }
+    .login-text {
+      max-width: 400px;
+      margin: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+    .form div {
+      width: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  #third p, #contact p, #admin p, #login p,  #about p, #patron p {
+    margin: 34px;
+    font-size: 1.1rem;
+    line-height: 1.6em;
+    position: relative;
+    // z-index: 33;
+  }
+  #third h2, #contact h2, #admin h2, #about h2 {
+    font-size: 2.7rem;
+    color: $maplered;
+    position: relative;
+    // left: -36px;
+    padding: 17px;
+    position: relative;
+    // z-index: 44;
+  }
+  #patron, #admin {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(121, 80, 80, .55 );
+    color: white;
+    z-index: 42;
+  }
+  #admin {
+    padding: 30px;
+    overflow: scroll;
+  }
+
+  .patron-nav, .admin-nav {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    height: $user-nav-height;
+    width: 100%;
+    // padding: 30px 100px;
+    border-bottom: dotted thin white;
+  }
+  .admin-nav {
+    position: absolute;
+    // padding: 30px 100px;
+  }
+  .admin-nav h3 {
+    color: white;
+    font-size: 2rem;
+  }
+  .admin-content {
+    margin-top: $user-nav-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: space-around;
+  }
+  .order-section, .my-info-section {
+    width: 100vw;
+    height: calc(100% - 70px);
+    // margin: 20px;
+    // padding: 20px;
+    border: dotted thin white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: scroll;
+    // color: white;
+    div {
+      margin: 0px 0;
+    }
+    ol {
+      margin-bottom: 55px;
+    }
+  }
+  .my-info-section {
+    justify-content: flex-start;
+    background-color: white;
+    color: black;
+    li {
+      padding: 10px 0;
+    }
+  }
+  .my-info section {
+    position: relative;
+    left: 30px;
+    // color: white;
+    padding: 10px 0;
   }
 }
