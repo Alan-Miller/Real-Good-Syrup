@@ -3,7 +3,7 @@ $maplelightred: RGB(234, 130, 137);
 $mapledarkred: RGB(101, 8, 25);
 // $lightred: RGB(217, 67, 98);
 $mapleorange: RGB(255, 132, 77);
-$mapleblue: RGB(80, 103, 129);
+$mapleblue: RGB(80, 100, 132);
 $maplelightblue: RGB(110, 143, 179);
 $mapledarkblue: RGB(40, 57, 69);
 $mapleyellow: rgba(240, 240, 240, 0.5);
@@ -63,8 +63,10 @@ h3 {
 #main-nav {
   height: 70px;
   background-color: $mapleblue;
+  border-top: 3px solid white;
+  border-bottom: 3px solid white;
   z-index: 45;
-  color: $beige;
+  color: white;
   ul {
     display: flex;
     font-size: 1.9em;
@@ -118,11 +120,11 @@ h3 {
 }
 
 .small-logo {
-  color: $beige;
+  color: white;
   position: absolute;
   font-size: .85em;
   left: 32px;
-  top: 21px;
+  top: 18px;
   span:before {
     content: 'Real';
     font-family: 'Galada', cursive;
