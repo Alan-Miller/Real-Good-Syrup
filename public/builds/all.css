@@ -1,3 +1,9 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  VARIABLES
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  IMPORTS
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 @import 'https://fonts.googleapis.com/css?family=Baloo+Bhai|Bevan|Teko:500|Lato|Galada|Oleo+Script|Oleo+Script+Swash+Caps|Open+Sans|Pacifico|Raleway|Roboto+Slab|Yellowtail';
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -254,11 +260,11 @@ Parallax trees
   left: 77%;
   background-image: url("../img/maple-leaf-yellow-painted.png"); }
 
-body.no-scroll {
-  overflow: hidden; }
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  BASE STYLES
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 html {
-  color: black;
+  color: #1c1622;
   font-family: 'Raleway', sans-serif;
   background-color: #1c1622;
   outline: none; }
@@ -266,17 +272,35 @@ html {
 body {
   overflow: auto; }
 
+body.no-scroll {
+  overflow: hidden; }
+
 h2 {
   font-size: 2.7rem; }
 
 h3 {
   font-size: 2.1rem; }
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  UNIVERSAL STYLES
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.pointer {
+  cursor: pointer; }
+
+.hidden {
+  visibility: hidden; }
+
 .flex-centered {
   display: flex;
   justify-content: center;
   align-items: center; }
 
+.routed-content {
+  padding: 70px 15%; }
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  MAIN NAV
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #nav-buffer {
   height: 70px;
   width: 100%;
@@ -295,7 +319,8 @@ h3 {
     font-size: 1.9em; }
   #main-nav ul > li {
     margin: 0 24px;
-    cursor: pointer; }
+    cursor: pointer;
+    display: inline-block; }
 
 .scroll-nav {
   position: relative;
@@ -317,26 +342,6 @@ h3 {
   position: absolute;
   font-size: .85em;
   right: 32px; }
-
-.splash-logo {
-  color: RGB(255, 255, 222);
-  /*color: $lightbrown;*/
-  font-size: 4em;
-  position: absolute; }
-
-.splash-bg {
-  height: 720px;
-  width: 720px;
-  background-image: url("../img/rgs-logo.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  z-index: 41;
-  -webkit-background-size: 720px;
-  -moz-background-size: 720px;
-  -ms-background-size: 720px;
-  -o-background-size: 720px;
-  background-size: 720px; }
 
 .small-logo {
   color: white;
@@ -362,6 +367,83 @@ h3 {
     top: 65%;
     left: -68%; }
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  MAJOR SECTIONS
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#first {
+  height: calc(100vh - 70px);
+  position: relative;
+  z-index: 50;
+  background: RGB(155, 188, 197);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  overflow: hidden; }
+
+#second {
+  min-height: 700px;
+  background-color: RGB(155, 188, 197);
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end; }
+
+#third {
+  position: relative;
+  min-height: 1500px;
+  background-color: RGB(155, 188, 197); }
+
+#fourth {
+  min-height: 300px;
+  background-color: RGB(155, 188, 197);
+  background-repeat: no-repeat;
+  overflow: hidden; }
+
+#footer {
+  position: relative;
+  height: 140px;
+  background-color: #1c1622; }
+
+#third p, #contact p, #admin p, #login p, #about p, #patron p {
+  margin: 34px;
+  font-size: 1.1rem;
+  line-height: 1.6em;
+  position: relative; }
+
+#third h2, #contact h2, #admin h2, #about h2 {
+  font-size: 2.7rem;
+  color: RGB(204, 70, 77);
+  position: relative;
+  padding: 17px;
+  position: relative; }
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  MAIN LOGO (SPLASH VIEW)
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.splash-logo {
+  color: RGB(255, 255, 222);
+  /*color: $lightbrown;*/
+  font-size: 4em;
+  position: absolute; }
+
+.splash-bg {
+  height: 720px;
+  width: 720px;
+  background-image: url("../img/rgs-logo.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  z-index: 41;
+  -webkit-background-size: 720px;
+  -moz-background-size: 720px;
+  -ms-background-size: 720px;
+  -o-background-size: 720px;
+  background-size: 720px; }
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  LOGIN VIEW
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .login {
   display: flex;
   flex-direction: column;
@@ -416,257 +498,10 @@ h3 {
     text-align: center;
     font-size: 1.2rem; }
 
-.routed-content {
-  padding: 70px 15%; }
-
-#first {
-  height: calc(100vh - 70px);
-  position: relative;
-  z-index: 50;
-  background: RGB(155, 188, 197);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center top;
-  overflow: hidden; }
-
-#second {
-  min-height: 700px;
-  background-color: RGB(155, 188, 197);
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-end; }
-
-#third {
-  position: relative;
-  min-height: 1500px;
-  background-color: RGB(155, 188, 197); }
-
-#fourth {
-  min-height: 300px;
-  background-color: RGB(155, 188, 197);
-  background-repeat: no-repeat;
-  overflow: hidden; }
-
-#footer {
-  position: relative;
-  height: 140px;
-  background-color: #1c1622; }
-
-.exit-cart {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 10px;
-  cursor: pointer; }
-
-#third p, #contact p, #admin p, #login p, #about p, #patron p {
-  margin: 34px;
-  font-size: 1.1rem;
-  line-height: 1.6em;
-  position: relative; }
-
-#third h2, #contact h2, #admin h2, #about h2 {
-  font-size: 2.7rem;
-  color: RGB(204, 70, 77);
-  position: relative;
-  padding: 17px;
-  position: relative; }
-
-.all-products {
-  min-height: 600px;
-  width: 95vw;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  position: relative;
-  margin-bottom: 24px;
-  z-index: 44; }
-
-.one-product {
-  width: calc(100% / 3);
-  margin: 0 14px;
-  background-color: rgba(240, 240, 240, 0.65);
-  border-radius: 167px 11px;
-  border: 4px double #e9e9e9;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 44; }
-
-#cart {
-  position: relative;
-  color: #1c1622;
-  z-index: 34;
-  display: flex;
-  flex-direction: column;
-  align-items: center; }
-
-.product-image {
-  position: relative;
-  background: url("../img/rgs.png") no-repeat center center;
-  min-height: 250px;
-  min-width: 100%;
-  -webkit-background-size: 120px;
-  -moz-background-size: 120px;
-  -ms-background-size: 120px;
-  -o-background-size: 120px;
-  background-size: 120px; }
-
-.product-name-and-price {
-  transform: rotate(-30deg);
-  font-size: 1.7rem;
-  background-color: white;
-  border-radius: 5px;
-  border: 3px dotted RGB(255, 132, 77);
-  padding: 9px; }
-
-.cart-adder {
-  color: #1c1622;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 13px;
-  line-height: 1.3em;
-  text-align: center;
-  font-size: 1.3rem;
-  position: relative;
-  bottom: 80px; }
-  .cart-adder .add-sub {
-    min-width: 54px;
-    font-size: 1.4em;
-    color: white;
-    position: relative;
-    top: 30px;
-    right: 30px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none; }
-  .cart-adder .add-sub:after {
-    content: '';
-    background-color: RGB(204, 70, 77);
-    height: 18px;
-    width: 18px;
-    border-radius: 3px 3px 0 0;
-    border-top: 5px solid #372d3b;
-    position: absolute;
-    z-index: 24;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%); }
-  .cart-adder .add-sub:before {
-    content: '';
-    border: 5px solid RGB(204, 70, 77);
-    height: 18px;
-    width: 11px;
-    border-radius: 11px;
-    position: absolute;
-    z-index: 24;
-    top: -12px;
-    right: 3px;
-    transform: rotate(25deg); }
-  .cart-adder .add-sub-padding {
-    padding: 14px 0; }
-  .cart-adder .sub {
-    background-color: RGB(204, 70, 77);
-    cursor: pointer;
-    border-radius: 20px 20px 0 0;
-    border-left: 4px solid RGB(255, 157, 162);
-    position: relative; }
-  .cart-adder .sub.white-highlight {
-    box-shadow: 0 -6px 9px 7px white; }
-  .cart-adder .sub:before {
-    content: '';
-    position: absolute;
-    border-left: 6px solid RGBa(255, 157, 162, 0.7);
-    border-radius: 12px 12px 0 0;
-    width: 23px;
-    height: 100%;
-    left: 7px;
-    bottom: 0px; }
-  .cart-adder .add {
-    background-color: #372d3b;
-    border-left: 4px solid RGB(255, 157, 162);
-    border-right: 4px solid RGB(204, 70, 77);
-    border-bottom: 4px solid RGB(204, 70, 77);
-    cursor: pointer;
-    border-radius: 0 0 12px 12px;
-    position: relative; }
-  .cart-adder .add.white-highlight {
-    box-shadow: 0 9px 9px 7px white; }
-  .cart-adder .add:before {
-    content: '';
-    position: absolute;
-    border-left: 6px solid RGBa(255, 157, 162, 0.7);
-    border-radius: 0 0 12px 12px;
-    width: 23px;
-    height: 100%;
-    left: 7px;
-    bottom: 0px; }
-
-.i-want {
-  text-align: center;
-  position: relative;
-  bottom: 70px;
-  font-size: 2.2em; }
-
-.num {
-  cursor: pointer; }
-
-.buy-btn {
-  background-color: RGB(204, 70, 77);
-  width: 200px;
-  height: 50px;
-  border: medium solid white;
-  color: white;
-  cursor: pointer;
-  z-index: 43;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 3px;
-  position: relative;
-  bottom: 20px;
-  outline: none; }
-
-.buy-btn:hover {
-  background-color: rgba(240, 240, 240, 0.5);
-  color: RGB(204, 70, 77); }
-
-.buy-btn:before {
-  content: '';
-  background-image: url("../img/maple-leaf-red.png");
-  background-size: 30px;
-  background-position: left center;
-  background-repeat: no-repeat;
-  position: absolute;
-  left: -44px;
-  top: -28px;
-  height: 100px;
-  width: 100px; }
-
-.buy-btn:after {
-  content: '';
-  background-image: url("../img/maple-leaf-red.png");
-  background-size: 30px;
-  background-position: left center;
-  background-repeat: no-repeat;
-  position: absolute;
-  right: -111px;
-  top: -28px;
-  height: 100px;
-  width: 100px; }
-
-.product-id {
-  font-size: 2.2em;
-  position: absolute;
-  color: gray;
-  top: 50px;
-  left: 50px; }
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  ADMIN VIEW
+  USER (PATRON) VIEW
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #patron, #admin {
   position: absolute;
   width: 100%;
@@ -719,7 +554,7 @@ h3 {
   background-color: transparent;
   outline: none; }
 
-.logout-nav, .my-info-nav {
+#logout-nav.logout-nav, .my-info-nav {
   color: #372d3b;
   outline: none;
   margin: 12px;
@@ -837,22 +672,7 @@ h3 {
   .all-users li:nth-child(even) {
     background-color: RGB(110, 143, 179); }
 
-#process, #faq {
-  background-color: rgba(240, 240, 240, 0.65);
-  border-radius: 18px;
-  position: relative;
-  z-index: 33; }
-
-#faq {
-  z-index: 44;
-  margin-bottom: 150px; }
-
-#contact {
-  z-index: 33;
-  position: relative;
-  color: white; }
-
-.user-info, .username-and-password, .edit {
+.user-info, .user-password, .edit {
   position: relative;
   display: flex;
   margin: 0 5px; }
@@ -882,6 +702,221 @@ h3 {
   border: 4px dotted RGB(110, 143, 179);
   border-radius: 50%; }
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  CART VIEW
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.all-products {
+  min-height: 600px;
+  width: 95vw;
+  display: inline;
+  align-items: center;
+  position: relative;
+  margin-bottom: 24px;
+  z-index: 44; }
+
+.one-product {
+  width: calc(100% / 3 - 28px);
+  margin: 34px 14px 14px 14px;
+  background-color: rgba(240, 240, 240, 0.65);
+  border-radius: 167px 11px;
+  border: 4px double #e9e9e9;
+  display: inline-block;
+  position: relative;
+  z-index: 44; }
+
+#cart {
+  position: relative;
+  color: #1c1622;
+  z-index: 34;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.product-image {
+  position: relative;
+  background: url("../img/rgs.png") no-repeat center center;
+  min-height: 250px;
+  min-width: 100%;
+  -webkit-background-size: 120px;
+  -moz-background-size: 120px;
+  -ms-background-size: 120px;
+  -o-background-size: 120px;
+  background-size: 120px; }
+
+.product-name-and-price {
+  transform: rotate(-30deg);
+  font-size: 1.7rem;
+  background-color: white;
+  border-radius: 5px;
+  border: 3px dotted RGB(255, 132, 77);
+  padding: 9px;
+  width: 210px; }
+
+.cart-adder {
+  color: #1c1622;
+  padding: 13px;
+  line-height: 1.3em;
+  text-align: center;
+  font-size: 1.3rem;
+  position: relative;
+  bottom: 80px; }
+  .cart-adder .add-sub {
+    width: 54px;
+    font-size: 1.4em;
+    color: white;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+  .cart-adder .add-sub:after {
+    content: '';
+    background-color: RGB(204, 70, 77);
+    height: 18px;
+    width: 18px;
+    border-radius: 3px 3px 0 0;
+    border-top: 5px solid #372d3b;
+    position: absolute;
+    z-index: 24;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%); }
+  .cart-adder .add-sub:before {
+    content: '';
+    border: 5px solid RGB(204, 70, 77);
+    height: 18px;
+    width: 11px;
+    border-radius: 11px;
+    position: absolute;
+    z-index: 24;
+    top: -12px;
+    right: 3px;
+    transform: rotate(25deg); }
+  .cart-adder .add-sub-padding {
+    padding: 14px 0; }
+  .cart-adder .sub {
+    background-color: RGB(204, 70, 77);
+    cursor: pointer;
+    border-radius: 20px 20px 0 0;
+    border-left: 4px solid RGB(255, 157, 162);
+    position: relative; }
+  .cart-adder .sub.white-highlight {
+    box-shadow: 0 -6px 9px 7px white; }
+  .cart-adder .sub:before {
+    content: '';
+    position: absolute;
+    border-left: 6px solid RGBa(255, 157, 162, 0.7);
+    border-radius: 12px 12px 0 0;
+    width: 23px;
+    height: 100%;
+    left: 7px;
+    bottom: 0px; }
+  .cart-adder .add {
+    background-color: #372d3b;
+    border-left: 4px solid RGB(255, 157, 162);
+    border-right: 4px solid RGB(204, 70, 77);
+    border-bottom: 4px solid RGB(204, 70, 77);
+    cursor: pointer;
+    border-radius: 0 0 12px 12px;
+    position: relative; }
+  .cart-adder .add.white-highlight {
+    box-shadow: 0 9px 9px 7px white; }
+  .cart-adder .add:before {
+    content: '';
+    position: absolute;
+    border-left: 6px solid RGBa(255, 157, 162, 0.7);
+    border-radius: 0 0 12px 12px;
+    width: 23px;
+    height: 100%;
+    left: 7px;
+    bottom: 0px; }
+
+.i-want {
+  text-align: center;
+  position: relative;
+  bottom: 70px;
+  font-size: 2.2em; }
+
+.num {
+  cursor: pointer; }
+
+.buy-btn {
+  background-color: RGB(204, 70, 77);
+  width: 200px;
+  height: 50px;
+  border: medium solid white;
+  color: white;
+  cursor: pointer;
+  z-index: 45;
+  text-align: center;
+  border-radius: 3px;
+  position: relative;
+  bottom: 120px;
+  outline: none; }
+
+.buy-btn > span {
+  position: relative;
+  top: 33%; }
+
+.buy-btn:hover {
+  background-color: rgba(240, 240, 240, 0.5);
+  color: RGB(204, 70, 77); }
+
+.buy-btn:before {
+  content: '';
+  background-image: url("../img/maple-leaf-red.png");
+  background-size: 30px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: -44px;
+  top: -28px;
+  height: 100px;
+  width: 100px; }
+
+.buy-btn:after {
+  content: '';
+  background-image: url("../img/maple-leaf-red.png");
+  background-size: 30px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: -111px;
+  top: -28px;
+  height: 100px;
+  width: 100px; }
+
+.product-id {
+  font-size: 2.2em;
+  position: absolute;
+  color: gray;
+  top: 50px;
+  left: 50px; }
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  HOW WE MAKE MAPLE SYRUP (PROCESS) VIEW
+  FAQ VIEW
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#process, #faq {
+  background-color: rgba(240, 240, 240, 0.65);
+  border-radius: 18px;
+  position: relative;
+  z-index: 33; }
+
+#faq {
+  z-index: 44;
+  margin-bottom: 150px; }
+
+#contact {
+  z-index: 33;
+  position: relative;
+  color: white; }
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  SWEET ALERT INPUTS
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .swal-input {
   position: relative;
   left: 50%;
@@ -896,12 +931,12 @@ h3 {
   color: RGB(80, 100, 132);
   outline-width: medium; }
 
-.pointer {
-  cursor: pointer; }
-
-.hidden {
-  visibility: hidden; }
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  STRIPE STYLES (NOT USED)
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  MEDIA QUERY IMPORTS
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 @media (max-width: 1000px) {
   .all-products {
     width: 95vw;

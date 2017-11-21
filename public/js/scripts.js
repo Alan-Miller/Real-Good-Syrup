@@ -36,15 +36,18 @@ $(document).ready(function() {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $.fn.scrollToStateContainer = function () {
       return this.each(function () {
-          if ($(window).scrollTop() < navOffset) {
-            $('html, body').animate({
-                scrollTop: $(this).offset().top - 70
-            }, 1000);
-          } else {
-            $('html, body').animate({
-                scrollTop: $(this).offset().top - 70
-            }, 1000);
-          }
+          // if ($(window).scrollTop() < navOffset) {
+          //   $('html, body').animate({
+          //       scrollTop: $(this).offset().top - 70
+          //   }, 1000);
+          // } else {
+          //   $('html, body').animate({
+          //       scrollTop: $(this).offset().top - 70
+          //   }, 1000);
+          // }
+          $('html, body').animate({
+              scrollTop: $(this).offset().top - 70
+          }, 1000);
       });
   };
   $('.small-logo, .login-nav, .my-info-nav').on('click', function() {

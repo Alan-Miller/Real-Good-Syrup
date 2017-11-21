@@ -15,7 +15,6 @@ angular.module('syrupApp')
             $(document.body).css('overflow', 'auto');
           });
 
-
     }
   };
 });

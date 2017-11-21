@@ -3,6 +3,9 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
   // var port = 8002;
   var serviceScope = this;
   var user = {};
+  console.log('this!');
+  console.log(serviceScope === this);
+  console.log(this);
 
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*

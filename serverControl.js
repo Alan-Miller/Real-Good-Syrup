@@ -18,8 +18,9 @@ module.exports = {
       res.status(200).json(users);
     });
   },
+
   getThisUser: function(req, res) {
-    console.log('req.user', req.user);
+    // console.log('req.user', req.user);
     db.get_this_user([req.params.id], function(err, user) {
       res.status(200).json(user);
     });

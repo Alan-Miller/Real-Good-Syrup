@@ -4,7 +4,7 @@ angular.module('syrupApp')
     restrict: 'AE',
     link: function(scope, elem, attribute) {
 
-      var elemOffset = elem.offset().top - 100;
+      var elemOffset = elem.offset().top - 170;
       var elemOpacity = (Math.pow($(window).scrollTop(), 2) / Math.pow(elemOffset, 2));
       // alert(navOffset);
 
@@ -16,6 +16,7 @@ angular.module('syrupApp')
       $(window).on('scroll', function() {
         // if ($(window).scrollTop() >= elem.offset().top - 400) {
           elemOpacity = (Math.pow($(window).scrollTop(), 12) / Math.pow(elemOffset, 12));
+          // console.log('opacity', elemOpacity);
           elem.css({'opacity': elemOpacity});
         // } else elem.css({'opacity': 0});
       });

@@ -266,15 +266,18 @@ $(document).ready(function () {
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   $.fn.scrollToStateContainer = function () {
     return this.each(function () {
-      if ($(window).scrollTop() < navOffset) {
-        $('html, body').animate({
-          scrollTop: $(this).offset().top - 70
-        }, 1000);
-      } else {
-        $('html, body').animate({
-          scrollTop: $(this).offset().top - 70
-        }, 1000);
-      }
+      // if ($(window).scrollTop() < navOffset) {
+      //   $('html, body').animate({
+      //       scrollTop: $(this).offset().top - 70
+      //   }, 1000);
+      // } else {
+      //   $('html, body').animate({
+      //       scrollTop: $(this).offset().top - 70
+      //   }, 1000);
+      // }
+      $('html, body').animate({
+        scrollTop: $(this).offset().top - 70
+      }, 1000);
     });
   };
   $('.small-logo, .login-nav, .my-info-nav').on('click', function () {
@@ -992,7 +995,7 @@ angular.module('syrupApp').directive('fadeIn', function () {
     restrict: 'AE',
     link: function link(scope, elem, attribute) {
 
-      var elemOffset = elem.offset().top - 100;
+      var elemOffset = elem.offset().top - 170;
       var elemOpacity = Math.pow($(window).scrollTop(), 2) / Math.pow(elemOffset, 2);
       // alert(navOffset);
 
@@ -1004,6 +1007,7 @@ angular.module('syrupApp').directive('fadeIn', function () {
       $(window).on('scroll', function () {
         // if ($(window).scrollTop() >= elem.offset().top - 400) {
         elemOpacity = Math.pow($(window).scrollTop(), 12) / Math.pow(elemOffset, 12);
+        // console.log('opacity', elemOpacity);
         elem.css({ 'opacity': elemOpacity });
         // } else elem.css({'opacity': 0});
       });

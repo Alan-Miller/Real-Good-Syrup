@@ -1,3 +1,4 @@
+require('dotenv').config();
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
   REQUIREMENTS
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -24,21 +25,18 @@ try {
   var config = {
     "port": 8002,
     "STRIPE_KEY": "",
-    "TOKEN_SECRET": "marbles",
+    "TOKEN_SECRET": process.env.TOKEN_SECRET
   };
 }
 
-var db = massive.connectSync({
-  connectionString: process.env.DATABASE_URL
-  // connectionString: 'postgres://ashman@localhost:5432/rgs'
-});
+massive(process.env.CONNECTION_STRING).then(db => app.set('db', db));;
 
 // app.set('database', massive.connectSync({
 //   db: 'rgs'
 // }));
 
-var app = module.exports = express();
-app.set('db', db);
+// var app = module.exports = express();
+// app.set('db', db);
 
 var controller = require('./serverControl.js');
 
@@ -208,7 +206,8 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
 //           }
 //           else if(!comparePassword(req.body.password, user.password, user)){
 //             return res.status(401).send({
-//               message: 'Invalid username and/or password'
+//               message: 'Inpost
+// valid username and/or password'
 //             });
 //           }
 //           res.send({

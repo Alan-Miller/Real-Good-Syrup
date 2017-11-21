@@ -233,7 +233,7 @@ angular.module('syrupApp', ['ui.router', 'satellizer', 'angular-stripe'])
 
    $urlRouterProvider.otherwise('/');
 
-   $authProvider.loginUrl = '/auth/login';
+   $authProvider.loginUrl = '/auth/login/';
    $authProvider.signupUrl = '/auth/signup';
 
 });
