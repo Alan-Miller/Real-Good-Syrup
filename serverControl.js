@@ -1,5 +1,5 @@
-var app = require('./server.js');
-var db = app.get('db');
+// var app = require('./server.js');
+// var db = app.get('db');
 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -15,31 +15,31 @@ module.exports = {
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   
   getUsers: function(req, res) {
-    app.get('db').get_users(function(err, users) {
+    req.app.get('db').get_users(function(err, users) {
       res.status(200).json(users);
     });
   },
 
   getThisUser: function(req, res) {
     // console.log('req.user', req.user);
-    app.get('db').get_this_user([req.params.id], function(err, user) {
+    req.app.get('db').get_this_user([req.params.id], function(err, user) {
       res.status(200).json(user);
     });
   },
   postUser: function(req, res) {
-    app.get('db').post_user([req.body.firstname, req.body.lastname, req.body.address, req.body.zip, req.body.username, req.body.password], function(err, user) {
+    req.app.get('db').post_user([req.body.firstname, req.body.lastname, req.body.address, req.body.zip, req.body.username, req.body.password], function(err, user) {
       res.status(200).json(user);
     });
   },
   updateUserInfo: function(req, res) {
-    app.get('db').update_user_info([req.body.firstname, req.body.lastname, req.body.username, req.body.address, req.body.zip, req.body.id], function(err, user) {
+    req.app.get('db').update_user_info([req.body.firstname, req.body.lastname, req.body.username, req.body.address, req.body.zip, req.body.id], function(err, user) {
       res.status(200).json(user);
     });
   },
   updatePassword: function(req, res) {
     console.log(req.body.newPassword);
     console.log(req.body.id);
-    app.get('db').update_password([req.body.newPassword, req.body.id], function(err, user) {
+    req.app.get('db').update_password([req.body.newPassword, req.body.id], function(err, user) {
       res.status(200).json(user);
     });
   },
@@ -50,12 +50,13 @@ module.exports = {
       Update products (admin)
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   getProducts: function(req, res) {
-    app.get('db').get_products(function(err, products) {
+    console.log('getProducts fn', req.app.get('db'))
+    req.app.get('db').get_products(function(err, products) {
       res.status(200).json(products);
     });
   },
   updateProducts: function(req, res) {
-    app.get('db').update_products([req.params.id, req.body.price_per], function(err, product) {
+    req.app.get('db').update_products([req.params.id, req.body.price_per], function(err, product) {
       res.status(200).json(product);
     });
   },
@@ -67,21 +68,21 @@ module.exports = {
       Post order to db
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   getUnfilledOrders: function(req, res) {
-    app.get('db').get_unfilled_orders(function(err, orders) {
+    req.app.get('db').get_unfilled_orders(function(err, orders) {
       res.status(200).json(orders);
     });
   },
 
   getFilledOrders: function(req, res) {
-    app.get('db').get_filled_orders(function(err, orders) {
+    req.app.get('db').get_filled_orders(function(err, orders) {
       res.status(200).json(orders);
     });
   },
 
   markOrderFilled: function(req, res) {
-    app.get('db').update_order_mark_filled([req.params.id], function(err, order) {
-      // app.get('db').get_unfilled_orders(function(err, unfilled) {
-        // app.get('db').get_filled_orders(function(err, filled) {
+    req.app.get('db').update_order_mark_filled([req.params.id], function(err, order) {
+      // req.app.get('db').get_unfilled_orders(function(err, unfilled) {
+        // req.app.get('db').get_filled_orders(function(err, filled) {
           res.status(200).json(order);
         });
       // });
@@ -89,9 +90,9 @@ module.exports = {
   },
 
   markOrderUnfilled: function(req, res) {
-    app.get('db').update_order_mark_unfilled([req.params.id], function(err, order) {
-      app.get('db').get_unfilled_orders(function(err, unfilled) {
-        app.get('db').get_filled_orders(function(err, filled) {
+    req.app.get('db').update_order_mark_unfilled([req.params.id], function(err, order) {
+      req.app.get('db').get_unfilled_orders(function(err, unfilled) {
+        req.app.get('db').get_filled_orders(function(err, filled) {
           res.status(200).json(filled);
         });
       });
@@ -99,13 +100,13 @@ module.exports = {
   },
 
   getUserOrders: function(req, res) {
-    app.get('db').get_user_orders([req.params.id], function(err, orders) {
+    req.app.get('db').get_user_orders([req.params.id], function(err, orders) {
       res.status(200).json(orders);
     });
   },
 
   getOrderDetails: function(req, res) {
-    app.get('db').get_order_details([req.params.id], function(err, details) {
+    req.app.get('db').get_order_details([req.params.id], function(err, details) {
       res.status(200).json(details);
     });
   },
@@ -118,18 +119,18 @@ module.exports = {
     // userOrder.push(req.body.total);
 
     console.log('userOrder before post', userOrder);
-    app.get('db').post_order([req.body.userId, req.body.total], function(err, order) {
+    req.app.get('db').post_order([req.body.userId, req.body.total], function(err, order) {
       // res.status(200).json(order);
       console.log('db.post_order returns:', order);
       console.log('returned order id:', order[0].id);
       userOrder.push(order[0].id);
       console.log('userOrder:', userOrder);
       // console.log('pushed obj:', userOrder);
-      app.get('db').post_ordered_products(userOrder, function(err, details) {
+      req.app.get('db').post_ordered_products(userOrder, function(err, details) {
         console.log(err);
         console.log('details:', details);
         // res.status(200).json(order);
-        app.get('db').delete_null_orders(function(err) {
+        req.app.get('db').delete_null_orders(function(err) {
           res.status(200).json(order[0]);
           // res.status(200).end();
           // Only one of these db functions has a send (otherwise, there is an error regarding sending multiple times with the same header. The value of nesting is that each will wait till the previous is successful.)
