@@ -50,6 +50,7 @@ module.exports = {
       Update products (admin)
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   getProducts: function(req, res) {
+    console.log('DB', req.app.get('db'));
     req.app.get('db').get_products(function(products) {
       // console.log('ERR', err);
       console.log('PRODUCTS', products);
