@@ -30,7 +30,7 @@ try {
 }
 
 massive(process.env.CONNECTION_STRING).then(db => {
-  console.log('DATABASE', db);
+  // console.log('DATABASE', db);
   app.set('db', db);
 });
 
