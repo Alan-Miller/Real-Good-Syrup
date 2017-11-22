@@ -52,8 +52,8 @@ module.exports = {
   getProducts: function(req, res) {
     // console.log('DB', req.app.get('db'));
     req.app.get('db').get_products(function(err, products) {
-      // console.log('ERR', err);
-      console.log('PRODUCTS', products);
+      console.log('ERR', err);
+      // console.log('PRODUCTS', products);
       res.status(200).json(products);
     });
   },
