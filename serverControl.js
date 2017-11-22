@@ -1,5 +1,5 @@
 var app = require('./server.js');
-var db = app.get('db');
+var db = req.app.get('db');
 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -13,6 +13,7 @@ module.exports = {
       Get this user
       Update user
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  
   getUsers: function(req, res) {
     db.get_users(function(err, users) {
       res.status(200).json(users);
