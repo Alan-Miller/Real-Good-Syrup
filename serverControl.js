@@ -120,7 +120,7 @@ module.exports = {
     console.log('userOrder before post', userOrder);
     app.get('db').post_order([req.body.userId, req.body.total], function(err, order) {
       // res.status(200).json(order);
-      console.log('app.get('db').post_order returns:', order);
+      console.log('db.post_order returns:', order);
       console.log('returned order id:', order[0].id);
       userOrder.push(order[0].id);
       console.log('userOrder:', userOrder);
