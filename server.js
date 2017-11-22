@@ -29,7 +29,10 @@ try {
   };
 }
 
-massive(process.env.CONNECTION_STRING).then(db => app.set('db', db));;
+massive(process.env.CONNECTION_STRING).then(db => {
+  console.log('DATABASE', db);
+  app.set('db', db);
+});
 
 // app.set('database', massive.connectSync({
 //   db: 'rgs'
