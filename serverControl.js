@@ -50,8 +50,8 @@ module.exports = {
       Update products (admin)
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   getProducts: function(req, res) {
-    req.app.get('db').get_products(function(err, products) {
-      console.log('ERR', err);
+    req.app.get('db').get_products(function(products) {
+      // console.log('ERR', err);
       console.log('PRODUCTS', products);
       res.status(200).json(products);
     });
