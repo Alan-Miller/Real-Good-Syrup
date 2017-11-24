@@ -33,6 +33,7 @@ angular.module('syrupApp').controller('cartControl', function($scope, rgsService
       Get all products
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   rgsService.getProducts().then(function(response) {
+    console.log('getProducts response', response);
     $scope.products = response;
   });
 

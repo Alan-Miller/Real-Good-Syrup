@@ -22,7 +22,7 @@ try {
 }
 
 massive(config.CONNECTION_STRING).then(db => {
-  console.log('DATABASE', db);
+  // console.log('DATABASE', db);
   app.set('db', db);
 });
 

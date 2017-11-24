@@ -51,11 +51,15 @@ module.exports = {
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   getProducts: function(req, res) {
     // console.log('DB', req.app.get('db'));
-    req.app.get('db').get_products(function(err, products) {
-      console.log('ERR', err);
-      // console.log('PRODUCTS', products);
-      res.status(200).json(products);
-    });
+    console.log('getProducts');
+    req.app.get('db').get_products().then(products => {
+      res.status(200).send(products);
+    })
+    // req.app.get('db').get_products(function(err, products) {
+    //   console.log('ERR', err);
+    //   // console.log('PRODUCTS', products);
+    //   res.status(200).json(products);
+    // });
   },
   updateProducts: function(req, res) {
     req.app.get('db').update_products([req.params.id, req.body.price_per], function(err, product) {

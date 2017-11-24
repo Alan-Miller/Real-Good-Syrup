@@ -226,7 +226,7 @@ angular.module('syrupApp', ['ui.router', 'satellizer', 'angular-stripe']).config
 
   $urlRouterProvider.otherwise('/');
 
-  $authProvider.loginUrl = '/auth/login';
+  $authProvider.loginUrl = '/auth/login/';
   $authProvider.signupUrl = '/auth/signup';
 });
 
@@ -379,7 +379,16 @@ $(document).ready(function () {
 
 });
 
-angular.module('syrupApp').controller('aboutControl', function ($scope) {});
+angular.module('syrupApp').controller('aboutControl', function ($scope, rgsService) {
+
+  // var arr = ['one', 'two'];
+
+  // $scope.aboutArray = arr;
+
+  // rgsService.aboutArray = $scope.aboutArray;
+
+
+});
 
 angular.module('syrupApp').controller('adminControl', function ($scope, rgsService, $state, $auth) {
 
@@ -491,6 +500,7 @@ angular.module('syrupApp').controller('cartControl', function ($scope, rgsServic
       Get all products
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   rgsService.getProducts().then(function (response) {
+    console.log('getProducts response', response);
     $scope.products = response;
   });
 
@@ -951,7 +961,12 @@ angular.module('syrupApp').controller('patronControl', function ($scope, rgsServ
   // FIN
 });
 
-angular.module('syrupApp').controller('processControl', function ($scope) {});
+angular.module('syrupApp').controller('processControl', function ($scope, rgsService) {
+
+  // $scope.processArray = rgsService.aboutArray;
+
+
+});
 
 angular.module('syrupApp').directive('addSubtract', function () {
   return {
@@ -1112,6 +1127,10 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   // var port = 8002;
   var serviceScope = this;
   var user = {};
+  console.log('this!');
+  // console.log(serviceScope === this);
+  console.log(this);
+  var baseURL =
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
@@ -1132,7 +1151,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   this.getUsers = function () {
     return $http({
       method: 'GET',
-      url: '/api/users'
+      url: baseURL + '/api/users'
     }).then(function (response) {
       return response.data;
     });
@@ -1141,7 +1160,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   this.getThisUser = function (id) {
     return $http({
       method: 'GET',
-      url: '/api/users/' + id
+      url: baseURL + '/api/users/' + id
     }).then(function (response) {
       return response.data;
     });
@@ -1150,7 +1169,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   this.getUser = function () {
     return $http({
       method: 'GET',
-      url: '/api/me'
+      url: baseURL + '/api/me'
     }).then(function (res) {
       return res.data;
     }).catch(function (err) {
@@ -1162,7 +1181,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
     return $http({
       method: 'POST',
       data: newUserObject,
-      url: '/api/users'
+      url: baseURL + '/api/users'
     }).then(function (response) {
       return response.data;
     });
@@ -1172,7 +1191,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
     return $http({
       method: 'PUT',
       data: updatedUserInfo,
-      url: '/api/users/info'
+      url: baseURL + '/api/users/info'
     }).then(function (response) {
       return response.data;
     });
@@ -1183,7 +1202,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
     return $http({
       method: 'PUT',
       data: updatedPassword,
-      url: '/api/users/password'
+      url: baseURL + '/api/users/password'
     }).then(function (response) {
       return response.data;
     });
@@ -1194,10 +1213,12 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
       Get all products
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   this.getProducts = function () {
+    console.log('getting products!');
     return $http({
       method: 'GET',
-      url: '/api/products'
+      url: baseURL + '/api/products'
     }).then(function (response) {
+      console.log('rgsService response', response);
       return response.data;
     });
   };
@@ -1213,7 +1234,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   this.getUnfilledOrders = function () {
     return $http({
       method: 'GET',
-      url: '/api/orders/unfilled'
+      url: baseURL + '/api/orders/unfilled'
     }).then(function (response) {
       return response.data;
     });
@@ -1222,7 +1243,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   this.getFilledOrders = function () {
     return $http({
       method: 'GET',
-      url: '/api/orders/filled'
+      url: baseURL + '/api/orders/filled'
     }).then(function (response) {
       return response.data;
     });
@@ -1231,14 +1252,14 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
   this.markOrderFilled = function (id) {
     return $http({
       method: 'PUT',
-      url: '/api/orders/mark/filled/' + id
+      url: baseURL + '/api/orders/mark/filled/' + id
     });
   };
 
   this.markOrderUnfilled = function (id) {
     return $http({
       method: 'PUT',
-      url: '/api/orders/mark/unfilled/' + id
+      url: baseURL + '/api/orders/mark/unfilled/' + id
     });
   };
 
@@ -1246,7 +1267,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
     // console.log('ID is: ' + id);
     return $http({
       method: 'GET',
-      url: '/api/orders/' + id
+      url: baseURL + '/api/orders/' + id
     }).then(function (response) {
       return response.data;
     });
@@ -1256,7 +1277,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
     // console.log('ID is: ' + id);
     return $http({
       method: 'GET',
-      url: '/api/orders/details/' + id
+      url: baseURL + '/api/orders/details/' + id
     }).then(function (response) {
       return response.data;
     });
@@ -1342,7 +1363,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
     return $http({
       method: 'POST',
       data: orderObj,
-      url: '/api/orders'
+      url: baseURL + '/api/orders'
     });
   };
 
