@@ -29,7 +29,7 @@ try {
   };
 }
 
-massive(process.env.CONNECTION_STRING).then(db => {
+massive(config.CONNECTION_STRING).then(db => {
   // console.log('DATABASE', db);
   app.set('db', db);
 });
