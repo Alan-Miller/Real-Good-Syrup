@@ -6,7 +6,8 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
   console.log('this!');
   // console.log(serviceScope === this);
   console.log(this);
-  const baseURL = 'http://localhost:8002';
+  // const baseURL = 'http://localhost:8002';
+  const baseURL = 'http://realgoodsyrup.alan.provo411.com:8002';
 
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*

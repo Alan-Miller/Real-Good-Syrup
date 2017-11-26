@@ -89,7 +89,7 @@ app.get('/api/me', ensureAuthenticated, function(req, res) {
  |--------------------------------------------------------------------------
  */
 app.put('/api/me', ensureAuthenticated, function(req, res) {
-  db.users.findById(req.user, function(err, user) {
+  req.app.get('db').users.findById(req.user, function(err, user) {
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
     }
@@ -103,14 +103,14 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
 
 
 app.post('/auth/login', function(req, res) {
-      db.users.findOne({username: req.body.username}, function(err, user) {
+      req.app.get('db').users.findOne({username: req.body.username}, function(err, user) {
           if (err) return res.status(500);
           if (!user) {
             return res.status(401).send({
               message: 'Invalid username and/or password'
             });
           }
-          db.compare_password([req.body.password, user.id], function(err, correct) {
+          req.app.get('db').compare_password([req.body.password, user.id], function(err, correct) {
             if (err) {
               console.log(err);
             }
@@ -136,14 +136,14 @@ app.post('/auth/login', function(req, res) {
  |--------------------------------------------------------------------------
  */
 app.post('/auth/signup', function(req, res) {
-  db.users.findOne({ username: req.body.username }, function(err, existingUser) {
+  req.app.get('db').users.findOne({ username: req.body.username }, function(err, existingUser) {
     if (existingUser) {
       return res.status(409).send({ message: 'Username is already taken' });
     }
     else {
 
-        db.post_user([req.body.firstname, req.body.lastname, req.body.address, req.body.zip, req.body.username, req.body.password], function(err, users){
-          db.users.findOne({username: req.body.username}, function(err, user){
+        req.app.get('db').post_user([req.body.firstname, req.body.lastname, req.body.address, req.body.zip, req.body.username, req.body.password], function(err, users){
+          req.app.get('db').users.findOne({username: req.body.username}, function(err, user){
             // console.log(user);
             res.send({
                       token: createJWT(user),
