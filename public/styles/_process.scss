@@ -1,0 +1,27 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  HOW WE MAKE MAPLE SYRUP (PROCESS) VIEW
+  FAQ VIEW
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#process, #faq {
+  background-color: $whitebackground;
+  border-radius: 18px;
+  position: relative;
+  // padding: 9px;
+  z-index: 33;
+  width: 100%;
+  min-width: 750px;
+  max-width: 1000px;
+}
+#faq {
+  z-index: 44;
+  margin-bottom: 150px;
+  min-width: 750px;
+  max-width: 1000px;
+}
+#contact {
+  z-index: 33;
+  position: relative;
+  color: white;
+  min-width: 750px;
+  max-width: 1000px;
+}

@@ -1,118 +1,133 @@
 <!DOCTYPE html>
 <html ng-app="syrupApp">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Real Good Syrup</title>
-    <link rel='shortcut icon' href='./public/img/icons/leaf.png' type='image/x-icon'/ >
-    <link rel="stylesheet" href="./builds/all.css">
-    <!-- <link rel="stylesheet" href="./styles/reset.css"> -->
-    <!-- <link rel="stylesheet" href="./styles/fonts.css"> -->
-    <!-- <link rel="stylesheet" href="./styles/parallax.css"> -->
-    <!-- <link rel="stylesheet" href="./styles/queries.css"> -->
-    <!-- <link rel="stylesheet" href="./styles/main.css"> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/5.2.0/sweetalert2.css">
-  </head>
 
-  <body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Real Good Syrup</title>
+  <link rel='shortcut icon' href='./public/img/icons/leaf.png' type='image/x-icon' />
+  <link rel="stylesheet" href="./builds/all.css">
+  <!-- <link rel="stylesheet" href="./styles/reset.css"> -->
+  <!-- <link rel="stylesheet" href="./styles/fonts.css"> -->
+  <!-- <link rel="stylesheet" href="./styles/parallax.css"> -->
+  <!-- <link rel="stylesheet" href="./styles/queries.css"> -->
+  <!-- <link rel="stylesheet" href="./styles/main.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/5.2.0/sweetalert2.css">
+</head>
 
-<!-- <div class="parallax">
+<body>
+
+  <!-- <div class="parallax">
   <div class="parallax__layer parallax__layer__back">BACK</div>
   <div class="parallax__layer parallax__layer__base">BASE</div>
 </div> -->
 
-<div class="parallax-layer-fore">
-  <section class="falling-leaf leaf-one"></section>
-  <!-- <section class="falling-leaf leaf-two"></section> -->
-  <section class="falling-leaf leaf-three"></section>
-  <section class="falling-leaf leaf-four"></section>
-  <section class="falling-leaf leaf-five"></section>
-  <section class="falling-leaf leaf-six"></section>
-</div>
+  <div id="all_content">
 
-<div class="parallax-layer-back">
-  <section class="tree tree-left"></section>
-  <!-- <section class="tree tree-right"><</section> -->
-  <!-- <section class="tree tree-left-back"><</section> -->
-  <section class="tree tree-right-back"><</section>
-  <!-- <section class="tree tree-deep"></section> -->
-
-  <section class="hill hill-fg"></section>
-  <section class="hill hill-bg"></section>
-  <section class="hill hill-dbg"></section>
-  <section class="hill hill-ddbg"></section>
-  <section class="clouds"></section>
-  <section class="sky"></section>
-</div>
-
-
-<div class="rgs">
-
-    <div id="first" class="flex-centered">
-      <section class="leaves leaves-nav-up"></section>
-      <section class="leaves leaves-splash-bg"></section>
-      <section class="routed-content flex-centered" ui-view="first"></section>
+    <div class="parallax-layer-fore">
+      <div class="p_container">
+        <section class="falling-leaf leaf-one"></section>
+        <!-- <section class="falling-leaf leaf-two"></section> -->
+        <section class="falling-leaf leaf-three"></section>
+        <section class="falling-leaf leaf-four"></section>
+        <section class="falling-leaf leaf-five"></section>
+        <section class="falling-leaf leaf-six"></section>
+      </div>
     </div>
 
-    <section id="nav-buffer"></section>
+    <div class="parallax-layer-back">
+      <div class="p_container">
+        <section class="tree tree-left"></section>
+        <!-- <section class="tree tree-right"><</section> -->
+        <!-- <section class="tree tree-left-back"><</section> -->
+        <section class="tree tree-right-back">
+        </section>
+        <!-- <section class="tree tree-deep"></section> -->
 
-    <nav id="main-nav" class="scroll-nav flex-centered">
-      <ul class="pacifico">
-        <li ui-sref="landing" class="small-logo admin-fade"><span class="teko">GOOD</span></li>
-        <li ui-sref="cart" class="cart-nav admin-fade">Buy</li>
-        <li ui-sref="about" class="about-nav admin-fade">About us</li>
-        <li ui-sref="process" class="process-nav admin-fade">Our process</li>
-        <li class="contact-nav admin-fade">Contact us</li>
-        <li ui-sref="login" class="login-nav admin-fade"><span class="teko">log in</span></li>
-        <li ui-sref="patron" class="my-info-nav patron-fade">my info</li>
-        <li id="logout-nav" class="logout-nav" nav-logout>log out</li>
-      </ul>
-    </nav>
-
-    <div id="second">
-      <section class="leaves leaves-nav-down"></section>
-      <section fade-in ui-view="second" id="cart"></section>
+        <section class="hill hill-fg"></section>
+        <section class="hill hill-bg"></section>
+        <section class="hill hill-dbg"></section>
+        <section class="hill hill-ddbg"></section>
+        <section class="clouds"></section>
+        <section class="sky"></section>
+      </div>
     </div>
 
-    <div id="third">
-      <section class="routed-content" ui-view="third"></section>
+
+    <div class="rgs">
+
+      <div id="first" class="flex-centered">
+        <section class="leaves leaves-nav-up"></section>
+        <section class="leaves leaves-splash-bg"></section>
+        <section class="routed-content flex-centered" ui-view="first"></section>
+      </div>
+
+      <section id="nav-buffer"></section>
+
+      <nav id="main-nav" class="scroll-nav flex-centered">
+        <ul class="pacifico">
+          <li ui-sref="landing" class="small-logo admin-fade">
+            <span class="teko">GOOD</span>
+          </li>
+          <li ui-sref="cart" class="cart-nav admin-fade">Buy</li>
+          <li ui-sref="about" class="about-nav admin-fade">About us</li>
+          <li ui-sref="process" class="process-nav admin-fade">Our process</li>
+          <li class="contact-nav admin-fade">Contact us</li>
+          <li ui-sref="login" class="login-nav admin-fade">
+            <span class="teko">log in</span>
+          </li>
+          <li ui-sref="patron" class="my-info-nav patron-fade">my info</li>
+          <li id="logout-nav" class="logout-nav" nav-logout>log out</li>
+        </ul>
+      </nav>
+
+      <div id="second">
+        <section class="leaves leaves-nav-down"></section>
+        <section fade-in ui-view="second" id="cart"></section>
+      </div>
+
+      <div id="third">
+        <section class="routed-content" ui-view="third"></section>
+      </div>
+
+      <div id="fourth">
+        <section class="routed-content" ui-view="fourth"></section>
+      </div>
+
+      <footer id="footer"></footer>
+
+
     </div>
-
-    <div id="fourth">
-      <section class="routed-content" ui-view="fourth"></section>
-    </div>
-
-    <footer id="footer"></footer>
-
 
   </div>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
-    <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/sweetalert2/5.2.0/sweetalert2.js"></script>
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-stripe/4.2.12/angular-stripe.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
+  <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/sweetalert2/5.2.0/sweetalert2.js"></script>
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-stripe/4.2.12/angular-stripe.js"></script>
 
-    <!-- <script type="text/javascript" src="./builds/all.js"></script> -->
-    <script type="text/javascript" src="./app.js"></script>
-    <script type="text/javascript" src="./js/scripts.js"></script>
-    <script type="text/javascript" src="./js/controllers/aboutControl.js"></script>
-    <script type="text/javascript" src="./js/controllers/adminControl.js"></script>
-    <script type="text/javascript" src="./js/controllers/cartControl.js"></script>
-    <script type="text/javascript" src="./js/controllers/contactControl.js"></script>
-    <script type="text/javascript" src="./js/controllers/landingControl.js"></script>
-    <script type="text/javascript" src="./js/controllers/loginControl.js"></script>
-    <script type="text/javascript" src="./js/controllers/patronControl.js"></script>
-    <script type="text/javascript" src="./js/controllers/processControl.js"></script>
-    <!-- <script type="text/javascript" src="./js/controllers/productsControl.js"></script> -->
-    <script type="text/javascript" src="./js/services/rgsService.js"></script>
-    <script type="text/javascript" src="./js/directives/addSubtract.js"></script>
-    <script type="text/javascript" src="./js/directives/fadeIn.js"></script>
-    <script type="text/javascript" src="./js/directives/navLogout.js"></script>
-    <script type="text/javascript" src="./js/directives/orderDetails.js"></script>
-    <script type="text/javascript" src="./js/directives/scrollElementNotDocument.js"></script>
-    <script type="text/javascript" src="./js/directives/shortenName.js"></script>
-  </body>
+  <!-- <script type="text/javascript" src="./builds/all.js"></script> -->
+  <script type="text/javascript" src="./app.js"></script>
+  <script type="text/javascript" src="./js/scripts.js"></script>
+  <script type="text/javascript" src="./js/controllers/aboutControl.js"></script>
+  <script type="text/javascript" src="./js/controllers/adminControl.js"></script>
+  <script type="text/javascript" src="./js/controllers/cartControl.js"></script>
+  <script type="text/javascript" src="./js/controllers/contactControl.js"></script>
+  <script type="text/javascript" src="./js/controllers/landingControl.js"></script>
+  <script type="text/javascript" src="./js/controllers/loginControl.js"></script>
+  <script type="text/javascript" src="./js/controllers/patronControl.js"></script>
+  <script type="text/javascript" src="./js/controllers/processControl.js"></script>
+  <!-- <script type="text/javascript" src="./js/controllers/productsControl.js"></script> -->
+  <script type="text/javascript" src="./js/services/rgsService.js"></script>
+  <script type="text/javascript" src="./js/directives/addSubtract.js"></script>
+  <script type="text/javascript" src="./js/directives/fadeIn.js"></script>
+  <script type="text/javascript" src="./js/directives/navLogout.js"></script>
+  <script type="text/javascript" src="./js/directives/orderDetails.js"></script>
+  <script type="text/javascript" src="./js/directives/scrollElementNotDocument.js"></script>
+  <script type="text/javascript" src="./js/directives/shortenName.js"></script>
+</body>
+
 </html>

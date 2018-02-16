@@ -1,0 +1,62 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+  LOGIN VIEW
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
+  min-height: 100px;
+  background-color: rgba(255, 255, 255, .55);
+  border-radius: 10px;
+  padding: 18px 10px;
+  color: rgb(111, 111, 111);
+  z-index: 42;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  input {
+    margin: 10px;
+    padding: 4px;
+    font-size: 1.4em;
+    max-width: 275px;
+    display: flex;
+    flex-direction: column;
+    outline-color: $maplered;
+    color: $maplered;
+    outline-width: medium;
+  }
+  .login-btn {
+    margin: 12px 0 12px 12px;
+    padding: 12px;
+    background-color: $maplered;
+    border-top: solid 2px $maplelightred;
+    border-right: solid 2px $mapledarkred;
+    border-bottom: solid 2px $mapledarkred;
+    border-left: solid 2px $maplelightred;
+    border-radius: 12px 0 0 12px;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-family: 'Raleway', serif;
+    outline: none;
+  }
+  .login-btn.new-login {
+    background-color: $mapleblue;
+    border-top: solid 2px $maplelightblue;
+    border-right: solid 2px $mapledarkblue;
+    border-bottom: solid 2px $mapledarkblue;
+    border-left: solid 2px $maplelightblue;
+    border-radius: 0 12px 12px 0;
+    margin: 12px 12px 12px 0;
+  }
+  .login-text {
+    max-width: 400px;
+    margin: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+}

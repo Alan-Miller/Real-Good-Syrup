@@ -7,17 +7,31 @@ Parallax trees
   top: 0px;
   left: 0px;
   z-index: 30;
-  width: 100%;
   height: 0px;
+  width: 100%;
+  max-width: 1400px;
+  display: none;
 }
 
 .parallax-layer-back {
   position: fixed;
   top: 0px;
   left: 0px;
+  // left: 50%;
+  // transform: translate(-50%);
   z-index: 29;
-  width: 100%;
   height: 100vh;
+  width: 100vw;
+  background-color: RGBA(44, 15, 6, 1.00);
+  .p_container {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    height: 100vh;
+    width: 80%;
+    max-width: 1400px;
+    overflow: hidden;
+  }
 }
 
 .tree {
@@ -77,11 +91,14 @@ Parallax trees
   z-index: 3;
   height: 2000px;
   top: 11400px;
+  // top: 600vw;
+  // top: 1200vh;
+  // bottom: -300px;
 }
 .hill-bg {
   background-image: url('../img/valley/hill2.png');
   z-index: 2;
-  top: -280px;
+  top: -210px;
 }
 .hill-dbg {
   background-image: url('../img/valley/hill3.png');
