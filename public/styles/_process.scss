@@ -21,6 +21,8 @@
 #contact {
   z-index: 33;
   position: relative;
+  left: 50%;
+  transform: translate(-50%);
   color: white;
   min-width: 750px;
   max-width: 1000px;
