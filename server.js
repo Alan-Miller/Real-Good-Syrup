@@ -219,6 +219,6 @@ app.put('/api/products/:id', ensureAuthenticated, controller.updateProducts);
   PORT
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 const port = process.env.PORT || config.port; // If the environment has a port (Heroku will) use it; otherwise use config.port
-app.listen(port, function() {
+app.listen(port, "localhost", function() {
   console.log('Listening now on port ' + port);
 });
