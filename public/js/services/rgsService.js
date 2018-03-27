@@ -1,12 +1,12 @@
 angular.module('syrupApp').service('rgsService', function($http, $state) {
 
-  // var port = 8002;
+  // var port = 8460;
   const serviceScope = this;
-  const user = {};
+  let user = {};
   console.log('this', this);
   // console.log(serviceScope === this);
-  const baseURL = 'http://localhost:8002';
-  // const baseURL = 'http://realgoodsyrup.alan.provo411.com:8002';
+  const baseURL = 'http://localhost:8460';
+  // const baseURL = 'http://realgoodsyrup.alan.provo411.com:8460';
 
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -100,7 +100,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
     console.log('GET all products on load');
     return $http({
       method: 'GET',
-      url: 'http://localhost:8002' + '/api/products'
+      url: 'http://localhost:8460' + '/api/products'
     }).then(function(response) {
       console.log('rgsService response', response);
       return response.data;

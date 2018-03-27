@@ -795,6 +795,7 @@ angular.module('syrupApp').controller('loginControl', function ($scope, rgsServi
         checkUser(user.admin);
       }
     }).catch(function (response) {
+      console.log('response', response);
       swal({
         title: 'Wrong username or password',
         text: 'Please try again',
@@ -1124,13 +1125,14 @@ angular.module('syrupApp').directive('shortenName', function () {
 
 angular.module('syrupApp').service('rgsService', function ($http, $state) {
 
-  // var port = 8002;
+  // var port = 8460;
   var serviceScope = this;
   var user = {};
-  console.log('this!');
+  console.log('this', this);
   // console.log(serviceScope === this);
-  console.log(this);
-  var baseURL =
+  var baseURL = 'http://localhost:8460';
+  // const baseURL = 'http://realgoodsyrup.alan.provo411.com:8460';
+
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     USERS
@@ -1213,10 +1215,10 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
       Get all products
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   this.getProducts = function () {
-    console.log('getting products!');
+    console.log('GET all products on load');
     return $http({
       method: 'GET',
-      url: baseURL + '/api/products'
+      url: 'http://localhost:8460' + '/api/products'
     }).then(function (response) {
       console.log('rgsService response', response);
       return response.data;

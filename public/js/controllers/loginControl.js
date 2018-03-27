@@ -216,6 +216,7 @@ angular.module('syrupApp').controller('loginControl', function($scope, rgsServic
         checkUser(user.admin);
        }
      }).catch(function (response) {
+       console.log('response', response)
        swal({
          title: 'Wrong username or password',
          text: 'Please try again',

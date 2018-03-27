@@ -53,7 +53,7 @@ gulp.task('default', ['sass']);
   Watch tasks
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 gulp.watch([paths.allStyles, paths.allOtherStyles], ['sass']);
-// gulp.watch(['./public/styles/trees{.scss,.css}'], ['sass']);
+gulp.watch(['./public/styles/trees{.scss,.css}'], ['sass']);
 gulp.watch([paths.allJs, paths.indexHtml], ['js']);
 
 

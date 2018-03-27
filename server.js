@@ -15,7 +15,7 @@ try {
   var config = require('./config.js');
 } catch (ex) {
   var config = {
-    "port": 8002,
+    // "port": 8460s,
     "STRIPE_KEY": "",
     "TOKEN_SECRET": process.env.TOKEN_SECRET
   };
@@ -26,9 +26,9 @@ massive(config.CONNECTION_STRING).then(db => {
   app.set('db', db);
 });
 
+app.use(cors());
 
 app.use(bodyParser.json());
-app.use(cors());
 
 app.use(express.static(__dirname + '/public'));
 
