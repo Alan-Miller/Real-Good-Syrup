@@ -47,7 +47,7 @@ gulp.task('sass', function() {
   Default tasks
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 gulp.task('default', ['sass']);
-// gulp.task('default', ['js','sass']);
+gulp.task('default', ['js','sass']);
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
   Watch tasks

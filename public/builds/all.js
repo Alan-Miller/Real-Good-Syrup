@@ -1132,8 +1132,8 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
 
   var that = this;
   var user = {};
-  var baseURL = '';
-  // const baseURL = 'http://localhost:8460';
+  // const baseURL = '';
+  var baseURL = 'http://localhost:8460';
   // const baseURL = 'http://realgoodsyrup.alan.provo411.com:8460';
 
 
