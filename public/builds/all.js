@@ -477,23 +477,28 @@ angular.module('syrupApp').controller('adminControl', function ($scope, rgsServi
 
 angular.module('syrupApp').controller('cartControl', function ($scope, rgsService, stripe, $http) {
 
-  $scope.charge = function () {
-    return stripe.card.createToken($scope.payment.card).then(function (response) {
-      console.log('token created for card ending in ', response.card.last4);
-      var payment = angular.copy($scope.payment);
-      payment.card = void 0;
-      payment.token = response.id;
-      return $http.post('/api/payment', payment);
-    }).then(function (payment) {
-      console.log('successfully submitted payment for $', payment.amount);
-    }).catch(function (err) {
-      if (err.type && /^Stripe/.test(err.type)) {
-        console.log('Stripe error: ', err.message);
-      } else {
-        console.log('Other error occurred, possibly with your API', err.message);
-      }
-    });
-  };
+  // $scope.charge = function () {
+  //   return stripe.card.createToken($scope.payment.card)
+  //     .then(function (response) {
+  //       console.log('token created for card ending in ', response.card.last4);
+  //       var payment = angular.copy($scope.payment);
+  //       payment.card = void 0;
+  //       payment.token = response.id;
+  //       return $http.post('/api/payment', payment);
+  //     })
+  //     .then(function (payment) {
+  //       console.log('successfully submitted payment for $', payment.amount);
+  //     })
+  //     .catch(function (err) {
+  //       if (err.type && /^Stripe/.test(err.type)) {
+  //         console.log('Stripe error: ', err.message);
+  //       }
+  //       else {
+  //         console.log('Other error occurred, possibly with your API', err.message);
+  //       }
+  //     });
+  // };
+
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     PRODUCTS
@@ -1125,12 +1130,10 @@ angular.module('syrupApp').directive('shortenName', function () {
 
 angular.module('syrupApp').service('rgsService', function ($http, $state) {
 
-  // var port = 8460;
-  var serviceScope = this;
+  var that = this;
   var user = {};
-  console.log('this', this);
-  // console.log(serviceScope === this);
-  var baseURL = 'http://localhost:8460';
+  var baseURL = '';
+  // const baseURL = 'http://localhost:8460';
   // const baseURL = 'http://realgoodsyrup.alan.provo411.com:8460';
 
 
@@ -1215,12 +1218,11 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
       Get all products
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   this.getProducts = function () {
-    console.log('GET all products on load');
     return $http({
       method: 'GET',
-      url: 'http://localhost:8460' + '/api/products'
+      url: baseURL + '/api/products'
     }).then(function (response) {
-      console.log('rgsService response', response);
+      console.log('rgsService response data', response.data);
       return response.data;
     });
   };
@@ -1352,7 +1354,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
           timer: 2100
         });
         //NEED TO LOG OUT
-        serviceScope.placeOrder(orderObj);
+        that.placeOrder(orderObj);
         // $state.go('patron');
         // $state.go('cart');
         $state.reload();
@@ -1371,7 +1373,7 @@ angular.module('syrupApp').service('rgsService', function ($http, $state) {
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     AUTHENTICATION
-      Auth functions are in server.js
+      Auth functions are in server/index.js
       Below are unused functions pasted in from Brett's code, with Josh's tweaks
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   // this.loginLocal = function(credentials) {

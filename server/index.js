@@ -12,7 +12,7 @@ const controller = require('./controller.js');
 const app = module.exports = express();
 
 try {
-  var config = require('./config.js');
+  var config = require('../config.js');
 } catch (ex) {
   var config = {
     // "port": 8460s,

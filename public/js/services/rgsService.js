@@ -1,11 +1,9 @@
 angular.module('syrupApp').service('rgsService', function($http, $state) {
 
-  // var port = 8460;
-  const serviceScope = this;
+  const that = this;
   let user = {};
-  console.log('this', this);
-  // console.log(serviceScope === this);
-  const baseURL = 'http://localhost:8460';
+  const baseURL = '';
+  // const baseURL = 'http://localhost:8460';
   // const baseURL = 'http://realgoodsyrup.alan.provo411.com:8460';
 
 
@@ -97,12 +95,11 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
       Get all products
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   this.getProducts = function() {
-    console.log('GET all products on load');
     return $http({
       method: 'GET',
-      url: 'http://localhost:8460' + '/api/products'
+      url: baseURL + '/api/products'
     }).then(function(response) {
-      console.log('rgsService response', response);
+      console.log('rgsService response data', response.data);
       return response.data;
     });
   };
@@ -237,7 +234,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
           }
         );
         //NEED TO LOG OUT
-        serviceScope.placeOrder(orderObj);
+        that.placeOrder(orderObj);
         // $state.go('patron');
         // $state.go('cart');
         $state.reload();
@@ -259,7 +256,7 @@ angular.module('syrupApp').service('rgsService', function($http, $state) {
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
     AUTHENTICATION
-      Auth functions are in server.js
+      Auth functions are in server/index.js
       Below are unused functions pasted in from Brett's code, with Josh's tweaks
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     // this.loginLocal = function(credentials) {
